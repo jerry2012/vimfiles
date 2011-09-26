@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# 20061213 by j_g
+for d in plugin doc colors autoload nerdtree_plugin after ftplugin snippets syntax; do
+	cd $d
+	for f in *; do
+		echo rm -v ~/.vim/$d/$f
+	done
+	cd ..
+done
+
+# vimballs
+for v in vba/*; do
+	ex $v -c RmVimball -c q
+done
+

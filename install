@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# vimrc
+mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
+ln -sf `pwd`/.vimrc ~/.vimrc
+
+# vimballs
+for v in vba/*; do
+	ex $v -c UseVimball -c q
+done
+
+# plugins & colors
+for d in plugin doc colors autoload nerdtree_plugin after ftplugin snippets syntax; do
+	mkdir -pv ~/.vim/$d
+	cp -rv $d/* ~/.vim/$d
+done
+
+git_pull() {
+	if [ ! -d $1 ]; then
+		git clone $2
+	fi
+	cd $1 || exit 1
+	git pull
+	cd ..
+}
+
+copy_files() {
+	cd $1
+	for d in *; do
+		if [ -d $d ]; then
+			mkdir -pv ~/.vim/$d
+			cp -vr $d/* ~/.vim/$d/
+		fi
+	done
+	cd ..
+}
+
+git_install() {
+	git_pull $1 $2
+	copy_files $1
+}
+
+# Snippets for snipMate
+git_pull snipmate-snippets git://github.com/junegunn/snipmate-snippets.git
+cd snipmate-snippets
+rake deploy_local
+cd ..
+
+# Scala support
+git_install scala-vim-support git://github.com/junegunn/scala-vim-support.git
+
+# Coffeescript
+git_install vim-coffee-script https://github.com/kchmck/vim-coffee-script.git
+
+# Rails
+git_install vim-rails https://github.com/tpope/vim-rails
+
+ex -c "helptags $HOME/.vim/doc" -c "q"
+
