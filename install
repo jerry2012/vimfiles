@@ -23,19 +23,21 @@ copy_files() {
 			cp -vr $d/* ~/.vim/$d/
 		fi
 	done
-	cd ..
+	cd -
 }
 
 git_pull() {
-	DIR=${1/#*\/}
-	DIR=${DIR/%.git/}
+	mkdir -p git
+	cd git || exit 1
 
-	if [ ! -d $DIR ]; then
+	if [ ! -d $1 ]; then
 		git clone $2
 	fi
-	cd $DIR || exit 1
+
+	cd $1 || exit 1
 	git pull
-	cd ..
+
+	cd ../..
 }
 
 git_install() {
@@ -43,14 +45,14 @@ git_install() {
 	DIR=${DIR/%.git/}
 
 	git_pull $DIR $1
-	copy_files $DIR
+	copy_files git/$DIR
 }
 
 # Snippets for snipMate
-git_pull git://github.com/junegunn/snipmate-snippets.git
-cd snipmate-snippets
+git_pull snipmate-snippets git://github.com/junegunn/snipmate-snippets.git
+cd git/snipmate-snippets
 rake deploy_local
-cd ..
+cd ../..
 
 # Scala support
 git_install git://github.com/junegunn/scala-vim-support.git
