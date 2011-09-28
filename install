@@ -64,7 +64,7 @@ git_install https://github.com/kchmck/vim-coffee-script.git
 git_install https://github.com/tpope/vim-rails
 
 # Supertab
-git_install https://github.com/ervandew/supertab.git
+# git_install https://github.com/ervandew/supertab.git
 
 # endwise
 git_install https://github.com/tpope/vim-endwise.git
@@ -74,6 +74,9 @@ git_install https://github.com/tpope/vim-fugitive.git
 
 # latest nerdtree
 git_install https://github.com/scrooloose/nerdtree.git
+
+# mbe
+git_install https://github.com/fholgado/minibufexpl.vim.git
 
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
