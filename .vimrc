@@ -295,6 +295,19 @@ endif
 au BufNewFile,BufRead capfile	setf ruby
 au BufNewFile,BufRead Capfile	setf ruby
 
-" Grep
-let Grep_Skip_Files = '*.bak *~ *.log *.swp' 
+" Grep in MacOS
 let Grep_Xargs_Options = '-0'
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+
+" New line before/after
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+
+" Yank/Delete lines
+inoremap <C-y> <C-o>yy
+inoremap <C-d> <C-o>dd
+
+inoremap <C-^> <C-o><C-^>
