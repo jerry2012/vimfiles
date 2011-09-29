@@ -311,9 +311,8 @@ inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 
-" Yank/Delete lines
+" Yank lines
 inoremap <C-y> <C-o>yy
-inoremap <C-d> <C-o>dd
 
 inoremap <C-^> <C-o><C-^>
 
