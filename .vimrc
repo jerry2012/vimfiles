@@ -191,43 +191,56 @@ noremap <F11> :NERDTree<cr>
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
-" Multi-window toggle
-function ToggleWindow()
-	execute "normal \<C-W>\<C-W>"
- 	if expand('%') == '-MiniBufExplorer-'
-		execute "normal \<C-W>\<C-W>"
-	endif
-	echo fnamemodify(expand('%'), ":p")
-endfunction
-map <tab> :call ToggleWindow()<cr>
-
-" Doesn't work correctly if window has no target file
-function ToMiniBuf()
-	let initial = expand('%')
-	while 1 
-		execute "normal \<C-W>\<C-W>"
-		if expand('%') == initial || expand('%') == '-MiniBufExplorer-'
-			break
-		endif
-	endwhile
-	echo fnamemodify(expand('%'), ":p")
-endfunction
-map <S-tab> :call ToMiniBuf()<cr>
-	
-function FuzzyFinder()
-	let initial = expand('%')
-	while 1 
-		execute "normal \<C-W>\<C-W>"
-		if expand('%') == initial || (expand('%') != '-MiniBufExplorer-' && match(expand('%'), 'NERD_tree_.*'))
-			break
-		endif
-	endwhile
-	exe('FufFile **/')
-endfunction
-" Fuzzy Finder
-inoremap <F7> <esc>:call FuzzyFinder()<cr>
-noremap <F7> :call FuzzyFinder()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" " Multi-window toggle
+" function ToggleWindow()
+" 	execute "normal \<C-W>\<C-W>"
+"  	if expand('%') == '-MiniBufExplorer-'
+" 		execute "normal \<C-W>\<C-W>"
+" 	endif
+" 	echo fnamemodify(expand('%'), ":p")
+" endfunction
+" map <tab> :call ToggleWindow()<cr>
+" 
+" " Doesn't work correctly if window has no target file
+" function ToMiniBuf()
+" 	let initial = expand('%')
+" 	while 1 
+" 		execute "normal \<C-W>\<C-W>"
+" 		if expand('%') == initial || expand('%') == '-MiniBufExplorer-'
+" 			break
+" 		endif
+" 	endwhile
+" 	echo fnamemodify(expand('%'), ":p")
+" endfunction
+" map <S-tab> :call ToMiniBuf()<cr>
+	
+" function FuzzyFinder()
+" 	let initial = expand('%')
+" 	while 1 
+" 		execute "normal \<C-W>\<C-W>"
+" 		if expand('%') == initial || (expand('%') != '-MiniBufExplorer-' && match(expand('%'), 'NERD_tree_.*'))
+" 			break
+" 		endif
+" 	endwhile
+" 	exe('FufFile **/')
+" endfunction
+" " Fuzzy Finder
+" inoremap <F7> <esc>:call FuzzyFinder()<cr>
+" noremap <F7> :call FuzzyFinder()<cr>
+"
+" " Minibufexplorer
+" let g:miniBufExplMapWindowNavArrows = 1 
+" let g:miniBufExplMapWindowNavVim = 1 
+" " let g:miniBufExplMapCTabSwitchBufs = 1 
+" let g:miniBufExplModSelTarget = 1 
+" " let g:miniBufExplTabWrap = 1
+" " let g:miniBufExplModSelTarget = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <tab> <C-W><C-W>
+map <S-tab> :FufBuffer<cr>
+inoremap <F7> <esc>:FufFile **/<cr>
+noremap <F7> :FufFile **/<cr>
 
 " Color setting
 "colo brown
@@ -264,14 +277,6 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
 	" Doesn't work
 	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
-
-" Minibufexplorer
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapWindowNavVim = 1 
-" let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1 
-" let g:miniBufExplTabWrap = 1
-" let g:miniBufExplModSelTarget = 1
 
 " NERD comment
 let mapleader = ","

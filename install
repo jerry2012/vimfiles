@@ -82,7 +82,7 @@ git_install http://github.com/tpope/vim-fugitive.git
 git_install http://github.com/scrooloose/nerdtree.git
 
 # mbe
-git_install http://github.com/fholgado/minibufexpl.vim.git
+# git_install http://github.com/fholgado/minibufexpl.vim.git
 
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
