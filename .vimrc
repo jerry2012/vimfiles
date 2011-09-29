@@ -251,7 +251,7 @@ noremap <F7> :FufFile **/<cr>
 "set t_Co=256
 colo automation
 "hi LineNr ctermfg=magenta
-hi Search term=reverse ctermbg=red ctermfg=white
+hi Search term=reverse ctermbg=blue ctermfg=white
 hi StatusLine ctermfg=6
 
 " For syntax highlighting and snipMate
@@ -316,3 +316,6 @@ inoremap <C-y> <C-o>yy
 inoremap <C-d> <C-o>dd
 
 inoremap <C-^> <C-o><C-^>
+
+" Shift-tab on GNU screen
+set t_kB=[Z
