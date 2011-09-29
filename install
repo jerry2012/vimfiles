@@ -55,34 +55,34 @@ git_install() {
 }
 
 # Snippets for snipMate
-git_pull snipmate-snippets git://github.com/junegunn/snipmate-snippets.git
+git_pull snipmate-snippets http://github.com/junegunn/snipmate-snippets.git
 cd git/snipmate-snippets
 rake deploy_local
 cd ../..
 
 # Scala support
-git_install git://github.com/junegunn/scala-vim-support.git
+git_install http://github.com/junegunn/scala-vim-support.git
 
 # Coffeescript
-git_install https://github.com/kchmck/vim-coffee-script.git
+git_install http://github.com/kchmck/vim-coffee-script.git
 
 # Rails
-git_install https://github.com/tpope/vim-rails
+git_install http://github.com/tpope/vim-rails
 
 # Supertab
-# git_install https://github.com/ervandew/supertab.git
+# git_install http://github.com/ervandew/supertab.git
 
 # endwise
-git_install https://github.com/tpope/vim-endwise.git
+git_install http://github.com/tpope/vim-endwise.git
 
 # fugitive
-git_install https://github.com/tpope/vim-fugitive.git
+git_install http://github.com/tpope/vim-fugitive.git
 
 # latest nerdtree
-git_install https://github.com/scrooloose/nerdtree.git
+git_install http://github.com/scrooloose/nerdtree.git
 
 # mbe
-git_install https://github.com/fholgado/minibufexpl.vim.git
+git_install http://github.com/fholgado/minibufexpl.vim.git
 
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
