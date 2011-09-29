@@ -4,15 +4,15 @@
 mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
 ln -sf `pwd`/.vimrc ~/.vimrc
 
-# vimballs
-for v in vba/*; do
-	ex $v -c UseVimball -c q
-done
-
 # plugins & colors
 for d in plugin doc colors autoload nerdtree_plugin after ftplugin snippets syntax; do
 	mkdir -pv ~/.vim/$d
 	cp -rv $d/* ~/.vim/$d
+done
+
+# vimballs
+for v in vba/*; do
+	ex $v -c UseVimball -c q
 done
 
 # helptags
