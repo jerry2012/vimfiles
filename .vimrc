@@ -320,3 +320,10 @@ set nocompatible
 if has("autocmd")
   filetype indent plugin on
 endif
+
+" Bubble lines
+nmap <C-k> ddkP
+nmap <C-j> ddp
+vmap <C-k> xkP`[V`]
+vmap <C-j> xp`[V`]
+
