@@ -272,12 +272,6 @@ set ims=-1
 map! ㅇㄱ <esc>
 vmap ㅇㄱ <esc>
 
-" Alleviate startup delay of JRuby
-if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
-	" Doesn't work
-	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
-endif
-
 " NERD comment
 let mapleader = ","
 vmap <F7> <leader>cc
@@ -302,6 +296,7 @@ au BufNewFile,BufRead Capfile	setf ruby
 
 " Grep in MacOS
 let Grep_Xargs_Options = '-0'
+let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h
