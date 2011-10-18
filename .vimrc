@@ -318,3 +318,10 @@ inoremap <C-^> <C-o><C-^>
 
 " Shift-tab on GNU screen
 set t_kB=[Z
+
+" https://github.com/nelstrom/vim-textobj-rubyblock
+runtime macros/matchit.vim
+set nocompatible
+if has("autocmd")
+  filetype indent plugin on
+endif
