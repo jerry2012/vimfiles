@@ -322,7 +322,7 @@ if has("autocmd")
 endif
 
 " Bubble lines
-nmap <C-k> ddkP
+nmap <C-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 nmap <C-j> ddp
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
