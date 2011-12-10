@@ -307,7 +307,7 @@ inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 
 " Yank lines
-inoremap <C-y> <C-o>yy
+" inoremap <C-y> <C-o>yy
 
 inoremap <C-^> <C-o><C-^>
 
