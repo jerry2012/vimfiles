@@ -73,10 +73,12 @@ set ignorecase smartcase
 set wildmenu
 
 " count a tab as 4 spaces
-set tabstop=4
+set tabstop=2
 
 " use 4 tabs when indenting
-set shiftwidth=4
+set shiftwidth=2
+
+set expandtab
 
 " restore visual selction after indenting
 :vnoremap < <gv
@@ -282,13 +284,18 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
 	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
 
-" dbext (breaks minibufexpl which is far more useful)
+" dbext (not sure about this)
 " let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=:dbname=test:extra=-t'
-" let g:dbext_default_profile_datahub_URL = 'type=ORA:srvname=//10.10.99.206\:1600/datahub:user=datahub:passwd=@askg'
-" let g:dbext_default_profile_coconut_URL = 'type=ORA:srvname=//10.10.99.206\:1600/coconut:user=coconut:passwd=@askg'
-" let g:dbext_default_profile_mysql_local_ODBC = 'type=ODBC:user=root:passwd=:dsnname=test'
+" let g:dbext_default_profile_oracle = 'type=ORA:srvname=//10.10.99.206\:1600/datahub:user=datahub:passwd=datahubdb'
 " let g:dbext_default_buffer_lines = 15
-" let g:dbext_default_profile = 'mysql_local'
+" let g:dbext_default_profile = 'oracle'
+" -- ,s(ql)e(xecute)
+" -- ,s(ql)t(able)
+" -- ,s(ql)d(escribe)t(able)
+" -- ,s(ql)d(escribe)p(rocedure)
+" -- ,s(ql)l(ist)t(able)
+" -- ,s(ql)l(ist)c(olumn)
+" -- dbext:profile=oracle
 
 " Capistrano
 au BufNewFile,BufRead capfile	setf ruby
@@ -326,4 +333,9 @@ nmap <C-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 nmap <C-j> ddp
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
+
+" Tabular.vim
+vmap <C-T>: :Tab /:<CR>
+vmap <C-T>= :Tab /=<CR>
+vmap <C-T>=> :Tab /=><CR>
 

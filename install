@@ -88,6 +88,9 @@ git_install http://github.com/scrooloose/nerdtree.git
 git_install http://github.com/kana/vim-textobj-user.git
 git_install http://github.com/nelstrom/vim-textobj-rubyblock.git
 
+# tabular
+git_install http://github.com/godlygeek/tabular.git
+
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
 
