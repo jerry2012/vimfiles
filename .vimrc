@@ -13,7 +13,7 @@ map ^[[5~ ^U
 map ^[[B ^E
 map ^[[A ^Y
 
-function Nunu()
+function! Nunu()
     if &nu
         set nonu
     else
@@ -119,15 +119,15 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 
 " ctags
 " set tags=./tags,../tags,../../tags,../../../tags,../../../../tags
-set tags=./tags;/
 
+set tags=./tags;/
 " cscope -- not needed. we have this in 
-silent cs add ./cscope.out
-silent cs add ../cscope.out
-silent cs add ../../cscope.out
-silent cs add ../../../cscope.out
-silent cs add ../../../../cscope.out
-silent cs add ../../../../../cscope.out
+silent! cs add ./cscope.out
+silent! cs add ../cscope.out
+silent! cs add ../../cscope.out
+silent! cs add ../../../cscope.out
+silent! cs add ../../../../cscope.out
+silent! cs add ../../../../../cscope.out
 if $CSCOPE_DB != ""
 	silent cs add $CSCOPE_DB
 endif
@@ -138,7 +138,7 @@ endif
 " nmap <C-\>K :!eedic.rb <C-R>=expand("<cword>")<CR><CR>
 
 " Run script
-function RunThisScript()
+function! RunThisScript()
 	let head = getline(1)
 	let pos = stridx(head, '#!')
 	let file = expand('%')
@@ -338,6 +338,12 @@ vmap <C-l> >
 
 " Tabular.vim
 vmap <C-T>: :Tab /:<CR>
+vmap <C-T>:: :Tab /:\zs<CR>
 vmap <C-T>= :Tab /=<CR>
+vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
+let g:tabular_default_format = "l1-1"
+
+" Auto-reload .vimrc
+au! BufWritePost .vimrc source %
 
