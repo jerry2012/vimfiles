@@ -308,8 +308,6 @@ let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 " Movement in insert mode
 inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
-
-" New line before/after
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 
@@ -333,6 +331,10 @@ nmap <C-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 nmap <C-j> ddp
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
+
+" Indentation
+vmap <C-h> <
+vmap <C-l> >
 
 " Tabular.vim
 vmap <C-T>: :Tab /:<CR>
