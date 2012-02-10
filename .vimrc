@@ -347,3 +347,6 @@ let g:tabular_default_format = "l1-1"
 " Auto-reload .vimrc
 au! BufWritePost .vimrc source %
 
+" Replace (wow)
+vmap r "_dP
+
