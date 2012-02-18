@@ -1,5 +1,5 @@
-set cindent
 set smartindent
+set cindent
 set nobackup
 set nu
 
@@ -129,8 +129,14 @@ silent! cs add ../../../cscope.out
 silent! cs add ../../../../cscope.out
 silent! cs add ../../../../../cscope.out
 if $CSCOPE_DB != ""
-	silent cs add $CSCOPE_DB
+	silent! cs add $CSCOPE_DB
 endif
+
+function! Csbuild()
+  exe("!csbuild -n")
+  silent! cs add ./cscope.out
+endfunction
+com! Csbuild call Csbuild()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Dictionary
@@ -348,5 +354,6 @@ let g:tabular_default_format = "l1-1"
 au! BufWritePost .vimrc source %
 
 " Replace (wow)
-vmap r "_dP
+vmap R "_dP
+" vmap R :call feedkeys( line('$')==line('.') ? "_dp : "_dP )<CR>
 
