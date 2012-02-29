@@ -307,6 +307,10 @@ endif
 au BufNewFile,BufRead capfile	setf ruby
 au BufNewFile,BufRead Capfile	setf ruby
 
+" Annoying temporary files
+set backupdir=/tmp
+set directory=/tmp
+
 " Grep in MacOS
 let Grep_Xargs_Options = '-0'
 let Grep_Skip_Files = '*.bak *~ *.swp *.log'
