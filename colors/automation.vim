@@ -44,9 +44,9 @@ hi WarningMsg 	term=standout ctermfg=LightRed guifg=Red
 hi WildMenu			term=standout ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
 hi Folded 			term=standout ctermbg=LightGrey ctermfg=DarkBlue guibg=LightGrey guifg=DarkBlue
 hi FoldColumn 	term=standout ctermbg=LightGrey ctermfg=DarkBlue guibg=Grey guifg=DarkBlue
-hi DiffAdd 			term=bold ctermbg=DarkBlue guibg=DarkBlue
+hi DiffAdd 			term=bold ctermbg=Red guibg=DarkBlue
 hi DiffChange 	term=bold ctermbg=DarkMagenta guibg=DarkMagenta
-hi DiffDelete 	term=bold ctermfg=Blue ctermbg=DarkCyan gui=bold guifg=Blue guibg=DarkCyan
+hi DiffDelete 	term=bold ctermfg=Black ctermbg=Yellow gui=bold guifg=Blue guibg=DarkCyan
 hi Comment			guifg=Blue guibg=Grey90 ctermfg=Darkblue
 hi String				guifg=DarkGreen ctermfg=LightGreen
 hi Statement		guifg=DarkBlue ctermfg=Blue

@@ -91,6 +91,9 @@ git_install http://github.com/nelstrom/vim-textobj-rubyblock.git
 # tabular
 git_install http://github.com/junegunn/tabular.git
 
+# easy_motion
+git_install http://github.com/Lokaltog/vim-easymotion.git
+
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
 
