@@ -12,7 +12,9 @@ done
 
 # vimballs
 for v in vba/*; do
-	ex $v -c UseVimball -c q
+  if [ -f $v ]; then
+    ex $v -c UseVimball -c q
+  fi
 done
 
 # helptags
@@ -46,12 +48,33 @@ git_pull() {
 	cd ../..
 }
 
+hg_pull() {
+  mkdir -p hg
+  cd hg || exit 1
+
+  if [ ! -d $1 ]; then
+    hg clone $2
+  fi
+
+	cd $1 || exit 1
+	hg update
+
+	cd ../..
+}
+
 git_install() {
 	DIR=${1/#*\/}
 	DIR=${DIR/%.git/}
 
 	git_pull $DIR $1
 	copy_files git/$DIR
+}
+
+hg_install() {
+	DIR=${1/#*\/}
+
+	hg_pull $DIR $1
+	copy_files hg/$DIR
 }
 
 # Snippets for snipMate
@@ -93,6 +116,15 @@ git_install http://github.com/junegunn/tabular.git
 
 # easy_motion
 git_install http://github.com/Lokaltog/vim-easymotion.git
+
+# delimitate
+git_install http://github.com/Raimondi/delimitMate.git
+
+# clojure support
+git_install https://github.com/vim-scripts/VimClojure.git
+
+# fuzzy finder
+hg_install http://bitbucket.org/ns9tks/vim-fuzzyfinder
 
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
