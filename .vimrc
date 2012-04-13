@@ -361,3 +361,4 @@ au! BufWritePost .vimrc source %
 vmap R "_dP
 " vmap R :call feedkeys( line('$')==line('.') ? "_dp : "_dP )<CR>
 
+let vimclojure#ParenRainbow = 1

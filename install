@@ -121,10 +121,12 @@ git_install http://github.com/Lokaltog/vim-easymotion.git
 git_install http://github.com/Raimondi/delimitMate.git
 
 # clojure support
-git_install https://github.com/vim-scripts/VimClojure.git
+git_install http://github.com/vim-scripts/VimClojure.git
 
 # fuzzy finder
-hg_install http://bitbucket.org/ns9tks/vim-fuzzyfinder
+if [ -n "`which hg`" ]; then
+  hg_install http://bitbucket.org/ns9tks/vim-fuzzyfinder
+fi
 
 # helptags
 ex -c "helptags $HOME/.vim/doc" -c "q"
