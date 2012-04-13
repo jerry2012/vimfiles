@@ -265,6 +265,7 @@ hi StatusLine ctermfg=6
 " For syntax highlighting and snipMate
 au BufRead,BufNewFile *.icc set filetype=cpp
 au BufRead,BufNewFile *.pde set filetype=java
+au BufNewFile,BufRead *.less set filetype=less
 "au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
