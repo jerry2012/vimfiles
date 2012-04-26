@@ -266,6 +266,7 @@ hi StatusLine ctermfg=6
 au BufRead,BufNewFile *.icc set filetype=cpp
 au BufRead,BufNewFile *.pde set filetype=java
 au BufNewFile,BufRead *.less set filetype=less
+au BufNewFile,BufRead *.md set filetype=markdown
 "au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
@@ -307,6 +308,9 @@ endif
 " Capistrano
 au BufNewFile,BufRead capfile	setf ruby
 au BufNewFile,BufRead Capfile	setf ruby
+
+" coffee-processing
+au BufNewFile,BufRead *.coffee-processing	setf coffee
 
 " Annoying temporary files
 set backupdir=/tmp
