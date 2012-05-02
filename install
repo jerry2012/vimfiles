@@ -84,7 +84,7 @@ rake deploy_local
 cd ../..
 
 # Scala support
-git_install http://github.com/junegunn/scala-vim-support.git
+git_install http://github.com/rosstimson/scala-vim-support.git
 
 # Coffeescript
 git_install http://github.com/kchmck/vim-coffee-script.git
