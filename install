@@ -123,6 +123,9 @@ git_install http://github.com/Raimondi/delimitMate.git
 # clojure support
 git_install http://github.com/vim-scripts/VimClojure.git
 
+# indent-object (vii)
+git_install http://github.com/michaeljsmith/vim-indent-object
+
 # fuzzy finder
 if [ -n "`which hg`" ]; then
   hg_install http://bitbucket.org/ns9tks/vim-fuzzyfinder
