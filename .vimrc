@@ -273,6 +273,11 @@ au BufNewFile,BufRead *.md set filetype=markdown
 map! jk <esc>
 vmap jk <esc>
 
+" No delay in visual mode by jk
+" vmap <expr> v mode() == 'V' ? '<down>' : ''
+vmap v <down>
+vmap V <down>
+
 " For MacVim
 set noimd
 set imi=1
