@@ -363,7 +363,7 @@ vmap <C-T>= :Tab /=<CR>
 vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
 " Sloppy, but does the work (Assuming # comment)
-vmap <C-T><space> :s/^\([^#]\{-\}\w\)[ ]/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>
+vmap <C-T><space> :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>
 let g:tabular_default_format = "l1-1"
 
 " Auto-reload .vimrc
