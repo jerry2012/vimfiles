@@ -14,11 +14,11 @@ map ^[[B ^E
 map ^[[A ^Y
 
 function! Nunu()
-    if &nu
-        set nonu
-    else
-        set nu
-    endif
+  if &nu
+    set nonu
+  else
+    set nu
+  endif
 endfunction
 
 let g:explVertical=1
@@ -78,7 +78,11 @@ set tabstop=2
 " use 4 tabs when indenting
 set shiftwidth=2
 
-set expandtab
+" tab-smart
+set expandtab smarttab
+
+" remove the buffer when closed
+set nohidden
 
 " restore visual selction after indenting
 :vnoremap < <gv
@@ -109,9 +113,6 @@ let g:netrw_list_hide='^\.,~$'
 " Make TOhtml use CSS and XHTML
 let html_use_css=1
 let use_xhtml=1
-
-" show possible matches above the command line when using tab completion
-set wildmenu
 
 " Korean Language Setting
 set encoding=utf-8
@@ -374,3 +375,6 @@ vmap R "_dP
 " vmap R :call feedkeys( line('$')==line('.') ? "_dp : "_dP )<CR>
 
 let vimclojure#ParenRainbow = 1
+
+" set complete=.,w,b,u,t
+set complete-=i

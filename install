@@ -115,7 +115,7 @@ git_install http://github.com/nelstrom/vim-textobj-rubyblock.git
 git_install http://github.com/junegunn/tabular.git
 
 # easy_motion
-git_install http://github.com/Lokaltog/vim-easymotion.git
+# git_install http://github.com/Lokaltog/vim-easymotion.git
 
 # delimitate
 git_install http://github.com/Raimondi/delimitMate.git
