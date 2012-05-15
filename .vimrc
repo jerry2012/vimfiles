@@ -82,7 +82,7 @@ set shiftwidth=2
 set expandtab smarttab
 
 " remove the buffer when closed
-set nohidden
+" set nohidden
 
 " restore visual selction after indenting
 :vnoremap < <gv
@@ -350,6 +350,8 @@ endif
 " Bubble lines
 nmap <C-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
 nmap <C-j> ddp
+nmap <C-h> <<
+nmap <C-l> >>
 vmap <C-k> xkP`[V`]
 vmap <C-j> xp`[V`]
 
