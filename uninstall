@@ -9,8 +9,3 @@ for d in plugin doc colors autoload nerdtree_plugin after ftplugin snippets synt
 	cd ..
 done
 
-# vimballs
-for v in vba/*; do
-	ex $v -c RmVimball -c q
-done
-

@@ -1,136 +1,27 @@
 #!/bin/bash
 
+# For Vundle behind proxy
+export GIT_SSL_NO_VERIFY=true
+
+VUNDLE_DIR=~/.vim/bundle/vundle
+if [ -d $VUNDLE_DIR ]; then
+  cd $VUNDLE_DIR
+  git pull
+  cd -
+else
+  git clone https://github.com/gmarik/vundle.git $VUNDLE_DIR
+fi
+
 # vimrc
 mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
 ln -sf `pwd`/.vimrc ~/.vimrc
 
-# plugins & colors
-for d in plugin doc colors autoload nerdtree_plugin after ftplugin snippets syntax; do
-	mkdir -pv ~/.vim/$d
-	cp -rv $d/* ~/.vim/$d
-done
-
-# vimballs
-for v in vba/*; do
-  if [ -f $v ]; then
-    ex $v -c UseVimball -c q
+for d in *; do
+  if [ -d $d ]; then
+    mkdir -pv ~/.vim/$d
+    cp -rv $d/* ~/.vim/$d
   fi
 done
 
-# helptags
+vim +BundleInstall +qall
 ex -c "helptags $HOME/.vim/doc" -c "q"
-
-echo "You can stop here if you can't access github"
-echo "--------------------------------------------"
-
-copy_files() {
-	cd $1
-	for d in *; do
-		if [ -d $d ]; then
-			mkdir -pv ~/.vim/$d
-			cp -vr $d/* ~/.vim/$d/
-		fi
-	done
-	cd -
-}
-
-git_pull() {
-	mkdir -p git
-	cd git || exit 1
-
-	if [ ! -d $1 ]; then
-		git clone $2
-	fi
-
-	cd $1 || exit 1
-	git pull
-
-	cd ../..
-}
-
-hg_pull() {
-  mkdir -p hg
-  cd hg || exit 1
-
-  if [ ! -d $1 ]; then
-    hg clone $2
-  fi
-
-	cd $1 || exit 1
-	hg update
-
-	cd ../..
-}
-
-git_install() {
-	DIR=${1/#*\/}
-	DIR=${DIR/%.git/}
-
-	git_pull $DIR $1
-	copy_files git/$DIR
-}
-
-hg_install() {
-	DIR=${1/#*\/}
-
-	hg_pull $DIR $1
-	copy_files hg/$DIR
-}
-
-# Snippets for snipMate
-git_pull snipmate-snippets http://github.com/junegunn/snipmate-snippets.git
-cd git/snipmate-snippets
-rake deploy_local
-cd ../..
-
-# Scala support
-git_install http://github.com/rosstimson/scala-vim-support.git
-
-# Coffeescript
-git_install http://github.com/kchmck/vim-coffee-script.git
-
-# Rails
-git_install http://github.com/tpope/vim-rails
-
-# Supertab
-# git_install http://github.com/ervandew/supertab.git
-
-# endwise
-git_install http://github.com/tpope/vim-endwise.git
-
-# fugitive
-git_install http://github.com/tpope/vim-fugitive.git
-
-# latest nerdtree
-git_install http://github.com/scrooloose/nerdtree.git
-
-# mbe
-# git_install http://github.com/fholgado/minibufexpl.vim.git
-
-# ruby text objects
-git_install http://github.com/kana/vim-textobj-user.git
-git_install http://github.com/nelstrom/vim-textobj-rubyblock.git
-
-# tabular
-git_install http://github.com/junegunn/tabular.git
-
-# easy_motion
-# git_install http://github.com/Lokaltog/vim-easymotion.git
-
-# delimitate
-git_install http://github.com/Raimondi/delimitMate.git
-
-# clojure support
-git_install http://github.com/vim-scripts/VimClojure.git
-
-# indent-object (vii)
-git_install http://github.com/michaeljsmith/vim-indent-object
-
-# fuzzy finder
-if [ -n "`which hg`" ]; then
-  hg_install http://bitbucket.org/ns9tks/vim-fuzzyfinder
-fi
-
-# helptags
-ex -c "helptags $HOME/.vim/doc" -c "q"
-

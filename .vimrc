@@ -1,3 +1,42 @@
+" Vundle block
+let $GIT_SSL_NO_VERIFY = 'true'
+filetype on  " MacOS Hack
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Required
+Bundle 'gmarik/vundle'
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+
+" github repos
+Bundle 'rosstimson/scala-vim-support.git'
+Bundle 'kchmck/vim-coffee-script.git'
+Bundle 'tpope/vim-rails.git'
+" Bundle 'ervandew/supertab.git'
+Bundle 'tpope/vim-endwise.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'scrooloose/nerdtree.git'
+Bundle 'kana/vim-textobj-user.git'
+Bundle 'nelstrom/vim-textobj-rubyblock.git'
+Bundle 'junegunn/tabular.git'
+Bundle 'Raimondi/delimitMate.git'
+Bundle 'vim-scripts/VimClojure.git'
+" indent-object (vii)
+Bundle 'michaeljsmith/vim-indent-object.git'
+" :RTFhighlight <lang>
+Bundle 'dharanasoft/rtf-highlight.git'
+
+filetype plugin indent on
+"
+
 set smartindent
 set cindent
 set nobackup
