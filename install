@@ -24,4 +24,3 @@ for d in *; do
 done
 
 vim +BundleInstall +qall
-ex -c "helptags $HOME/.vim/doc" -c "q"

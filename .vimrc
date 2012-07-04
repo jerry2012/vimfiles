@@ -33,6 +33,7 @@ Bundle 'vim-scripts/VimClojure.git'
 Bundle 'michaeljsmith/vim-indent-object.git'
 " :RTFhighlight <lang>
 Bundle 'dharanasoft/rtf-highlight.git'
+Bundle 'plasticboy/vim-markdown'
 
 filetype plugin indent on
 "
@@ -306,7 +307,6 @@ hi StatusLine ctermfg=6
 au BufRead,BufNewFile *.icc set filetype=cpp
 au BufRead,BufNewFile *.pde set filetype=java
 au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufRead *.md set filetype=markdown
 "au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
@@ -419,3 +419,5 @@ let vimclojure#ParenRainbow = 1
 
 " set complete=.,w,b,u,t
 set complete-=i
+
+setlocal foldmethod=manual
