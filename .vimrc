@@ -23,7 +23,7 @@ Bundle 'Zenburn'
 Bundle 'jellybeans.vim'
 
 " non github repos
-Bundle 'git://git.wincent.com/command-t'
+" Bundle 'git://git.wincent.com/command-t'
 
 " github repos
 Bundle 'rosstimson/scala-vim-support'
@@ -389,6 +389,6 @@ setlocal foldmethod=manual
 
 " Color setting
 set t_Co=256
-" colo zenburn
-colo jellybeans
+"colo jellybeans
+colo zenburn
 
