@@ -255,12 +255,6 @@ map <S-tab> :FufBuffer<cr>
 inoremap <F7> <esc>:FufFile **/<cr>
 noremap <F7> :FufFile **/<cr>
 
-" Color setting
-colo automation
-"hi LineNr ctermfg=magenta
-hi Search term=reverse ctermbg=blue ctermfg=white
-hi StatusLine ctermfg=6
-
 " For syntax highlighting and snipMate
 au BufRead,BufNewFile *.icc set filetype=cpp
 au BufRead,BufNewFile *.pde set filetype=java
@@ -388,3 +382,8 @@ let vimclojure#ParenRainbow = 1
 set complete-=i
 
 setlocal foldmethod=manual
+
+" Color setting
+set t_Co=256
+colo railscasts
+
