@@ -12,28 +12,38 @@ Bundle 'gmarik/vundle'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'a.vim'
+Bundle 'cscope.vim'
+Bundle 'grep.vim'
+Bundle 'snipMate'
+Bundle 'vcscommand.vim'
 
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'git://git.wincent.com/command-t'
 
 " github repos
-Bundle 'rosstimson/scala-vim-support.git'
-Bundle 'kchmck/vim-coffee-script.git'
-Bundle 'tpope/vim-rails.git'
-" Bundle 'ervandew/supertab.git'
-Bundle 'tpope/vim-endwise.git'
-Bundle 'tpope/vim-fugitive.git'
-Bundle 'scrooloose/nerdtree.git'
-Bundle 'kana/vim-textobj-user.git'
-Bundle 'nelstrom/vim-textobj-rubyblock.git'
-Bundle 'junegunn/tabular.git'
-Bundle 'Raimondi/delimitMate.git'
-Bundle 'vim-scripts/VimClojure.git'
+Bundle 'rosstimson/scala-vim-support'
+Bundle 'kchmck/vim-coffee-script'
+" Bundle 'ervandew/supertab'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-fugitive'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'junegunn/tabular'
+Bundle 'Raimondi/delimitMate'
+Bundle 'vim-scripts/VimClojure'
 " indent-object (vii)
-Bundle 'michaeljsmith/vim-indent-object.git'
+Bundle 'michaeljsmith/vim-indent-object'
 " :RTFhighlight <lang>
-Bundle 'dharanasoft/rtf-highlight.git'
+Bundle 'dharanasoft/rtf-highlight'
 Bundle 'plasticboy/vim-markdown'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'bronson/vim-visual-star-search'
+
 
 filetype plugin indent on
 "
@@ -125,8 +135,8 @@ set expandtab smarttab
 " set nohidden
 
 " restore visual selction after indenting
-:vnoremap < <gv
-:vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " use filetype plugins and indenting
 filetype plugin on
@@ -240,64 +250,12 @@ noremap <F11> :NERDTree<cr>
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" " Multi-window toggle
-" function ToggleWindow()
-" 	execute "normal \<C-W>\<C-W>"
-"  	if expand('%') == '-MiniBufExplorer-'
-" 		execute "normal \<C-W>\<C-W>"
-" 	endif
-" 	echo fnamemodify(expand('%'), ":p")
-" endfunction
-" map <tab> :call ToggleWindow()<cr>
-" 
-" " Doesn't work correctly if window has no target file
-" function ToMiniBuf()
-" 	let initial = expand('%')
-" 	while 1 
-" 		execute "normal \<C-W>\<C-W>"
-" 		if expand('%') == initial || expand('%') == '-MiniBufExplorer-'
-" 			break
-" 		endif
-" 	endwhile
-" 	echo fnamemodify(expand('%'), ":p")
-" endfunction
-" map <S-tab> :call ToMiniBuf()<cr>
-	
-" function FuzzyFinder()
-" 	let initial = expand('%')
-" 	while 1 
-" 		execute "normal \<C-W>\<C-W>"
-" 		if expand('%') == initial || (expand('%') != '-MiniBufExplorer-' && match(expand('%'), 'NERD_tree_.*'))
-" 			break
-" 		endif
-" 	endwhile
-" 	exe('FufFile **/')
-" endfunction
-" " Fuzzy Finder
-" inoremap <F7> <esc>:call FuzzyFinder()<cr>
-" noremap <F7> :call FuzzyFinder()<cr>
-"
-" " Minibufexplorer
-" let g:miniBufExplMapWindowNavArrows = 1 
-" let g:miniBufExplMapWindowNavVim = 1 
-" " let g:miniBufExplMapCTabSwitchBufs = 1 
-" let g:miniBufExplModSelTarget = 1 
-" " let g:miniBufExplTabWrap = 1
-" " let g:miniBufExplModSelTarget = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <tab> <C-W><C-W>
 map <S-tab> :FufBuffer<cr>
 inoremap <F7> <esc>:FufFile **/<cr>
 noremap <F7> :FufFile **/<cr>
 
 " Color setting
-"colo brown
-"colo relaxedgreen
-"colo black_angus
-"colo darkdot
-"colo slate
-"set t_Co=256
 colo automation
 "hi LineNr ctermfg=magenta
 hi Search term=reverse ctermbg=blue ctermfg=white
