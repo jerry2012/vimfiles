@@ -18,6 +18,10 @@ Bundle 'grep.vim'
 Bundle 'snipMate'
 Bundle 'vcscommand.vim'
 
+" Colorschemes
+Bundle 'Zenburn'
+Bundle 'jellybeans.vim'
+
 " non github repos
 Bundle 'git://git.wincent.com/command-t'
 
@@ -385,5 +389,6 @@ setlocal foldmethod=manual
 
 " Color setting
 set t_Co=256
-colo railscasts
+" colo zenburn
+colo jellybeans
 
