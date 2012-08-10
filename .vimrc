@@ -324,6 +324,14 @@ set noimd
 set imi=1
 set ims=-1
 
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    " Clipboard
+    vmap <C-c> :w !pbcopy<CR><CR>
+  endif
+endif
+
 " Doesn't seem to work though
 map! ㅇㄱ <esc>
 vmap ㅇㄱ <esc>
@@ -332,9 +340,6 @@ vmap ㅇㄱ <esc>
 let mapleader = ","
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
-
-" Clipboard
-vmap <C-c> :w !pbcopy<CR><CR>
 
 " Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
