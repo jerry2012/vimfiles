@@ -328,7 +328,7 @@ if has("unix")
   let s:uname = system("uname")
   if s:uname == "Darwin\n"
     " Clipboard
-    vmap <C-c> :w !pbcopy<CR><CR>
+    vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>"))
   endif
 endif
 
