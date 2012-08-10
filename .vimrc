@@ -307,6 +307,7 @@ hi StatusLine ctermfg=6
 au BufRead,BufNewFile *.icc set filetype=cpp
 au BufRead,BufNewFile *.pde set filetype=java
 au BufNewFile,BufRead *.less set filetype=less
+au BufNewFile,BufRead *.god set filetype=ruby
 "au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
@@ -331,6 +332,9 @@ vmap ㅇㄱ <esc>
 let mapleader = ","
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
+
+" Clipboard
+vmap <C-c> :w !pbcopy<CR><CR>
 
 " Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
