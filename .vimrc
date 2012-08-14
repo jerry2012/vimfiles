@@ -23,12 +23,13 @@ Bundle 'Zenburn'
 Bundle 'jellybeans.vim'
 
 " non github repos
-" Bundle 'git://git.wincent.com/command-t'
+" Bundle 'wincent/command-t'
 
 " github repos
 Bundle 'rosstimson/scala-vim-support'
 Bundle 'kchmck/vim-coffee-script'
 " Bundle 'ervandew/supertab'
+Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
