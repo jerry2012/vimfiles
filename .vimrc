@@ -19,7 +19,7 @@ Bundle 'snipMate'
 Bundle 'vcscommand.vim'
 
 " Colorschemes
-Bundle 'Zenburn'
+Bundle 'junegunn/Zenburn'
 Bundle 'jellybeans.vim'
 
 " non github repos
