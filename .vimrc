@@ -370,8 +370,8 @@ vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
 " Sloppy, but does the work (Assuming # comment)
 vmap <C-T><space> :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>:nohl<CR>
-vmap <C-T><C-T><space> :s/ /:TABULAR_SPACE:/<cr>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /<cr>:nohl<CR>
-vmap <C-T><C-T><C-T><space> :s/ /:TABULAR_SPACE:/<cr>gv:s/ /:TABULAR_SPACE:/<cr>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /g<cr>:nohl<CR>
+vmap <C-T><C-T><space>      :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR_SPACE:/<CR>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /<cr>:nohl<CR>
+vmap <C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR_SPACE:/<CR>gv:s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR_SPACE:/<CR>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /g<cr>:nohl<CR>
 let g:tabular_default_format = "l1-1"
 
 " Auto-reload .vimrc
