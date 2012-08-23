@@ -18,17 +18,10 @@ Bundle 'grep.vim'
 Bundle 'snipMate'
 Bundle 'vcscommand.vim'
 
-" Colorschemes
-Bundle 'junegunn/Zenburn'
 Bundle 'jellybeans.vim'
-
-" non github repos
-" Bundle 'wincent/command-t'
-
-" github repos
+Bundle 'junegunn/Zenburn'
 Bundle 'rosstimson/scala-vim-support'
 Bundle 'kchmck/vim-coffee-script'
-" Bundle 'ervandew/supertab'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rails'
@@ -48,6 +41,11 @@ Bundle 'dharanasoft/rtf-highlight'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
+
+" Bundle 'wincent/command-t'
+" Bundle 'ervandew/supertab'
+" Bundle 'spolu/dwm.vim'
+" Bundle 'tpope/vim-unimpaired'
 
 
 filetype plugin indent on
@@ -371,7 +369,9 @@ vmap <C-T>= :Tab /=<CR>
 vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
 " Sloppy, but does the work (Assuming # comment)
-vmap <C-T><space> :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>
+vmap <C-T><space> :s/^\([^#]\{-\}[^# \t]\)[ ]/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>:nohl<CR>
+vmap <C-T><C-T><space> :s/ /:TABULAR_SPACE:/<cr>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /<cr>:nohl<CR>
+vmap <C-T><C-T><C-T><space> :s/ /:TABULAR_SPACE:/<cr>gv:s/ /:TABULAR_SPACE:/<cr>gv<C-T><space>gv:s/:TABULAR_SPACE:/ /g<cr>:nohl<CR>
 let g:tabular_default_format = "l1-1"
 
 " Auto-reload .vimrc
@@ -393,3 +393,6 @@ set t_Co=256
 "colo jellybeans
 colo zenburn
 
+" mouse
+set ttymouse=xterm2
+set mouse=a
