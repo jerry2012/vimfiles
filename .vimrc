@@ -37,8 +37,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'vim-scripts/VimClojure'
 " indent-object (vii)
 Bundle 'michaeljsmith/vim-indent-object'
-" :RTFhighlight <lang>
-Bundle 'dharanasoft/rtf-highlight'
+" :CopyRTF
+Bundle 'aniero/vim-copy-as-rtf'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
@@ -193,17 +193,6 @@ function! Csbuild()
 endfunction
 com! Csbuild call Csbuild()
 
-" Snippet
-function! OpenSnippet()
-  colo summerfruit256
-  TOhtml
-  w! /tmp/open_snippet.xhtml
-  q!
-  !open /tmp/open_snippet.xhtml
-  colo Zenburn
-endfunction
-com! OpenSnippet call OpenSnippet()
-
 " Run script
 function! RunThisScript()
 	let head = getline(1)
@@ -291,6 +280,8 @@ if has("unix")
   if s:uname == "Darwin\n"
     " Clipboard
     vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>"))
+    " Clipboard-RTF
+    vmap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo zenburn<cr>
   endif
 endif
 
