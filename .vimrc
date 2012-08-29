@@ -18,6 +18,7 @@ Bundle 'grep.vim'
 Bundle 'snipMate'
 Bundle 'vcscommand.vim'
 
+Bundle 'summerfruit256.vim'
 Bundle 'jellybeans.vim'
 Bundle 'junegunn/Zenburn'
 Bundle 'rosstimson/scala-vim-support'
@@ -43,7 +44,7 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
 
 " Bundle 'wincent/command-t'
-" Bundle 'ervandew/supertab'
+Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
 
@@ -192,10 +193,16 @@ function! Csbuild()
 endfunction
 com! Csbuild call Csbuild()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Dictionary
-" nmap <C-\>k :!edic.rb <C-R>=expand("<cword>")<CR><CR>
-" nmap <C-\>K :!eedic.rb <C-R>=expand("<cword>")<CR><CR>
+" Snippet
+function! OpenSnippet()
+  colo summerfruit256
+  TOhtml
+  w! /tmp/open_snippet.xhtml
+  q!
+  !open /tmp/open_snippet.xhtml
+  colo Zenburn
+endfunction
+com! OpenSnippet call OpenSnippet()
 
 " Run script
 function! RunThisScript()
@@ -396,3 +403,16 @@ colo zenburn
 " mouse
 set ttymouse=xterm2
 set mouse=a
+
+" rnu
+if v:version >= 703
+  set rnu
+  au BufEnter * :set rnu
+  au BufLeave * :set nu
+  au WinEnter * :set rnu
+  au WinLeave * :set nu
+  au InsertEnter * :set nu
+  au InsertLeave * :set rnu
+  au FocusLost * :set nu
+  au FocusGained * :set rnu
+endif
