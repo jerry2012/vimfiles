@@ -17,7 +17,6 @@ Bundle 'cscope.vim'
 Bundle 'grep.vim'
 Bundle 'snipMate'
 Bundle 'vcscommand.vim'
-
 Bundle 'summerfruit256.vim'
 Bundle 'jellybeans.vim'
 Bundle 'junegunn/Zenburn'
@@ -42,24 +41,21 @@ Bundle 'aniero/vim-copy-as-rtf'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
+Bundle 'mileszs/ack.vim'
 
 " Bundle 'wincent/command-t'
-Bundle 'ervandew/supertab'
+" Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
 
-
+" use filetype plugins and indenting
 filetype plugin indent on
-"
 
+set autoindent
 set smartindent
 set cindent
 set nobackup
 set nu
-
-if has("syntax")
-	syntax on
-endif
 
 map ^[[6~ ^D
 map ^[[5~ ^U
@@ -75,12 +71,6 @@ function! Nunu()
   endif
 endfunction
 
-let g:explVertical=1
-let g:explWinSize=20
-
-" set auto indent
-set autoindent
-
 " always show a status line
 set laststatus=2
 
@@ -94,13 +84,10 @@ set visualbell
 set lazyredraw
 
 " allow backspace to erase over start of insert, autoindent, and eol
-set backspace=2
+set backspace=indent,eol,start
 
-" I mostly use dark backgrounds
-set background=dark
-
-" set timeout to 0.5 s.
-set timeoutlen=500
+" set timeout to 0.25 s. (jk)
+set timeoutlen=250
 
 " wrap cursor when using <bs> or <space>
 set whichwrap=b,s
@@ -108,7 +95,7 @@ set whichwrap=b,s
 " avoid annoying "Hit ENTER to continue" prompts and intro-screen
 set shortmess=aI
 
-" hilight searches
+" highlight searches
 set hlsearch
 
 " incremental search
@@ -126,43 +113,24 @@ set ignorecase smartcase
 " show possible matches above the command line when using tab completion
 set wildmenu
 
-" count a tab as 4 spaces
+" count a tab as 2 spaces
 set tabstop=2
 
-" use 4 tabs when indenting
+" use 2 tabs when indenting
 set shiftwidth=2
 
 " tab-smart
 set expandtab smarttab
 
-" remove the buffer when closed
-" set nohidden
-
 " restore visual selction after indenting
 vnoremap < <gv
 vnoremap > >gv
 
-" use filetype plugins and indenting
-filetype plugin on
-filetype indent on
-
 " display full path to file, filetype and buffer number in statusline
 set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
 
-" remember marks for 20 files, max 50 lines pr reg., dont hilight last search
-" set viminfo='20,<50,h
-
-" use modlines
-set modeline
-
-" always show two lines above and below cursor
-set scrolloff=3
-
-" Dont list hidden files when using explorer.vim
-let g:explHideFiles='^\.'
-
-" Dont list hidden files when using netrw
-let g:netrw_list_hide='^\.,~$'
+" always show five lines above and below cursor
+set scrolloff=5
 
 " Make TOhtml use CSS and XHTML
 let html_use_css=1
@@ -173,10 +141,7 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 
 " ctags
-" set tags=./tags,../tags,../../tags,../../../tags,../../../../tags
-
 set tags=./tags;/
-" cscope -- not needed. we have this in 
 silent! cs add ./cscope.out
 silent! cs add ../cscope.out
 silent! cs add ../../cscope.out
@@ -217,48 +182,43 @@ function! RunThisScript()
 	end
 endfunction
 inoremap <F5> <esc>:call RunThisScript()<cr>
-noremap <F5> :call RunThisScript()<cr>
+noremap  <F5> :call RunThisScript()<cr>
 
 " Under line
 inoremap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
-noremap <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
-"noremap <S-F7> yyP:s/[^\t]/=/g<cr>:nohl<cr>
+noremap  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 
 " Save
 inoremap <C-s> <esc>:w<cr>a
-noremap <C-s> :w<cr>
+noremap  <C-s> :w<cr>
 
 " Quit
-inoremap <F10> <esc>:q<cr>
-noremap <F10> :q<cr>
 inoremap <C-Q> <esc>:q<cr>
-noremap <C-Q> :q<cr>
+noremap  <C-Q> :q<cr>
 
 " Toggle line number display
 inoremap <F12> <esc>:call Nunu()<cr>:f<cr>a
-noremap <F12> :call Nunu()<cr>:f<cr>
-
-"noremap <F12> :call Nunu()<cr>
+noremap  <F12> :call Nunu()<cr>:f<cr>
 
 " NERD Tree
 "inoremap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
-"noremap <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
+"noremap  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
 inoremap <F11> <esc>:NERDTree<cr>
-noremap <F11> :NERDTree<cr>
+noremap  <F11> :NERDTree<cr>
 
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
-map <tab> <C-W><C-W>
-map <S-tab> :FufBuffer<cr>
-inoremap <F7> <esc>:FufFile **/<cr>
-noremap <F7> :FufFile **/<cr>
+map      <tab>   <C-W><C-W>
+map      <S-tab> :FufBuffer<cr>
+inoremap <F7>    <esc>:FufFile **/<cr>
+noremap  <F7>    :FufFile **/<cr>
 
 " For syntax highlighting and snipMate
-au BufRead,BufNewFile *.icc set filetype=cpp
-au BufRead,BufNewFile *.pde set filetype=java
+au BufRead,BufNewFile *.icc  set filetype=cpp
+au BufRead,BufNewFile *.pde  set filetype=java
 au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufRead *.god set filetype=ruby
+au BufNewFile,BufRead *.god  set filetype=ruby
 "au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
@@ -361,15 +321,16 @@ vmap <C-h> <
 vmap <C-l> >
 
 " Tabular.vim
-vmap <C-T>: :Tab /:<CR>
+vmap <C-T>:  :Tab /:<CR>
 vmap <C-T>:: :Tab /:\zs<CR>
-vmap <C-T>= :Tab /=<CR>
+vmap <C-T>=  :Tab /=<CR>
 vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
+
 " Sloppy, but does the work (Assuming # comment)
-vmap <C-T><space>               :s/^\([^#]\{-\}[^# \t]\) /\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>:nohl<CR>
-vmap <C-T><C-T><space>          :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+\)/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>:nohl<CR> 
-vmap <C-T><C-T><C-T><space>     :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+\)/\1:TABULAR__TABULAR:/<CR>gv:Tab /:TABULAR__TABULAR:<CR>gv:s/:TABULAR__TABULAR: //<CR>:nohl<CR> 
+vmap <C-T><space>           :s/^\([^#]\{-\}[^# \t]\) /\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
+vmap <C-T><C-T><space>      :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
+vmap <C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
 let g:tabular_default_format = "l1-1"
 
 " Auto-reload .vimrc
@@ -387,8 +348,8 @@ set complete-=i
 setlocal foldmethod=manual
 
 " Color setting
-set t_Co=256
-"colo jellybeans
+set  t_Co=256
+set  background=dark
 colo zenburn
 
 " mouse
@@ -396,14 +357,14 @@ set ttymouse=xterm2
 set mouse=a
 
 " rnu
-if v:version >= 703
-  set rnu
-  au BufEnter * :set rnu
-  au BufLeave * :set nu
-  au WinEnter * :set rnu
-  au WinLeave * :set nu
-  au InsertEnter * :set nu
-  au InsertLeave * :set rnu
-  au FocusLost * :set nu
-  au FocusGained * :set rnu
-endif
+" if v:version >= 703
+"   set rnu
+"   au BufEnter * :set rnu
+"   au BufLeave * :set nu
+"   au WinEnter * :set rnu
+"   au WinLeave * :set nu
+"   au InsertEnter * :set nu
+"   au InsertLeave * :set rnu
+"   au FocusLost * :set nu
+"   au FocusGained * :set rnu
+" endif
