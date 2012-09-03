@@ -63,14 +63,6 @@ map ^[[5~ ^U
 map ^[[B ^E
 map ^[[A ^Y
 
-function! Nunu()
-  if &nu
-    set nonu
-  else
-    set nu
-  endif
-endfunction
-
 " always show a status line
 set laststatus=2
 
@@ -197,8 +189,7 @@ inoremap <C-Q> <esc>:q<cr>
 noremap  <C-Q> :q<cr>
 
 " Toggle line number display
-inoremap <F12> <esc>:call Nunu()<cr>:f<cr>a
-noremap  <F12> :call Nunu()<cr>:f<cr>
+map <F12> :set nonumber!<cr>
 
 " NERD Tree
 "inoremap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
@@ -213,13 +204,6 @@ map      <tab>   <C-W><C-W>
 map      <S-tab> :FufBuffer<cr>
 inoremap <F7>    <esc>:FufFile **/<cr>
 noremap  <F7>    :FufFile **/<cr>
-
-" For syntax highlighting and snipMate
-au BufRead,BufNewFile *.icc  set filetype=cpp
-au BufRead,BufNewFile *.pde  set filetype=java
-au BufNewFile,BufRead *.less set filetype=less
-au BufNewFile,BufRead *.god  set filetype=ruby
-"au BufRead,BufNewFile *.html.erb set filetype=html.eruby
 
 " Escaping!
 map! jk <esc>
@@ -259,26 +243,6 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
 	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
 
-" dbext (not sure about this)
-" let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=:dbname=test:extra=-t'
-" let g:dbext_default_profile_oracle = 'type=ORA:srvname=//10.10.99.206\:1600/datahub:user=datahub:passwd=datahubdb'
-" let g:dbext_default_buffer_lines = 15
-" let g:dbext_default_profile = 'oracle'
-" -- ,s(ql)e(xecute)
-" -- ,s(ql)t(able)
-" -- ,s(ql)d(escribe)t(able)
-" -- ,s(ql)d(escribe)p(rocedure)
-" -- ,s(ql)l(ist)t(able)
-" -- ,s(ql)l(ist)c(olumn)
-" -- dbext:profile=oracle
-
-" Capistrano
-au BufNewFile,BufRead capfile	setf ruby
-au BufNewFile,BufRead Capfile	setf ruby
-
-" coffee-processing
-au BufNewFile,BufRead *.coffee-processing	setf coffee
-
 " Annoying temporary files
 set backupdir=/tmp
 set directory=/tmp
@@ -292,10 +256,6 @@ inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
-
-" Yank lines
-" inoremap <C-y> <C-o>yy
-
 inoremap <C-^> <C-o><C-^>
 
 " Shift-tab on GNU screen
@@ -333,19 +293,29 @@ vmap <C-T><C-T><space>      :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+\)/\1:__TBLR__:/<C
 vmap <C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
 let g:tabular_default_format = "l1-1"
 
-" Auto-reload .vimrc
-au! BufWritePost .vimrc source %
-
-" Replace (wow)
+" Replace
 vmap R "_dP
-" vmap R :call feedkeys( line('$')==line('.') ? "_dp : "_dP )<CR>
 
 let vimclojure#ParenRainbow = 1
 
 " set complete=.,w,b,u,t
 set complete-=i
 
-setlocal foldmethod=manual
+augroup vimrc
+  autocmd!
+
+  au BufWritePost .vimrc source %
+  au BufReadPre * setlocal foldmethod=syntax
+  au BufReadPre * setlocal nofoldenable
+
+  au BufNewFile,BufRead capfile	setf ruby
+  au BufNewFile,BufRead Capfile	setf ruby
+  au BufRead,BufNewFile *.icc  set filetype=cpp
+  au BufRead,BufNewFile *.pde  set filetype=java
+  au BufNewFile,BufRead *.less set filetype=less
+  au BufNewFile,BufRead *.god  set filetype=ruby
+  au BufNewFile,BufRead *.coffee-processing	setf coffee
+augroup END
 
 " Color setting
 set  t_Co=256
