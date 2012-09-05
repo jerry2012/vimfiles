@@ -24,5 +24,10 @@ for d in *; do
 done
 
 vim +BundleInstall +qall
-cd ~/.vim/bundle/Command-T
-/usr/local/bin/rake make || /usr/bin/rake make || rake make
+if [ `vim --version | grep '+ruby' | wc -l` -eq 1 ]; then
+  cd ~/.vim/bundle/Command-T
+
+  ([ -x '/usr/local/bin/rake' ] && /usr/local/bin/rake make) || 
+  ([ -x '/usr/bin/rake' ]       && /usr/bin/rake       make) || 
+  rake make
+fi
