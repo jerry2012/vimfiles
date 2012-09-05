@@ -11,7 +11,6 @@ Bundle 'gmarik/vundle'
 
 " vim-scripts repos
 Bundle 'L9'
-Bundle 'FuzzyFinder'
 Bundle 'a.vim'
 Bundle 'cscope.vim'
 Bundle 'grep.vim'
@@ -43,8 +42,9 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'mileszs/ack.vim'
+" Bundle 'Lokaltog/vim-powerline'
 
-" Bundle 'wincent/command-t'
+Bundle 'wincent/Command-T'
 " Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
@@ -63,6 +63,10 @@ map ^[[5~ ^U
 
 map ^[[B ^E
 map ^[[A ^Y
+
+" powerline-friendly remapping
+map <C-F> <C-D>
+map <C-B> <C-U>
 
 " always show a status line
 set laststatus=2
@@ -120,7 +124,11 @@ vnoremap < <gv
 vnoremap > >gv
 
 " display full path to file, filetype and buffer number in statusline
+" (deprecated due to powerline... nah.. keep it)
 set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
+
+" powerline (need font-patching)
+" let g:Powerline_symbols = 'fancy'
 
 " always show five lines above and below cursor
 set scrolloff=5
@@ -202,9 +210,8 @@ set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
 map      <tab>   <C-W><C-W>
-map      <S-tab> :FufBuffer<cr>
-inoremap <F7>    <esc>:FufFile **/<cr>
-noremap  <F7>    :FufFile **/<cr>
+map      <S-tab> :CommandTBuffer<cr>
+map      <F7>    ,t
 
 " Escaping!
 map! jk <esc>
