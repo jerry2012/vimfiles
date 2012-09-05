@@ -44,7 +44,11 @@ Bundle 'bronson/vim-visual-star-search'
 Bundle 'mileszs/ack.vim'
 " Bundle 'Lokaltog/vim-powerline'
 
-Bundle 'wincent/Command-T'
+if has("ruby")
+  Bundle 'wincent/Command-T'
+else
+  Bundle 'FuzzyFinder'
+endif
 " Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
@@ -182,36 +186,43 @@ function! RunThisScript()
 		exe('!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r'))
 	end
 endfunction
-inoremap <F5> <esc>:call RunThisScript()<cr>
-noremap  <F5> :call RunThisScript()<cr>
+imap <F5> <esc>:call RunThisScript()<cr>
+map  <F5> :call RunThisScript()<cr>
 
 " Under line
-inoremap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
-noremap  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
+imap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
+map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 
 " Save
-inoremap <C-s> <esc>:w<cr>a
-noremap  <C-s> :w<cr>
+imap <C-s> <esc>:w<cr>a
+map  <C-s> :w<cr>
 
 " Quit
-inoremap <C-Q> <esc>:q<cr>
-noremap  <C-Q> :q<cr>
+imap <C-Q> <esc>:q<cr>
+map  <C-Q> :q<cr>
 
 " Toggle line number display
 map <F12> :set nonumber!<cr>
 
 " NERD Tree
-"inoremap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
-"noremap  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
-inoremap <F11> <esc>:NERDTree<cr>
-noremap  <F11> :NERDTree<cr>
+"imap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
+"map  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
+imap <F11> <esc>:NERDTree<cr>
+map  <F11> :NERDTree<cr>
 
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
 map      <tab>   <C-W><C-W>
-map      <S-tab> :CommandTBuffer<cr>
-map      <F7>    ,t
+if has("ruby")
+  map  <S-tab> :CommandTBuffer<cr>
+  map  <F7>    ,t
+  imap <F7>    <esc>,t
+else
+  map  <S-tab> :FufBuffer<cr>
+  imap <F7>    <esc>:FufFile **/<cr>
+  map  <F7>    :FufFile **/<cr>
+end
 
 " Escaping!
 map! jk <esc>

@@ -25,4 +25,4 @@ done
 
 vim +BundleInstall +qall
 cd ~/.vim/bundle/Command-T
-/usr/bin/rake make || rake make
+/usr/local/bin/rake make || /usr/bin/rake make || rake make
