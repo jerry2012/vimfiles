@@ -40,7 +40,12 @@ Bundle 'vim-scripts/VimClojure'
 " indent-object (vii)
 Bundle 'michaeljsmith/vim-indent-object'
 " :CopyRTF
-Bundle 'aniero/vim-copy-as-rtf'
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    Bundle 'aniero/vim-copy-as-rtf'
+  endif
+endif
 Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
