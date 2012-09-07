@@ -1,15 +1,18 @@
+""""""""""""""""""""""""""""""""""""""""
+" .vimrc of Junegunn Choi
+""""""""""""""""""""""""""""""""""""""""
+ 
+""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""
 " Vundle block
-let $GIT_SSL_NO_VERIFY = 'true'
-filetype on  " MacOS Hack
+set      nocompatible
+filetype on
 filetype off
+let      $GIT_SSL_NO_VERIFY = 'true'
+set      rtp+=~/.vim/bundle/vundle/
+call     vundle#rc()
+Bundle   'gmarik/vundle'
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Required
-Bundle 'gmarik/vundle'
-
-" vim-scripts repos
 Bundle 'L9'
 Bundle 'a.vim'
 Bundle 'cscope.vim'
@@ -42,19 +45,23 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'mileszs/ack.vim'
-" Bundle 'Lokaltog/vim-powerline'
 
 if has("ruby")
   Bundle 'wincent/Command-T'
 else
   Bundle 'FuzzyFinder'
 endif
+
+" Bundle 'altercation/vim-colors-solarized'
+" Bundle 'Lokaltog/vim-powerline'
 " Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
 
-" use filetype plugins and indenting
 filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""
 
 set autoindent
 set smartindent
@@ -81,14 +88,11 @@ set showcmd
 " use visual bell instead of beeping
 set visualbell
 
-" don't redraw screen while exectuing macros
-set lazyredraw
-
 " allow backspace to erase over start of insert, autoindent, and eol
 set backspace=indent,eol,start
 
-" set timeout to 0.25 s. (jk)
-set timeoutlen=250
+" set timeout to 0.20 s. (jk)
+set timeoutlen=200
 
 " wrap cursor when using <bs> or <space>
 set whichwrap=b,s
@@ -147,6 +151,8 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 
 " ctags
 set tags=./tags;/
+
+" cscope
 silent! cs add ./cscope.out
 silent! cs add ../cscope.out
 silent! cs add ../../cscope.out
@@ -156,7 +162,6 @@ silent! cs add ../../../../../cscope.out
 if $CSCOPE_DB != ""
 	silent! cs add $CSCOPE_DB
 endif
-
 function! Csbuild()
   exe("!csbuild -n")
   silent! cs add ./cscope.out
@@ -213,7 +218,8 @@ map  <F11> :NERDTree<cr>
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 
-map      <tab>   <C-W><C-W>
+map <tab> <C-W><C-W>
+
 if has("ruby")
   map  <S-tab> :CommandTBuffer<cr>
   map  <F7>    ,t
@@ -229,7 +235,6 @@ map! jk <esc>
 vmap jk <esc>
 
 " No delay in visual mode by jk
-" vmap <expr> v mode() == 'V' ? '<down>' : ''
 vmap v <down>
 vmap V <down>
 
@@ -282,7 +287,6 @@ set t_kB=[Z
 
 " https://github.com/nelstrom/vim-textobj-rubyblock
 runtime macros/matchit.vim
-set nocompatible
 if has("autocmd")
   filetype indent plugin on
 endif
@@ -323,17 +327,17 @@ set complete-=i
 augroup vimrc
   autocmd!
 
-  au BufWritePost .vimrc source %
-  au BufReadPre * setlocal foldmethod=syntax
-  au BufReadPre * setlocal nofoldenable
+  au BufWritePost       .vimrc              source %
+  au BufReadPre         *                   setlocal foldmethod=syntax
+  au BufReadPre         *                   setlocal nofoldenable
 
-  au BufNewFile,BufRead capfile	setf ruby
-  au BufNewFile,BufRead Capfile	setf ruby
-  au BufRead,BufNewFile *.icc  set filetype=cpp
-  au BufRead,BufNewFile *.pde  set filetype=java
-  au BufNewFile,BufRead *.less set filetype=less
-  au BufNewFile,BufRead *.god  set filetype=ruby
-  au BufNewFile,BufRead *.coffee-processing	setf coffee
+  au BufNewFile,BufRead capfile             setf ruby
+  au BufNewFile,BufRead Capfile             setf ruby
+  au BufRead,BufNewFile *.icc               set filetype=cpp
+  au BufRead,BufNewFile *.pde               set filetype=java
+  au BufNewFile,BufRead *.less              set filetype=less
+  au BufNewFile,BufRead *.god               set filetype=ruby
+  au BufNewFile,BufRead *.coffee-processing setf coffee
 augroup END
 
 " Color setting
@@ -345,15 +349,3 @@ colo zenburn
 set ttymouse=xterm2
 set mouse=a
 
-" rnu
-" if v:version >= 703
-"   set rnu
-"   au BufEnter * :set rnu
-"   au BufLeave * :set nu
-"   au WinEnter * :set rnu
-"   au WinLeave * :set nu
-"   au InsertEnter * :set nu
-"   au InsertLeave * :set rnu
-"   au FocusLost * :set nu
-"   au FocusGained * :set rnu
-" endif
