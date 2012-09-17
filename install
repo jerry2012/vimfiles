@@ -23,11 +23,12 @@ for d in *; do
   fi
 done
 
-vim +BundleInstall +qall
+vim +BundleClean +BundleInstall +qall
 if [ `vim --version | grep '+ruby' | wc -l` -eq 1 ]; then
-  cd ~/.vim/bundle/Command-T
-
-  ([ -x '/usr/local/bin/rake' ] && /usr/local/bin/rake make) || 
-  ([ -x '/usr/bin/rake' ]       && /usr/bin/rake       make) || 
-  rake make
+  cd ~/.vim/bundle/Command-T/ruby/command-t
+  RUBY=ruby
+  [ -x '/usr/bin/ruby' ] && RUBY=/usr/bin/ruby
+  make clean
+  $RUBY extconf.rb
+  make
 fi
