@@ -68,94 +68,88 @@ filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""
 
+syntax on
+
 set autoindent
 set smartindent
 set cindent
 set nobackup
 set nu
-
-map ^[[6~ ^D
-map ^[[5~ ^U
-
-map ^[[B ^E
-map ^[[A ^Y
-
-" powerline-friendly remapping
-map <C-F> <C-D>
-map <C-B> <C-U>
-
-" always show a status line
+set lazyredraw
 set laststatus=2
-
-" show (partial) command in status line
 set showcmd
-
-" use visual bell instead of beeping
 set visualbell
-
-" allow backspace to erase over start of insert, autoindent, and eol
 set backspace=indent,eol,start
-
-" set timeout to 0.20 s. (jk)
 set timeoutlen=200
-
-" wrap cursor when using <bs> or <space>
 set whichwrap=b,s
-
-" avoid annoying "Hit ENTER to continue" prompts and intro-screen
 set shortmess=aI
-
-" highlight searches
-set hlsearch
-
-" incremental search
+set hlsearch " CTRL-L / CTRL-R W
 set incsearch
-
-" syntax-hilighting, yes please
-syntax on
-
-" allow hiding a buffer without saving it first
 set hidden
-
-" make search queries case-insensitive, unless they contain upper-case letters
 set ignorecase smartcase
-
-" show possible matches above the command line when using tab completion
 set wildmenu
-
-" count a tab as 2 spaces
 set tabstop=2
-
-" use 2 tabs when indenting
 set shiftwidth=2
-
-" tab-smart
 set expandtab smarttab
-
-" restore visual selction after indenting
-vnoremap < <gv
-vnoremap > >gv
-
-" display full path to file, filetype and buffer number in statusline
-" (deprecated due to powerline... nah.. keep it)
-set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
-
-" powerline (need font-patching)
-" let g:Powerline_symbols = 'fancy'
-
-" always show five lines above and below cursor
 set scrolloff=5
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,euc-kr,latin1
+set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
+set pastetoggle=<Ins>
+set pastetoggle=<F9> " For Mac
+
+" For MacVim
+set noimd
+set imi=1
+set ims=-1
+
+" ctags
+set tags=./tags;/
+
+" Annoying temporary files
+set backupdir=/tmp
+set directory=/tmp
+
+" Shift-tab on GNU screen
+set t_kB=[Z
+
+" set complete=.,w,b,u,t
+set complete-=i
+
+" Color setting
+set  t_Co=256
+set  background=dark
+colo zenburn
+
+" mouse
+set ttymouse=xterm2
+set mouse=a
 
 " Make TOhtml use CSS and XHTML
 let html_use_css=1
 let use_xhtml=1
 
-" Korean Language Setting
-set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,euc-kr,latin1
+" Grep in MacOS
+let Grep_Xargs_Options = '-0'
+let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 
-" ctags
-set tags=./tags;/
+let vimclojure#ParenRainbow = 1
+
+augroup vimrc
+  autocmd!
+
+  au BufWritePost       .vimrc              source %
+  au BufReadPre         *                   setlocal foldmethod=syntax
+  au BufReadPre         *                   setlocal nofoldenable
+
+  au BufNewFile,BufRead capfile             setf ruby
+  au BufNewFile,BufRead Capfile             setf ruby
+  au BufRead,BufNewFile *.icc               set filetype=cpp
+  au BufRead,BufNewFile *.pde               set filetype=java
+  au BufNewFile,BufRead *.less              set filetype=less
+  au BufNewFile,BufRead *.god               set filetype=ruby
+  au BufNewFile,BufRead *.coffee-processing setf coffee
+augroup END
 
 " cscope
 silent! cs add ./cscope.out
@@ -199,6 +193,18 @@ endfunction
 imap <F5> <esc>:call RunThisScript()<cr>
 map  <F5> :call RunThisScript()<cr>
 
+map ^[[6~ ^D
+map ^[[5~ ^U
+
+map ^[[B ^E
+map ^[[A ^Y
+
+map <C-F> <C-D>
+map <C-B> <C-U>
+
+vnoremap < <gv
+vnoremap > >gv
+
 " Under line
 imap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
 map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
@@ -220,9 +226,6 @@ map <F12> :set nonumber!<cr>
 imap <F11> <esc>:NERDTree<cr>
 map  <F11> :NERDTree<cr>
 
-set pastetoggle=<Ins>
-set pastetoggle=<F9> " For Mac
-
 map <tab> <C-W><C-W>
 
 if has("ruby")
@@ -242,11 +245,6 @@ vmap jk <esc>
 " No delay in visual mode by jk
 vmap v <down>
 vmap V <down>
-
-" For MacVim
-set noimd
-set imi=1
-set ims=-1
 
 if has("unix")
   let s:uname = system("uname")
@@ -272,23 +270,12 @@ if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
 	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
 
-" Annoying temporary files
-set backupdir=/tmp
-set directory=/tmp
-
-" Grep in MacOS
-let Grep_Xargs_Options = '-0'
-let Grep_Skip_Files = '*.bak *~ *.swp *.log'
-
 " Movement in insert mode
 inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 inoremap <C-^> <C-o><C-^>
-
-" Shift-tab on GNU screen
-set t_kB=[Z
 
 " https://github.com/nelstrom/vim-textobj-rubyblock
 runtime macros/matchit.vim
@@ -311,6 +298,7 @@ vmap <C-l> >
 " Tabular.vim
 vmap <C-T>:  :Tab /:<CR>
 vmap <C-T>:: :Tab /:\zs<CR>
+vmap <C-T>,  :Tab /,\zs<CR>
 vmap <C-T>=  :Tab /=<CR>
 vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
 vmap <C-T>=> :Tab /=><CR>
@@ -323,34 +311,4 @@ let g:tabular_default_format = "l1-1"
 
 " Replace
 vmap R "_dP
-
-let vimclojure#ParenRainbow = 1
-
-" set complete=.,w,b,u,t
-set complete-=i
-
-augroup vimrc
-  autocmd!
-
-  au BufWritePost       .vimrc              source %
-  au BufReadPre         *                   setlocal foldmethod=syntax
-  au BufReadPre         *                   setlocal nofoldenable
-
-  au BufNewFile,BufRead capfile             setf ruby
-  au BufNewFile,BufRead Capfile             setf ruby
-  au BufRead,BufNewFile *.icc               set filetype=cpp
-  au BufRead,BufNewFile *.pde               set filetype=java
-  au BufNewFile,BufRead *.less              set filetype=less
-  au BufNewFile,BufRead *.god               set filetype=ruby
-  au BufNewFile,BufRead *.coffee-processing setf coffee
-augroup END
-
-" Color setting
-set  t_Co=256
-set  background=dark
-colo zenburn
-
-" mouse
-set ttymouse=xterm2
-set mouse=a
 
