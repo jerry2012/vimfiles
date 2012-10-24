@@ -80,7 +80,7 @@ set laststatus=2
 set showcmd
 set visualbell
 set backspace=indent,eol,start
-set timeoutlen=200
+set timeoutlen=300
 set whichwrap=b,s
 set shortmess=aI
 set hlsearch " CTRL-L / CTRL-R W
@@ -307,6 +307,7 @@ vmap <C-T>=> :Tab /=><CR>
 vmap <C-T><space>           :s/^\([^#]\{-\}[^# \t]\) /\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
 vmap <C-T><C-T><space>      :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
 vmap <C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
+vmap <C-T><C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
 let g:tabular_default_format = "l1-1"
 
 " Replace
