@@ -213,6 +213,9 @@ map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 imap <C-s> <esc>:w<cr>a
 map  <C-s> :w<cr>
 
+" Select-all (don't need confusing increment C-a)
+map  <C-a> ggvG
+
 " Quit
 imap <C-Q> <esc>:q<cr>
 map  <C-Q> :q<cr>
