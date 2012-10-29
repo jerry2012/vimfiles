@@ -214,7 +214,7 @@ imap <C-s> <esc>:w<cr>a
 map  <C-s> :w<cr>
 
 " Select-all (don't need confusing increment C-a)
-map  <C-a> ggvG
+map  <C-a> ggvG$
 
 " Quit
 imap <C-Q> <esc>:q<cr>
