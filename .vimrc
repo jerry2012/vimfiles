@@ -17,7 +17,6 @@ Bundle 'L9'
 Bundle 'a.vim'
 Bundle 'cscope.vim'
 Bundle 'grep.vim'
-Bundle 'snipMate'
 Bundle 'vcscommand.vim'
 Bundle 'summerfruit256.vim'
 Bundle 'jellybeans.vim'
@@ -50,6 +49,12 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'mileszs/ack.vim'
+
+" SnipMate
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/snipmate-snippets"
+Bundle "garbas/vim-snipmate"
 
 if has("ruby")
   Bundle 'wincent/Command-T'
