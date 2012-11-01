@@ -35,7 +35,10 @@ Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'junegunn/tabular'
 Bundle 'Raimondi/delimitMate'
+
+" VimClojure
 Bundle 'vim-scripts/VimClojure'
+
 " indent-object (vii)
 Bundle 'michaeljsmith/vim-indent-object'
 " :CopyRTF
@@ -85,7 +88,7 @@ set laststatus=2
 set showcmd
 set visualbell
 set backspace=indent,eol,start
-set timeoutlen=300
+set timeoutlen=500
 set whichwrap=b,s
 set shortmess=aI
 set hlsearch " CTRL-L / CTRL-R W
@@ -138,7 +141,10 @@ let use_xhtml=1
 let Grep_Xargs_Options = '-0'
 let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 
+" VimClojure
 let vimclojure#ParenRainbow = 1
+let vimclojure#WantNailgun = 1
+let vimclojure#NailgunClient = $HOME."/bin/ng"
 
 augroup vimrc
   autocmd!
@@ -270,6 +276,7 @@ vmap ㅇㄱ <esc>
 
 " NERD comment
 let mapleader = ","
+let maplocalleader = " "
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
 

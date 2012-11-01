@@ -16,12 +16,22 @@ fi
 mv -v ~/.vimrc ~/.vimrc.old 2> /dev/null
 ln -sf `pwd`/.vimrc ~/.vimrc
 
-for d in *; do
+for d in ftplugin syntax; do
   if [ -d $d ]; then
     mkdir -pv ~/.vim/$d
     cp -rv $d/* ~/.vim/$d
   fi
 done
+
+# VimClojure-client
+rm -rf vimclojure-nailgun-client*
+wget http://kotka.de/projects/vimclojure/vimclojure-nailgun-client-2.3.5.zip &&
+unzip vimclojure-nailgun-client-2.3.5.zip &&
+cd vimclojure-nailgun-client/ &&
+make &&
+mkdir -p ~/bin &&
+cp ng ~/bin &&
+cd -
 
 vim +BundleClean +BundleInstall +qall
 if [ `vim --version | grep '+ruby' | wc -l` -eq 1 ]; then
