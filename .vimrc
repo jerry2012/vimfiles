@@ -35,6 +35,7 @@ Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'junegunn/tabular'
 Bundle 'Raimondi/delimitMate'
+Bundle 'bronson/vim-trailing-whitespace'
 
 " VimClojure
 Bundle 'vim-scripts/VimClojure'
