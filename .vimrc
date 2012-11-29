@@ -1,7 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""
 " .vimrc of Junegunn Choi
 """"""""""""""""""""""""""""""""""""""""
- 
+
 """"""""""""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""""""""
 " Vundle block
@@ -36,6 +36,8 @@ Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'junegunn/tabular'
 Bundle 'Raimondi/delimitMate'
 Bundle 'bronson/vim-trailing-whitespace'
+Bundle 'kien/ctrlp.vim'
+Bundle 'vim-scripts/Gundo'
 
 " VimClojure
 Bundle 'vim-scripts/VimClojure'
@@ -59,12 +61,6 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
-
-if has("ruby")
-  Bundle 'wincent/Command-T'
-else
-  Bundle 'FuzzyFinder'
-endif
 
 " Bundle 'altercation/vim-colors-solarized'
 " Bundle 'Lokaltog/vim-powerline'
@@ -221,6 +217,10 @@ vnoremap > >gv
 imap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
 map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 
+" Gundo
+imap <F7> <esc>:GundoShow<cr>
+map <F7> :GundoShow<cr>
+
 " Save
 imap <C-s> <esc>:w<cr>a
 map  <C-s> :w<cr>
@@ -241,17 +241,11 @@ map <F12> :set nonumber!<cr>
 imap <F11> <esc>:NERDTree<cr>
 map  <F11> :NERDTree<cr>
 
+" Window toggle
 map <tab> <C-W><C-W>
 
-if has("ruby")
-  map  <S-tab> :CommandTBuffer<cr>
-  map  <F7>    ,t
-  imap <F7>    <esc>,t
-else
-  map  <S-tab> :FufBuffer<cr>
-  imap <F7>    <esc>:FufFile **/<cr>
-  map  <F7>    :FufFile **/<cr>
-end
+" Ctrl-P
+map  <S-tab> :CtrlPBuffer<cr>
 
 " Escaping!
 map! jk <esc>

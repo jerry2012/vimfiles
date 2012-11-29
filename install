@@ -23,7 +23,7 @@ for d in ftplugin syntax; do
   fi
 done
 
-# VimClojure-client
+# VimClojure-client (DEAD LINK)
 rm -rf vimclojure-nailgun-client*
 wget http://kotka.de/projects/vimclojure/vimclojure-nailgun-client-2.3.5.zip &&
 unzip vimclojure-nailgun-client-2.3.5.zip &&
