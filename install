@@ -34,11 +34,3 @@ cp ng ~/bin &&
 cd -
 
 vim +BundleClean +BundleInstall +qall
-if [ `vim --version | grep '+ruby' | wc -l` -eq 1 ]; then
-  cd ~/.vim/bundle/Command-T/ruby/command-t
-  RUBY=ruby
-  [ -x '/usr/bin/ruby' ] && RUBY=/usr/bin/ruby
-  make clean
-  $RUBY extconf.rb
-  make
-fi
