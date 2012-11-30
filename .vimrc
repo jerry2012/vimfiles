@@ -147,8 +147,8 @@ augroup vimrc
   autocmd!
 
   au BufWritePost       .vimrc              source %
-  au BufReadPre         *                   setlocal foldmethod=syntax
-  au BufReadPre         *                   setlocal nofoldenable
+  au BufRead            *                   setlocal foldmethod=syntax
+  au BufRead            *                   setlocal nofoldenable
 
   au BufNewFile,BufRead capfile             setf ruby
   au BufNewFile,BufRead Capfile             setf ruby
@@ -322,6 +322,3 @@ let g:tabular_default_format = "l1-1"
 
 " Replace
 vmap R "_dP
-
-" No folding
-set nofen
