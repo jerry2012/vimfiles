@@ -138,11 +138,6 @@ let use_xhtml=1
 let Grep_Xargs_Options = '-0'
 let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 
-" VimClojure
-let vimclojure#ParenRainbow = 1
-let vimclojure#WantNailgun = 1
-let vimclojure#NailgunClient = $HOME."/bin/ng"
-
 augroup vimrc
   autocmd!
 
@@ -271,7 +266,6 @@ vmap ㅇㄱ <esc>
 
 " NERD comment
 let mapleader = ","
-let maplocalleader = " "
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
 
@@ -324,4 +318,10 @@ let g:tabular_default_format = "l1-1"
 vmap R "_dP
 
 " Vimclojure
-map <LocalLeader><LocalLeader> va)<LocalLeader>eb
+let maplocalleader             = " "
+let vimclojure#ParenRainbow    = 1
+let vimclojure#WantNailgun     = 1
+let vimclojure#NailgunClient   = $HOME."/bin/ng"
+let vimclojure#SearchThreshold = 30
+map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb
+set isk+="-?"
