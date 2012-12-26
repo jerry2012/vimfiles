@@ -328,3 +328,6 @@ let g:tabular_default_format = "l1-1"
 " Replace
 vmap R "_dP
 
+" Vimclojure
+map <LocalLeader><LocalLeader> va)<LocalLeader>eb
+
