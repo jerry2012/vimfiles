@@ -23,7 +23,7 @@ for d in ftplugin syntax; do
   fi
 done
 
-# VimClojure-client
+# VimClojure-client (DEAD LINK)
 rm -rf vimclojure-nailgun-client*
 wget http://kotka.de/projects/vimclojure/vimclojure-nailgun-client-2.3.5.zip &&
 unzip vimclojure-nailgun-client-2.3.5.zip &&
@@ -34,11 +34,3 @@ cp ng ~/bin &&
 cd -
 
 vim +BundleClean +BundleInstall +qall
-if [ `vim --version | grep '+ruby' | wc -l` -eq 1 ]; then
-  cd ~/.vim/bundle/Command-T/ruby/command-t
-  RUBY=ruby
-  [ -x '/usr/bin/ruby' ] && RUBY=/usr/bin/ruby
-  make clean
-  $RUBY extconf.rb
-  make
-fi
