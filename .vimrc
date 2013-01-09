@@ -317,6 +317,10 @@ let g:tabular_default_format = "l1-1"
 " Replace
 vmap R "_dP
 
+" Find and replace
+map  fnr *:%s///gc<Left><Left><Left>
+vmap fnr y:%s/<C-R>"//gc<Left><Left><Left>
+
 " Vimclojure
 let maplocalleader             = " "
 let vimclojure#ParenRainbow    = 1
