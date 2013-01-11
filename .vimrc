@@ -245,6 +245,7 @@ map  <F11> :NERDTree<cr>
 map <tab> <C-W><C-W>
 
 " Ctrl-P
+let g:ctrlp_working_path_mode = 'a'
 map  <S-tab> :CtrlPBuffer<cr>
 
 " Escaping!
@@ -322,3 +323,6 @@ let g:tabular_default_format = "l1-1"
 
 " Replace
 vmap R "_dP
+
+" iskeyword
+set isk+=-
