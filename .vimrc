@@ -242,11 +242,12 @@ imap <F11> <esc>:TagbarToggle<cr>
 map  <F11> :TagbarToggle<cr>
 
 " Window toggle
-map <tab> <C-W><C-W>
+map <tab> <c-w>w
+map <S-tab> <c-w>W
 
 " Ctrl-P
 let g:ctrlp_working_path_mode = 'a'
-map  <S-tab> :CtrlPBuffer<cr>
+map <C-P><C-P> :CtrlPBuffer<cr>
 
 " Escaping!
 map! jk <esc>
