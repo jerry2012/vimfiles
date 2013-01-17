@@ -38,6 +38,7 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
 Bundle 'vim-scripts/Gundo'
+Bundle 'majutsushi/tagbar'
 
 " VimClojure
 Bundle 'vim-scripts/VimClojure'
@@ -238,8 +239,12 @@ map <F12> :set nonumber!<cr>
 " NERD Tree
 "imap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
 "map  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
-imap <F11> <esc>:NERDTree<cr>
-map  <F11> :NERDTree<cr>
+imap <F10> <esc>:NERDTreeToggle<cr>
+map  <F10> :NERDTreeToggle<cr>
+
+" Tagbar
+imap <F11> <esc>:TagbarToggle<cr>
+map  <F11> :TagbarToggle<cr>
 
 " Window toggle
 map <tab> <C-W><C-W>
