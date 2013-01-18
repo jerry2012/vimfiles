@@ -240,6 +240,7 @@ map  <F10> :NERDTreeToggle<cr>
 " Tagbar
 imap <F11> <esc>:TagbarToggle<cr>
 map  <F11> :TagbarToggle<cr>
+let g:tagbar_sort = 0
 
 " Window toggle
 map <tab> <c-w>w
