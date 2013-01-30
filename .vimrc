@@ -34,7 +34,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'kana/vim-textobj-user'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'junegunn/tabular'
-Bundle 'Raimondi/delimitMate'
+" Bundle 'Raimondi/delimitMate'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
 Bundle 'vim-scripts/Gundo'
@@ -248,6 +248,7 @@ map <S-tab> <c-w>W
 
 " Ctrl-P
 let g:ctrlp_working_path_mode = 'a'
+let g:ctrlp_max_height = 30
 map <C-P><C-P> :CtrlPBuffer<cr>
 
 " Escaping!
