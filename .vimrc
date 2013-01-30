@@ -19,7 +19,7 @@ Bundle 'cscope.vim'
 Bundle 'grep.vim'
 Bundle 'vcscommand.vim'
 Bundle 'summerfruit256.vim'
-Bundle 'jellybeans.vim'
+Bundle 'junegunn/jellybeans.vim'
 Bundle 'junegunn/Zenburn'
 Bundle 'rosstimson/scala-vim-support'
 Bundle 'kchmck/vim-coffee-script'
@@ -125,7 +125,8 @@ set complete-=i
 " Color setting
 set  t_Co=256
 set  background=dark
-colo zenburn
+" colo zenburn
+colo jellybeans
 
 " mouse
 set ttymouse=xterm2
