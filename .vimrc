@@ -275,7 +275,7 @@ map! ㅇㄱ <esc>
 vmap ㅇㄱ <esc>
 
 " NERD comment
-let mapleader = ","
+let mapleader = " "
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
 
@@ -332,10 +332,15 @@ map  fnr *:%s///gc<Left><Left><Left>
 vmap fnr y:%s/<C-R>"//gc<Left><Left><Left>
 
 " Vimclojure
-let maplocalleader             = " "
-let vimclojure#ParenRainbow    = 1
-let vimclojure#WantNailgun     = 1
-let vimclojure#NailgunClient   = $HOME."/bin/ng"
-let vimclojure#SearchThreshold = 30
-map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb
-set isk+="-?"
+augroup clojure
+  autocmd!
+  autocmd FileType clojure
+    \ let maplocalleader             = " " |
+    \ let vimclojure#ParenRainbow    = 1 |
+    \ let vimclojure#WantNailgun     = 1 |
+    \ let vimclojure#NailgunClient   = $HOME."/bin/ng" |
+    \ let vimclojure#SearchThreshold = 30 |
+    \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
+    \ set isk+="-?"
+augroup END
+
