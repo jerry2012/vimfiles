@@ -15,7 +15,6 @@ Bundle   'gmarik/vundle'
 
 Bundle 'L9'
 Bundle 'a.vim'
-Bundle 'cscope.vim'
 Bundle 'grep.vim'
 Bundle 'vcscommand.vim'
 Bundle 'summerfruit256.vim'
@@ -156,21 +155,69 @@ augroup vimrc
   au BufNewFile,BufRead *.coffee-processing setf coffee
 augroup END
 
-" cscope
-silent! cs add ./cscope.out
-silent! cs add ../cscope.out
-silent! cs add ../../cscope.out
-silent! cs add ../../../cscope.out
-silent! cs add ../../../../cscope.out
-silent! cs add ../../../../../cscope.out
-if $CSCOPE_DB != ""
-	silent! cs add $CSCOPE_DB
+if has("cscope")
+  set csprg=/usr/local/bin/cscope
+  set csto=0
+  set cst
+  set nocsverb
+  " add any database in current directory
+  let db = findfile('cscope.out', '.;')
+  if db != ""
+      exe("cs add ".db)
+  " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+      cs add $CSCOPE_DB
+  endif
+  set csverb
+
+  """"""""""""" My cscope/vim key mappings
+  "
+  " The following maps all invoke one of the following cscope search types:
+  "
+  "   's'   symbol: find all references to the token under cursor
+  "   'g'   global: find global definition(s) of the token under cursor
+  "   'c'   calls:  find all calls to the function name under cursor
+  "   't'   text:   find all instances of the text under cursor
+  "   'e'   egrep:  egrep search for the word under cursor
+  "   'f'   file:   open the filename under cursor
+  "   'i'   includes: find files that include the filename under cursor
+  "   'd'   called: find functions that function under cursor calls
+  "
+  " Below are three sets of the maps: one set that just jumps to your
+  " search result, one that splits the existing vim window horizontally and
+  " diplays your search result in the new window, and one that does the same
+  " thing, but does a vertical split instead (vim 6 only).
+  "
+  " I've used CTRL-\ and CTRL-@ as the starting keys for these maps, as it's
+  " unlikely that you need their default mappings (CTRL-\'s default use is
+  " as part of CTRL-\ CTRL-N typemap, which basically just does the same
+  " thing as hitting 'escape': CTRL-@ doesn't seem to have any default use).
+  " If you don't like using 'CTRL-@' or CTRL-\, , you can change some or all
+  " of these maps to use other keys.  One likely candidate is 'CTRL-_'
+  " (which also maps to CTRL-/, which is easier to type).  By default it is
+  " used to switch between Hebrew and English keyboard mode.
+  "
+  " All of the maps involving the <cfile> macro use '^<cfile>$': this is so
+  " that searches over '#include <time.h>" return only references to
+  " 'time.h', and not 'sys/time.h', etc. (by default cscope will return all
+  " files that contain 'time.h' as part of their name).
+
+
+  " To do the first type of search, hit 'CTRL-\', followed by one of the
+  " cscope search types above (s,g,c,t,e,f,i,d).  The result of your cscope
+  " search will be displayed in the current window.  You can use CTRL-T to
+  " go back to where you were before the search.  
+  "
+
+  nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
+  nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>  
+  nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>  
+  nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>  
+  nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>  
+  nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>  
+  nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
-function! Csbuild()
-  exe("!csbuild -n")
-  silent! cs add ./cscope.out
-endfunction
-com! Csbuild call Csbuild()
 
 " Run script
 function! RunThisScript()
@@ -275,7 +322,7 @@ map! ㅇㄱ <esc>
 vmap ㅇㄱ <esc>
 
 " NERD comment
-let mapleader = " "
+let mapleader = ","
 vmap <F7> <leader>cc
 vmap <F8> <leader>cu
 
