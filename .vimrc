@@ -284,6 +284,7 @@ map <F12> :set nonumber!<cr>
 "map  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
 imap <F10> <esc>:NERDTreeToggle<cr>
 map  <F10> :NERDTreeToggle<cr>
+" autocmd vimenter * if !argc() | NERDTree | endif
 
 " Tagbar
 imap <F11> <esc>:TagbarToggle<cr>
