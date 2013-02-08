@@ -221,26 +221,28 @@ endif
 
 " Run script
 function! RunThisScript()
-	let head = getline(1)
-	let pos = stridx(head, '#!')
-	let file = expand('%')
-	let absp = stridx(file, '/') == 0
-	if !absp
-		let file = './'.file
-	end
-	let xperm = executable(file)
+  let head = getline(1)
+  let pos = stridx(head, '#!')
+  let file = expand('%')
+  let absp = stridx(file, '/') == 0
+  if !absp
+    let file = './'.file
+  end
+  let xperm = executable(file)
 
-	" She-bang found
-	if pos != -1
-		exe('!'.strpart(head, pos + 2).' '.file)
-	" She-bang not found but executable
-	elseif xperm
-		exe('!'.file)
-	elseif &filetype == 'ruby'
-		exe('!/usr/bin/env ruby '.file)
-	elseif &filetype == 'tex'
-		exe('!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r'))
-	end
+  " She-bang found
+  if pos != -1
+    exe('!'.strpart(head, pos + 2).' '.file)
+  " She-bang not found but executable
+  elseif xperm
+    exe('!'.file)
+  elseif &filetype == 'ruby'
+    exe('!/usr/bin/env ruby '.file)
+  elseif &filetype == 'tex'
+    exe('!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r'))
+  elseif &filetype == 'dot'
+    exe('!dot -Tpng '.file.' -o '.file.'.png && open '.file.'.png')
+  end
 endfunction
 imap <F5> <esc>:call RunThisScript()<cr>
 map  <F5> :call RunThisScript()<cr>
@@ -329,7 +331,7 @@ vmap <F8> <leader>cu
 
 " Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
-	let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
+  let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
 
 " Movement in insert mode
