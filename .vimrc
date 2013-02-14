@@ -38,6 +38,7 @@ Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
 Bundle 'vim-scripts/Gundo'
 Bundle 'majutsushi/tagbar'
+Bundle 'junegunn/vim-scroll-position'
 
 " VimClojure
 Bundle 'vim-scripts/VimClojure'
@@ -394,3 +395,6 @@ augroup clojure
     \ set isk+="-?"
 augroup END
 
+" vim-scroll-position
+highlight ScrollPositionMarker ctermfg=208 ctermbg=232
+highlight SignColumn ctermbg=232
