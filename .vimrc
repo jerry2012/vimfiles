@@ -65,7 +65,7 @@ Bundle "garbas/vim-snipmate"
 
 " Bundle 'altercation/vim-colors-solarized'
 " Bundle 'Lokaltog/vim-powerline'
-" Bundle 'ervandew/supertab'
+Bundle 'ervandew/supertab'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'tpope/vim-unimpaired'
 
@@ -76,11 +76,11 @@ filetype plugin indent on
 
 syntax on
 
+set nu
 set autoindent
 set smartindent
 set cindent
 set nobackup
-set nu
 set lazyredraw
 set laststatus=2
 set showcmd
@@ -123,9 +123,9 @@ set t_kB=[Z
 set complete-=i
 
 " Color setting
+" colo zenburn
 set  t_Co=256
 set  background=dark
-" colo zenburn
 colo jellybeans
 
 " mouse
@@ -317,7 +317,7 @@ if has("unix")
     " Clipboard
     vmap <C-c> y:call system("pbcopy", getreg("\""))<CR>"))
     " Clipboard-RTF
-    vmap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo zenburn<cr>
+    vmap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo jellybeans<cr>
   endif
 endif
 
@@ -398,3 +398,4 @@ augroup END
 " vim-scroll-position
 highlight ScrollPositionMarker ctermfg=208 ctermbg=232
 highlight SignColumn ctermbg=232
+
