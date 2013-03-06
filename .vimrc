@@ -38,7 +38,7 @@ Bundle 'junegunn/tabular'
 " Bundle 'Raimondi/delimitMate'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
-Bundle 'vim-scripts/Gundo'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'majutsushi/tagbar'
 Bundle 'junegunn/vim-scroll-position'
 
@@ -244,7 +244,8 @@ function! RunThisScript()
   elseif &filetype == 'tex'
     exe('!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r'))
   elseif &filetype == 'dot'
-    exe('!dot -Tpng '.file.' -o '.file.'.png && open '.file.'.png')
+    let output = substitute(file, '.dot$', '.png', '')
+    exe('!dot -Tpng '.file.' -o '.output.' && open '.output)
   end
 endfunction
 imap <F5> <esc>:call RunThisScript()<cr>
@@ -405,3 +406,5 @@ highlight ScrollPositionChange ctermfg=124 ctermbg=232
 highlight ScrollPositionJump ctermfg=131 ctermbg=232
 highlight SignColumn ctermbg=232
 
+" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
