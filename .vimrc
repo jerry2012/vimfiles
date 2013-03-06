@@ -11,42 +11,36 @@ filetype off
 let      $GIT_SSL_NO_VERIFY = 'true'
 set      rtp+=~/.vim/bundle/vundle/
 call     vundle#rc()
-Bundle   'gmarik/vundle'
 
+Bundle 'gmarik/vundle'
 Bundle 'L9'
 Bundle 'a.vim'
 Bundle 'grep.vim'
-Bundle 'vcscommand.vim'
 Bundle 'summerfruit256.vim'
 Bundle 'junegunn/jellybeans.vim'
 Bundle 'junegunn/Zenburn'
-Bundle 'rosstimson/scala-vim-support'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
+Bundle 'airblade/vim-gitgutter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'kana/vim-textobj-user'
 Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'junegunn/tabular'
-" Bundle 'Raimondi/delimitMate'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
-Bundle 'airblade/vim-gitgutter'
 Bundle 'majutsushi/tagbar'
 Bundle 'junegunn/vim-scroll-position'
-
-" VimClojure
 Bundle 'vim-scripts/VimClojure'
-
-" indent-object (vii)
-Bundle 'michaeljsmith/vim-indent-object'
+Bundle 'kien/rainbow_parentheses.vim'
 " :CopyRTF
 if has("unix")
   let s:uname = system("uname")
@@ -55,21 +49,13 @@ if has("unix")
   endif
 endif
 Bundle 'plasticboy/vim-markdown'
-Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bronson/vim-visual-star-search'
 Bundle 'mileszs/ack.vim'
-
-" SnipMate
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
-
-" Bundle 'altercation/vim-colors-solarized'
-" Bundle 'Lokaltog/vim-powerline'
 Bundle 'ervandew/supertab'
-" Bundle 'spolu/dwm.vim'
-" Bundle 'tpope/vim-unimpaired'
 
 filetype plugin indent on
 
@@ -137,10 +123,6 @@ set mouse=a
 " Make TOhtml use CSS and XHTML
 let html_use_css=1
 let use_xhtml=1
-
-" Grep in MacOS
-let Grep_Xargs_Options = '-0'
-let Grep_Skip_Files = '*.bak *~ *.swp *.log'
 
 augroup vimrc
   autocmd!
@@ -267,10 +249,6 @@ vnoremap > >gv
 imap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
 map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 
-" Gundo
-imap <F7> <esc>:GundoShow<cr>
-map <F7> :GundoShow<cr>
-
 " Save
 imap <C-s> <esc>:w<cr>a
 map  <C-s> :w<cr>
@@ -290,7 +268,6 @@ map <F12> :set nonumber!<cr>
 "map  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
 imap <F10> <esc>:NERDTreeToggle<cr>
 map  <F10> :NERDTreeToggle<cr>
-" autocmd vimenter * if !argc() | NERDTree | endif
 
 " Tagbar
 imap <F11> <esc>:TagbarToggle<cr>
@@ -323,10 +300,6 @@ if has("unix")
     vmap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo jellybeans<cr>
   endif
 endif
-
-" Doesn't seem to work though
-map! ㅇㄱ <esc>
-vmap ㅇㄱ <esc>
 
 " NERD comment
 let mapleader = ","
