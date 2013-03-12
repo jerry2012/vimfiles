@@ -56,6 +56,7 @@ Bundle "tomtom/tlib_vim"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 Bundle 'ervandew/supertab'
+Bundle 'nathanaelkane/vim-indent-guides'
 
 filetype plugin indent on
 
@@ -381,3 +382,8 @@ highlight SignColumn ctermbg=232
 
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" indent-guide
+hi IndentGuidesOdd  ctermbg=237
+hi IndentGuidesEven ctermbg=235
+let g:indent_guides_guide_size = 1
