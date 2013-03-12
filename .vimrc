@@ -132,10 +132,10 @@ augroup vimrc
   au BufRead            *                   setlocal foldmethod=syntax
   au BufRead            *                   setlocal nofoldenable
 
-  au BufNewFile,BufRead capfile             setf ruby
-  au BufNewFile,BufRead Capfile             setf ruby
-  au BufRead,BufNewFile *.icc               set filetype=cpp
-  au BufRead,BufNewFile *.pde               set filetype=java
+  au BufNewFile,BufRead *                   IndentGuidesEnable
+  au BufNewFile,BufRead [Cc]apfile          setf ruby
+  au BufNewFile,BufRead *.icc               set filetype=cpp
+  au BufNewFile,BufRead *.pde               set filetype=java
   au BufNewFile,BufRead *.less              set filetype=less
   au BufNewFile,BufRead *.god               set filetype=ruby
   au BufNewFile,BufRead *.coffee-processing setf coffee
