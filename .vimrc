@@ -57,6 +57,7 @@ Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 Bundle 'ervandew/supertab'
 Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'slim-template/vim-slim'
 
 filetype plugin indent on
 
@@ -125,20 +126,40 @@ set mouse=a
 let html_use_css=1
 let use_xhtml=1
 
+function! OverrideHighlight()
+  " indent-guide
+  hi IndentGuidesOdd       ctermbg=237
+  hi IndentGuidesEven      ctermbg=237
+
+  " vim-scroll-position
+  hi SignColumn            ctermbg=232
+  hi ScrollPositionMarker  ctermfg=208 ctermbg=232
+  hi ScrollPositionChange  ctermfg=124 ctermbg=232
+  hi ScrollPositionJump    ctermfg=131 ctermbg=232
+
+  " vim-gitgutter
+  hi GitGutterAdd          ctermfg=26  ctermbg=232
+  hi GitGutterChange       ctermfg=107 ctermbg=232
+  hi GitGutterDelete       ctermfg=124 ctermbg=232
+  hi GitGutterChangeDelete ctermfg=202 ctermbg=232
+endfunction
+
 augroup vimrc
   autocmd!
 
-  au BufWritePost       .vimrc              source %
-  au BufRead            *                   setlocal foldmethod=syntax
-  au BufRead            *                   setlocal nofoldenable
+  au VimEnter             *                   IndentGuidesEnable
+  au VimEnter,Colorscheme *                   call OverrideHighlight()
 
-  au BufNewFile,BufRead *                   IndentGuidesEnable
-  au BufNewFile,BufRead [Cc]apfile          setf ruby
-  au BufNewFile,BufRead *.icc               set filetype=cpp
-  au BufNewFile,BufRead *.pde               set filetype=java
-  au BufNewFile,BufRead *.less              set filetype=less
-  au BufNewFile,BufRead *.god               set filetype=ruby
-  au BufNewFile,BufRead *.coffee-processing setf coffee
+  au BufRead              *                   setlocal foldmethod=syntax
+  au BufRead              *                   setlocal nofoldenable
+  au BufWritePost         .vimrc              source % | call OverrideHighlight()
+
+  au BufNewFile,BufRead   [Cc]apfile          set filetype=ruby
+  au BufNewFile,BufRead   *.icc               set filetype=cpp
+  au BufNewFile,BufRead   *.pde               set filetype=java
+  au BufNewFile,BufRead   *.less              set filetype=less
+  au BufNewFile,BufRead   *.god               set filetype=ruby
+  au BufNewFile,BufRead   *.coffee-processing set filetype=coffee
 augroup END
 
 if has("cscope")
@@ -375,15 +396,11 @@ augroup END
 " vim-scroll-position
 " let g:scroll_position_jump = '-'
 " let g:scroll_position_change = 'x'
-highlight ScrollPositionMarker ctermfg=208 ctermbg=232
-highlight ScrollPositionChange ctermfg=124 ctermbg=232
-highlight ScrollPositionJump ctermfg=131 ctermbg=232
-highlight SignColumn ctermbg=232
+
+" indent-guide
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
 
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" indent-guide
-hi IndentGuidesOdd  ctermbg=237
-hi IndentGuidesEven ctermbg=237
-let g:indent_guides_guide_size = 1
