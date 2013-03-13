@@ -385,5 +385,5 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " indent-guide
 hi IndentGuidesOdd  ctermbg=237
-hi IndentGuidesEven ctermbg=235
+hi IndentGuidesEven ctermbg=237
 let g:indent_guides_guide_size = 1
