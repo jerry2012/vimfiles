@@ -133,10 +133,14 @@ function! OverrideHighlight()
   hi IndentGuidesEven      ctermbg=237
 
   " vim-scroll-position
-  hi SignColumn            ctermbg=232
-  hi ScrollPositionMarker  ctermfg=208 ctermbg=232
-  hi ScrollPositionChange  ctermfg=124 ctermbg=232
-  hi ScrollPositionJump    ctermfg=131 ctermbg=232
+  hi SignColumn                  ctermbg=232
+  hi ScrollPositionMarker        ctermfg=208 ctermbg=232
+  hi ScrollPositionVisualBegin   ctermfg=196 ctermbg=232
+  hi ScrollPositionVisualMiddle  ctermfg=196 ctermbg=232
+  hi ScrollPositionVisualEnd     ctermfg=196 ctermbg=232
+  hi ScrollPositionVisualOverlap ctermfg=196 ctermbg=232
+  hi ScrollPositionChange        ctermfg=124 ctermbg=232
+  hi ScrollPositionJump          ctermfg=131 ctermbg=232
 
   " vim-gitgutter
   hi GitGutterAdd          ctermfg=26  ctermbg=232
