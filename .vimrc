@@ -58,6 +58,7 @@ Bundle "garbas/vim-snipmate"
 Bundle 'ervandew/supertab'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
+Bundle 'vim-ruby/vim-ruby'
 
 filetype plugin indent on
 
@@ -404,3 +405,5 @@ let g:indent_guides_auto_colors = 0
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" vim-slim
+hi def link slimBegin NONE
