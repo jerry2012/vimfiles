@@ -352,11 +352,11 @@ if has("autocmd")
 endif
 
 " Bubble lines
-nmap <C-k> :call feedkeys( line('.')==1 ? '' : 'ddkP' )<CR>
+nmap <C-k> :call feedkeys( line('.') == 1 ? '' : (line('.') == line('$')) ? 'ddP' : 'ddkP' )<CR>
 nmap <C-j> ddp
 nmap <C-h> <<
 nmap <C-l> >>
-vmap <C-k> xkP`[V`]
+vmap <C-k> x:call feedkeys( index([1, line('$')], line('.')) == -1 ? 'kP`[V`]' : 'P`[V`]' )<CR>
 vmap <C-j> xp`[V`]
 
 " Indentation
@@ -399,8 +399,8 @@ augroup clojure
 augroup END
 
 " vim-scroll-position
-" let g:scroll_position_jump = '-'
-" let g:scroll_position_change = 'x'
+let g:scroll_position_jump = '-'
+let g:scroll_position_change = 'x'
 
 " indent-guide
 let g:indent_guides_guide_size = 1
@@ -411,3 +411,9 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " vim-slim
 hi def link slimBegin NONE
+
+" customization
+au Filetype ruby syn match rubyRocket "=>" | syn match rubyParens "[()]"
+hi rubyRocket ctermfg=185
+hi rubyParens ctermfg=210
+
