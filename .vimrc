@@ -401,8 +401,8 @@ augroup clojure
 augroup END
 
 " vim-scroll-position
-let g:scroll_position_jump = '-'
-let g:scroll_position_change = 'x'
+" let g:scroll_position_jump = '-'
+" let g:scroll_position_change = 'x'
 
 " indent-guide
 let g:indent_guides_guide_size = 1
