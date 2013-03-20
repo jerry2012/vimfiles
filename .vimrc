@@ -165,6 +165,8 @@ augroup vimrc
   au BufNewFile,BufRead   *.less              set filetype=less
   au BufNewFile,BufRead   *.god               set filetype=ruby
   au BufNewFile,BufRead   *.coffee-processing set filetype=coffee
+
+  au Filetype ruby syn match rubyRocket "=>" | syn match rubyParens "[()]"
 augroup END
 
 if has("cscope")
@@ -413,7 +415,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 hi def link slimBegin NONE
 
 " customization
-au Filetype ruby syn match rubyRocket "=>" | syn match rubyParens "[()]"
 hi rubyRocket ctermfg=185
 hi rubyParens ctermfg=210
 
