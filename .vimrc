@@ -155,7 +155,7 @@ augroup vimrc
   au VimEnter             *                   IndentGuidesEnable
   au VimEnter,Colorscheme *                   call OverrideHighlight()
 
-  au BufRead              *                   setlocal foldmethod=syntax
+  au BufRead              *                   setlocal foldmethod=manual
   au BufRead              *                   setlocal nofoldenable
   au BufWritePost         .vimrc              source % | call OverrideHighlight()
 
