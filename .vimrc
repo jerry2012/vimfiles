@@ -94,6 +94,7 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
+set modelines=2
 
 " For MacVim
 set noimd
