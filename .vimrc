@@ -34,7 +34,6 @@ Bundle 'kana/vim-textobj-user'
 Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'junegunn/tabular'
 Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
@@ -59,6 +58,7 @@ Bundle 'ervandew/supertab'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'junegunn/vim-lesser-align'
 
 filetype plugin indent on
 
@@ -366,21 +366,6 @@ vmap <C-j> xp`[V`]
 vmap <C-h> <
 vmap <C-l> >
 
-" Tabular.vim
-vmap <C-T>:  :Tab /:<CR>
-vmap <C-T>:: :Tab /:\zs<CR>
-vmap <C-T>,  :Tab /,\zs<CR>
-vmap <C-T>=  :Tab /=<CR>
-vmap <C-T>== :Tab /[- +*/]\{,1}=<CR>
-vmap <C-T>=> :Tab /=><CR>
-
-" Sloppy, but does the work (Assuming # comment)
-vmap <C-T><space>           :s/^\([^#]\{-\}[^# \t]\) /\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
-vmap <C-T><C-T><space>      :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
-vmap <C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
-vmap <C-T><C-T><C-T><C-T><space> :s/^\([^#]\{-\}[^# \t] \+[^ ]\+ \+[^ ]\+ \+[^ ]\+ \+\)/\1:__TBLR__:/<CR>gv:Tab /:__TBLR__:<CR>gv:s/:__TBLR__: //<CR>:nohl<CR>
-let g:tabular_default_format = "l1-1"
-
 " Replace
 vmap R "_dP
 
@@ -418,4 +403,7 @@ hi def link slimBegin NONE
 " customization
 hi rubyRocket ctermfg=185
 hi rubyParens ctermfg=210
+
+" vim-lesser-align
+vnoremap <silent> <Enter> :LesserAlign<cr>
 
