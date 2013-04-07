@@ -91,7 +91,7 @@ set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
-set statusline=%<[%n]\ %F\ %m%r%y%=%-14.(%l,%c%V%)\ %P
+set statusline=%<[%n]\ %F\ %m%r%y%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
