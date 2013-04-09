@@ -400,10 +400,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-slim
 hi def link slimBegin NONE
 
-" customization
-hi rubyRocket ctermfg=185
-hi rubyParens ctermfg=210
-
 " vim-lesser-align
 vnoremap <silent> <Enter> :LesserAlign<cr>
 
