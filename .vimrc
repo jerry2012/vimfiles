@@ -356,8 +356,8 @@ noremap  <silent> <C-k> :execute "normal! ". (line('.') == 1 ? '' : (line('.') =
 noremap  <silent> <C-j> ddp
 noremap  <silent> <C-h> <<
 noremap  <silent> <C-l> >>
-vnoremap <silent> <C-k> y:execute "normal! ". (line("'[") == 1 ? 'gv' : line("']") == line('$') ? '`[V`]xP`[V`]' : '`[V`]xkP`[V`]')<cr>
-vnoremap <silent> <C-j> xp`[V`]
+vnoremap <silent> <C-k> y:execute "normal! ". (line("'[") == 1 ? 'gv' : line("']") == line('$') ? "'[V']xP'[V']" : "'[V']xkP'[V']")<cr>
+vnoremap <silent> <C-j> y'[V']xp'[V']
 vnoremap <silent> <C-h> <gv
 vnoremap <silent> <C-l> >gv
 
