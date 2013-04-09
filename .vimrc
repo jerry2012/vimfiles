@@ -272,9 +272,6 @@ map ^[[A ^Y
 map <C-F> <C-D>
 map <C-B> <C-U>
 
-vnoremap < <gv
-vnoremap > >gv
-
 " Under line
 imap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
 map  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
@@ -355,16 +352,18 @@ if has("autocmd")
 endif
 
 " Bubble lines
-nmap <C-k> :call feedkeys( line('.') == 1 ? '' : (line('.') == line('$')) ? 'ddP' : 'ddkP' )<CR>
-nmap <C-j> ddp
-nmap <C-h> <<
-nmap <C-l> >>
-vmap <C-k> x:call feedkeys( index([1, line('$')], line('.')) == -1 ? 'kP`[V`]' : 'P`[V`]' )<CR>
-vmap <C-j> xp`[V`]
+noremap  <silent> <C-k> :execute "normal! ". (line('.') == 1 ? '' : (line('.') == line('$')) ? 'ddP' : 'ddkP')<cr>
+noremap  <silent> <C-j> ddp
+noremap  <silent> <C-h> <<
+noremap  <silent> <C-l> >>
+vnoremap <silent> <C-k> y:execute "normal! ". (line("'[") == 1 ? 'gv' : line("']") == line('$') ? '`[V`]xP`[V`]' : '`[V`]xkP`[V`]')<cr>
+vnoremap <silent> <C-j> xp`[V`]
+vnoremap <silent> <C-h> <gv
+vnoremap <silent> <C-l> >gv
 
 " Indentation
-vmap <C-h> <
-vmap <C-l> >
+vnoremap < <gv
+vnoremap > >gv
 
 " Replace
 vmap R "_dP
