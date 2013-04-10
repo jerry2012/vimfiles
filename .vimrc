@@ -11,6 +11,8 @@ filetype off
 let      $GIT_SSL_NO_VERIFY = 'true'
 set      rtp+=~/.vim/bundle/vundle/
 call     vundle#rc()
+let      mapleader = ","
+
 
 Bundle 'gmarik/vundle'
 Bundle 'L9'
@@ -29,7 +31,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
+Bundle 'tomtom/tcomment_vim'
 Bundle 'kana/vim-textobj-user'
 Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'nelstrom/vim-textobj-rubyblock'
@@ -294,12 +296,6 @@ if has("unix")
     vmap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo jellybeans<cr>
   endif
 endif
-
-" NERD commenter
-let mapleader = ","
-vmap <C-_> <leader>c<space>gv
-vmap <F7>  <leader>cc
-vmap <F8>  <leader>cu
 
 " Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
