@@ -185,10 +185,6 @@ if has("cscope")
   endif
   set csverb
 
-  """"""""""""" My cscope/vim key mappings
-  "
-  " The following maps all invoke one of the following cscope search types:
-  "
   "   's'   symbol: find all references to the token under cursor
   "   'g'   global: find global definition(s) of the token under cursor
   "   'c'   calls:  find all calls to the function name under cursor
@@ -197,33 +193,6 @@ if has("cscope")
   "   'f'   file:   open the filename under cursor
   "   'i'   includes: find files that include the filename under cursor
   "   'd'   called: find functions that function under cursor calls
-  "
-  " Below are three sets of the maps: one set that just jumps to your
-  " search result, one that splits the existing vim window horizontally and
-  " diplays your search result in the new window, and one that does the same
-  " thing, but does a vertical split instead (vim 6 only).
-  "
-  " I've used CTRL-\ and CTRL-@ as the starting keys for these maps, as it's
-  " unlikely that you need their default mappings (CTRL-\'s default use is
-  " as part of CTRL-\ CTRL-N typemap, which basically just does the same
-  " thing as hitting 'escape': CTRL-@ doesn't seem to have any default use).
-  " If you don't like using 'CTRL-@' or CTRL-\, , you can change some or all
-  " of these maps to use other keys.  One likely candidate is 'CTRL-_'
-  " (which also maps to CTRL-/, which is easier to type).  By default it is
-  " used to switch between Hebrew and English keyboard mode.
-  "
-  " All of the maps involving the <cfile> macro use '^<cfile>$': this is so
-  " that searches over '#include <time.h>" return only references to
-  " 'time.h', and not 'sys/time.h', etc. (by default cscope will return all
-  " files that contain 'time.h' as part of their name).
-
-
-  " To do the first type of search, hit 'CTRL-\', followed by one of the
-  " cscope search types above (s,g,c,t,e,f,i,d).  The result of your cscope
-  " search will be displayed in the current window.  You can use CTRL-T to
-  " go back to where you were before the search.
-  "
-
   nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
   nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
   nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -291,8 +260,6 @@ map  <C-Q> :q<cr>
 map <F12> :set nonumber!<cr>
 
 " NERD Tree
-"imap <F11> <esc>:exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
-"map  <F11> :exe "cd " . fnamemodify(expand('%'), ":p:h")<cr>:NERDTree<cr>
 imap <F10> <esc>:NERDTreeToggle<cr>
 map  <F10> :NERDTreeToggle<cr>
 
@@ -328,10 +295,11 @@ if has("unix")
   endif
 endif
 
-" NERD comment
+" NERD commenter
 let mapleader = ","
-vmap <F7> <leader>cc
-vmap <F8> <leader>cu
+vmap <C-_> <leader>c<space>gv
+vmap <F7>  <leader>cc
+vmap <F8>  <leader>cu
 
 " Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
