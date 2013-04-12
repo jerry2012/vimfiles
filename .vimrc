@@ -61,6 +61,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'slim-template/vim-slim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'junegunn/vim-lesser-align'
+Bundle 'jnwhiteh/vim-golang'
 
 filetype plugin indent on
 
