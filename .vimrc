@@ -12,6 +12,7 @@ let      $GIT_SSL_NO_VERIFY = 'true'
 set      rtp+=~/.vim/bundle/vundle/
 call     vundle#rc()
 let      mapleader = ","
+let      maplocalleader = " "
 
 Bundle 'gmarik/vundle'
 Bundle 'L9'
@@ -371,12 +372,11 @@ augroup vimrc
   au Filetype slim hi def link slimBegin NONE
 
   au FileType clojure
-    \ let maplocalleader             = " " |
-    \ let vimclojure#ParenRainbow    = 1 |
-    \ let vimclojure#WantNailgun     = 1 |
-    \ let vimclojure#NailgunClient   = $HOME."/bin/ng" |
-    \ let vimclojure#SearchThreshold = 30 |
-    \ noremap <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
+    \ let vimclojure#ParenRainbow    = 1                     |
+    \ let vimclojure#WantNailgun     = 1                     |
+    \ let vimclojure#NailgunClient   = $HOME."/bin/ng"       |
+    \ let vimclojure#SearchThreshold = 30                    |
+    \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
 augroup END
 
