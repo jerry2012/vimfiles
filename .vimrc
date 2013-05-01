@@ -326,6 +326,9 @@ let g:indentLine_color_term = 238
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " vim-easy-align
+let g:easy_align_delimiters = {
+\ '>': { 'pattern': '>>\|=>\|>' }
+\ }
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
 function! OverrideHighlight()
