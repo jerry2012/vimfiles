@@ -50,7 +50,7 @@ Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
 Bundle 'ervandew/supertab'
-Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'Yggdroot/indentLine'
 Bundle 'slim-template/vim-slim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'junegunn/vim-easy-align'
@@ -317,10 +317,10 @@ vnoremap fnr y:%s/<C-R>"//gc<Left><Left><Left>
 " vim-scroll-position
 " let g:scroll_position_jump = '-'
 " let g:scroll_position_change = 'x'
+" let g:scroll_position_auto_enable = 0
 
-" indent-guide
-let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
+" indentLine
+let g:indentLine_color_term = 238
 
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -329,10 +329,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
 function! OverrideHighlight()
-  " indent-guide
-  hi IndentGuidesOdd             ctermbg=237
-  hi IndentGuidesEven            ctermbg=237
-
   " vim-scroll-position
   hi SignColumn                  ctermbg=232
   hi ScrollPositionMarker        ctermfg=208 ctermbg=232
@@ -353,7 +349,6 @@ endfunction
 augroup vimrc
   autocmd!
 
-  au VimEnter             *                   IndentGuidesEnable
   au VimEnter,Colorscheme *                   call OverrideHighlight()
 
   au BufRead              *                   setlocal foldmethod=manual
