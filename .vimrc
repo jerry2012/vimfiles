@@ -57,10 +57,8 @@ Bundle 'junegunn/vim-easy-align'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'CCTree'
 " :CopyRTF
-if has("unix")
-  if system("uname") == "Darwin\n"
-    Bundle 'aniero/vim-copy-as-rtf'
-  endif
+if has("unix") && system("uname") == "Darwin\n"
+  Bundle 'zerowidth/vim-copy-as-rtf'
 endif
 
 filetype plugin indent on
