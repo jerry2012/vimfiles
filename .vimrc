@@ -247,9 +247,8 @@ inoremap <F11> <esc>:TagbarToggle<cr>
 noremap  <F11> :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
-" Window toggle
-noremap <tab> <c-w>w
-noremap <S-tab> <c-w>W
+" Window toggle (Tab clashes with CTRL-i)
+noremap <S-tab> <c-w>w
 
 " Ctrl-P
 let g:ctrlp_working_path_mode = 'a'
