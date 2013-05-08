@@ -55,7 +55,6 @@ Bundle 'slim-template/vim-slim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'jnwhiteh/vim-golang'
-Bundle 'CCTree'
 " :CopyRTF
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
