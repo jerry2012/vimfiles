@@ -11,7 +11,7 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-let s:ns_char = '\%(\%([\n\r\uFEFF\t]\)\@!\p\)'
+let s:ns_char = '\%(\%([\n\r\uFEFF \t]\)\@!\p\)'
 let s:ns_word_char = '\%(\w\|-\)'
 let s:ns_uri_char  = '\%(%\x\x\|'.s:ns_word_char.'\|[#/;?:@&=+$,.!~*''()\[\]]\)'
 let s:ns_tag_char  = '\%(%\x\x\|'.s:ns_word_char.'\|[#/;?:@&=+$.~*''()]\)'
