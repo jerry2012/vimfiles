@@ -326,7 +326,20 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " vim-easy-align
 let g:easy_align_delimiters = {
-\ '>': { 'pattern': '>>\|=>\|>' }
+\ '>': { 'pattern': '>>\|=>\|>' },
+\ '/': { 'pattern': '//*' },
+\ ']': {
+\     'margin_left':   '',
+\     'pattern':       '[\[\]]',
+\     'margin_right':  '',
+\     'stick_to_left': 0
+\   },
+\ ')': {
+\     'pattern':       '[()]',
+\     'margin_left':   '',
+\     'margin_right':  '',
+\     'stick_to_left': 0
+\   }
 \ }
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
