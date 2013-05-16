@@ -327,7 +327,8 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-easy-align
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
-\ '/': { 'pattern': '//*' },
+\ '/': { 'pattern': '//\+' },
+\ '#': { 'pattern': '#\+' },
 \ ']': {
 \     'margin_left':   '',
 \     'pattern':       '[\[\]]',
