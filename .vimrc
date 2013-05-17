@@ -390,8 +390,10 @@ augroup vimrc
     \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
   au FileType mkd
-    \ syntax include @RUBY syntax/rubby.vim |
-    \ syntax region rubySnip matchgroup=Snip start="```ruby" keepend end="```" contains=@RUBY |
-    \ highlight Snip ctermbg=234
+    \ unlet b:current_syntax                                                          |
+    \ exec "syntax include @RUBY ~/.vim/bundle/vim-ruby/syntax/ruby.vim"              |
+    \ syntax region rubySnip matchgroup=Snip start="```ruby" end="```" contains=@RUBY |
+    \ highlight link Snip mkdCode                                                     |
+    \ let b:current_syntax='mkd'
 augroup END
 
