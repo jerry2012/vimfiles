@@ -375,5 +375,9 @@ augroup vimrc
     \ let vimclojure#SearchThreshold = 30                    |
     \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
+  au FileType mkd
+    \ syntax include @RUBY syntax/rubby.vim |
+    \ syntax region rubySnip matchgroup=Snip start="```ruby" keepend end="```" contains=@RUBY |
+    \ highlight Snip ctermbg=234
 augroup END
 
