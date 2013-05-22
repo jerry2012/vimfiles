@@ -162,7 +162,7 @@ if has("cscope")
 endif
 
 " Run script
-function! RunThisScript()
+function! RunThisScript(output)
   let head = getline(1)
   let pos  = stridx(head, '#!')
   let file = expand('%')
@@ -184,13 +184,18 @@ function! RunThisScript()
   elseif &filetype == 'tex'
     execute '!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').redir
   elseif &filetype == 'dot'
-    let output = substitute(file, '.dot$', '.png', '')
-    execute '!dot -Tpng '.file.' -o '.output.' && open '.output.redir
+    let svg = substitute(file, '.dot$', '.svg', '')
+    let png = substitute(file, '.dot$', '.png', '')
+    execute '!dot -Tsvg '.file.' -o '.svg.' && '
+          \ 'mogrify -density 600 -format png '.svg.' && open '.png.redir
   else
     return
   end
 
   " Scratch buffer
+  if !a:output
+    return
+  endif
   let sr = &splitright
   set      splitright
   silent!  bdelete [vim-exec-output]
@@ -207,8 +212,10 @@ function! RunThisScript()
     set nosplitright
   endif
 endfunction
-inoremap <silent> <F5> <esc>:call RunThisScript()<cr>
-noremap  <silent> <F5> :call RunThisScript()<cr>
+inoremap <silent> <F5> <esc>:call RunThisScript(0)<cr>
+noremap  <silent> <F5> :call RunThisScript(0)<cr>
+inoremap <silent> <F6> <esc>:call RunThisScript(1)<cr>
+noremap  <silent> <F6> :call RunThisScript(1)<cr>
 
 noremap ^[[6~ ^D
 noremap ^[[5~ ^U
@@ -218,10 +225,6 @@ noremap ^[[A ^Y
 
 noremap <C-F> <C-D>
 noremap <C-B> <C-U>
-
-" Under line
-inoremap <F6> <esc>yyp:s/[^\t]/=/g<cr>:nohl<cr>a
-noremap  <F6> yyp:s/[^\t]/=/g<cr>:nohl<cr>
 
 " Save
 inoremap <C-s> <esc>:w<cr>a
