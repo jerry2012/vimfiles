@@ -353,7 +353,7 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 " let g:vim_redis_port = '6379'
 " let g:vim_redis_auth = 'xxx'
 noremap <silent> <leader>re :RedisExecute<cr>
-noremap <silent> <leader>rq :RedisClose<cr>
+noremap <silent> <leader>rq :RedisQuit<cr>
 vnoremap <silent> <leader>re :RedisExecute<cr>gv
 
 function! OverrideHighlight()
