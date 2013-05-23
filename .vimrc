@@ -56,6 +56,7 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
+Bundle 'noahfrederick/Hemisu'
 " :CopyRTF
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
@@ -188,7 +189,7 @@ function! RunThisScript(output)
     let svg = substitute(file, '.dot$', '.svg', '')
     let png = substitute(file, '.dot$', '.png', '')
     execute '!dot -Tsvg '.file.' -o '.svg.' && '
-          \ 'mogrify -density 600 -format png '.svg.' && open '.png.redir
+          \ 'mogrify -density 300 -format png '.svg.' && open '.png.redir
   else
     return
   end
