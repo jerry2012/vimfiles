@@ -352,9 +352,9 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 " let g:vim_redis_host = 'localhost'
 " let g:vim_redis_port = '6379'
 " let g:vim_redis_auth = 'xxx'
-noremap <silent> <leader>rr :RedisExecute<cr>
+noremap <silent> <leader>re :RedisExecute<cr>
 noremap <silent> <leader>rq :RedisClose<cr>
-vnoremap <silent> <leader>rr :RedisExecute<cr>gv
+vnoremap <silent> <leader>re :RedisExecute<cr>gv
 
 function! OverrideHighlight()
   " vim-scroll-position
