@@ -57,6 +57,7 @@ Bundle 'junegunn/vim-easy-align'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
 Bundle 'noahfrederick/Hemisu'
+Bundle 'tpope/vim-tbone'
 " :CopyRTF
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
@@ -359,6 +360,21 @@ noremap  <silent> <leader>re :RedisExecute<cr>
 noremap  <silent> <leader>rw :RedisWipe<cr>
 noremap  <silent> <leader>rq :RedisQuit<cr>
 vnoremap <silent> <leader>re :RedisExecute<cr>gv
+
+" vim-tbone
+function! TmuxSend() range
+  echon "To which pane? (t = .1) "
+  let char = getchar()
+  if char == 116
+    let target = '.1'
+  else
+    let target = nr2char(char)
+  endif
+  silent call tbone#write_command(0, a:firstline, a:lastline, 1, target)
+endfunction
+noremap  <silent> <leader>t :call TmuxSend()<cr>
+vnoremap <silent> <leader>t :call TmuxSend()<cr>
+
 
 function! OverrideHighlight()
   " vim-scroll-position
