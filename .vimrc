@@ -18,9 +18,6 @@ Bundle 'gmarik/vundle'
 Bundle 'L9'
 Bundle 'a.vim'
 Bundle 'grep.vim'
-Bundle 'summerfruit256.vim'
-Bundle 'junegunn/jellybeans.vim'
-Bundle 'junegunn/Zenburn'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
@@ -56,8 +53,15 @@ Bundle 'vim-ruby/vim-ruby'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
-Bundle 'noahfrederick/Hemisu'
 Bundle 'tpope/vim-tbone'
+Bundle 'pangloss/vim-javascript'
+
+" Colors
+Bundle 'junegunn/jellybeans.vim'
+Bundle 'junegunn/Zenburn'
+Bundle 'summerfruit256.vim'
+Bundle 'beauty256'
+
 " :CopyRTF
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
@@ -375,6 +379,21 @@ endfunction
 noremap  <silent> <leader>t :call TmuxSend()<cr>
 vnoremap <silent> <leader>t :call TmuxSend()<cr>
 
+function! RotateColors()
+  if !exists("s:colorscheme_list")
+    let s:colorscheme_list = split(globpath(&rtp, "colors/*.vim"), "\n")
+  endif
+  if !exists("s:colorscheme_index")
+    let s:colorscheme_index = 0
+  endif
+  let s:colorscheme_index += 1
+  let path = s:colorscheme_list[(len(s:colorscheme_list) - s:colorscheme_index - 1) % len(s:colorscheme_list)]
+  let name = substitute(fnamemodify(path, ':t'), '\..\{-}$', '', '')
+  execute "colorscheme " . name
+  redraw
+  echom name
+endfunction
+noremap <F8> :call RotateColors()<cr>
 
 function! OverrideHighlight()
   " vim-scroll-position
