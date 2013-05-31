@@ -57,6 +57,7 @@ Bundle 'tpope/vim-tbone'
 Bundle 'pangloss/vim-javascript'
 
 " Colors
+Bundle 'junegunn/seoul256.vim'
 Bundle 'junegunn/jellybeans.vim'
 Bundle 'junegunn/Zenburn'
 Bundle 'summerfruit256.vim'
@@ -125,7 +126,7 @@ set complete-=i
 " colo zenburn
 set  t_Co=256
 set  background=dark
-colo jellybeans
+colo seoul256
 
 " mouse
 set ttymouse=xterm2
@@ -280,7 +281,7 @@ if has("unix")
     " Clipboard
     vnoremap <C-c> y:call system("pbcopy", getreg("\""))<CR>"))
     " Clipboard-RTF
-    vnoremap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo jellybeans<cr>
+    vnoremap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo seoul256<cr>
   endif
 endif
 
@@ -395,32 +396,12 @@ function! RotateColors()
 endfunction
 noremap <F8> :call RotateColors()<cr>
 
-function! OverrideHighlight()
-  " vim-scroll-position
-  hi SignColumn                  ctermbg=232
-  hi ScrollPositionMarker        ctermfg=208 ctermbg=232
-  hi ScrollPositionVisualBegin   ctermfg=196 ctermbg=232
-  hi ScrollPositionVisualMiddle  ctermfg=196 ctermbg=232
-  hi ScrollPositionVisualEnd     ctermfg=196 ctermbg=232
-  hi ScrollPositionVisualOverlap ctermfg=196 ctermbg=232
-  hi ScrollPositionChange        ctermfg=124 ctermbg=232
-  hi ScrollPositionJump          ctermfg=131 ctermbg=232
-
-  " vim-gitgutter
-  hi GitGutterAdd                ctermfg=26  ctermbg=232
-  hi GitGutterChange             ctermfg=107 ctermbg=232
-  hi GitGutterDelete             ctermfg=124 ctermbg=232
-  hi GitGutterChangeDelete       ctermfg=202 ctermbg=232
-endfunction
-
 augroup vimrc
   autocmd!
 
-  au VimEnter,Colorscheme *                   call OverrideHighlight()
-
   au BufRead              *                   setlocal foldmethod=manual
   au BufRead              *                   setlocal nofoldenable
-  au BufWritePost         .vimrc              source % | call OverrideHighlight()
+  au BufWritePost         .vimrc              source %
 
   au BufNewFile,BufRead   [Cc]apfile          set filetype=ruby
   au BufNewFile,BufRead   *.icc               set filetype=cpp
