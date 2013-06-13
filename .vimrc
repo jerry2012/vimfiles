@@ -33,7 +33,6 @@ Bundle 'kana/vim-textobj-user'
 Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'nelstrom/vim-textobj-rubyblock'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'junegunn/vim-scroll-position'
@@ -427,5 +426,9 @@ augroup vimrc
     \ syntax region rubySnip matchgroup=Snip start="```ruby" end="```" contains=@RUBY |
     \ highlight link Snip mkdCode                                                     |
     \ let b:current_syntax='mkd'
-augroup END
 
+  " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+  au BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
+  au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+augroup END
+command! Chomp silent! normal! :%s/\s\+$//<cr>
