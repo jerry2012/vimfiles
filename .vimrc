@@ -355,9 +355,6 @@ runtime macros/matchit.vim
 " let g:scroll_position_change = 'x'
 " let g:scroll_position_auto_enable = 0
 
-" indentLine
-let g:indentLine_color_term = 238
-
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
@@ -388,9 +385,9 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 let g:vim_redis_paste_command = 1
 let g:vim_redis_paste_command_prefix = '> '
 noremap  <silent> <leader>re :RedisExecute<cr>
+vnoremap <silent> <leader>re :RedisExecuteVisual<cr>gv
 noremap  <silent> <leader>rw :RedisWipe<cr>
 noremap  <silent> <leader>rq :RedisQuit<cr>
-vnoremap <silent> <leader>re :RedisExecute<cr>gv
 
 " vim-tbone
 function! TmuxSend() range
