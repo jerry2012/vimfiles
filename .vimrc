@@ -11,49 +11,62 @@ filetype off
 let      $GIT_SSL_NO_VERIFY = 'true'
 set      rtp+=~/.vim/bundle/vundle/
 call     vundle#rc()
-let      mapleader = ","
-let      maplocalleader = " "
+Bundle   'gmarik/vundle'
 
-Bundle 'gmarik/vundle'
-Bundle 'L9'
-Bundle 'a.vim'
-Bundle 'grep.vim'
-Bundle 'kchmck/vim-coffee-script'
+" Edit
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-abolish'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'bronson/vim-visual-star-search'
+Bundle 'ervandew/supertab'
+Bundle 'junegunn/vim-easy-align'
+Bundle 'tpope/vim-tbone'
+if has("unix") && system("uname") == "Darwin\n"
+  Bundle 'zerowidth/vim-copy-as-rtf'
+endif
+
+" Browsing
+Bundle 'a.vim'
+Bundle 'grep.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'majutsushi/tagbar'
+
+" Git
 Bundle 'tpope/vim-fugitive'
 Bundle 'gregsexton/gitv'
 Bundle 'airblade/vim-gitgutter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'kana/vim-textobj-user'
-Bundle 'vim-scripts/argtextobj.vim'
+
+" Snippets
+Bundle 'honza/vim-snippets'
+Bundle   'garbas/vim-snipmate'
+Bundle     'tomtom/tlib_vim'
+Bundle     'MarcWeber/vim-addon-mw-utils'
+
+" Text object
 Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle   'kana/vim-textobj-user'
+Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'michaeljsmith/vim-indent-object'
-Bundle 'kien/ctrlp.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'junegunn/vim-scroll-position'
-Bundle 'vim-scripts/VimClojure'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'bronson/vim-visual-star-search'
-Bundle 'mileszs/ack.vim'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle "honza/vim-snippets"
-Bundle 'ervandew/supertab'
-Bundle 'Yggdroot/indentLine'
-Bundle 'slim-template/vim-slim'
+
+" Lang
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'junegunn/vim-easy-align'
+Bundle 'tpope/vim-rails'
+Bundle 'pangloss/vim-javascript'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'plasticboy/vim-markdown'
+Bundle 'slim-template/vim-slim'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
-Bundle 'tpope/vim-tbone'
-Bundle 'pangloss/vim-javascript'
+Bundle 'vim-scripts/VimClojure'
+Bundle 'kien/rainbow_parentheses.vim'
+
+" Visual
+Bundle 'Yggdroot/indentLine'
+Bundle 'junegunn/vim-scroll-position'
 
 " Colors
 Bundle 'junegunn/seoul256.vim'
@@ -62,15 +75,13 @@ Bundle 'junegunn/Zenburn'
 Bundle 'summerfruit256.vim'
 Bundle 'beauty256'
 
-" :CopyRTF
-if has("unix") && system("uname") == "Darwin\n"
-  Bundle 'zerowidth/vim-copy-as-rtf'
-endif
-
 filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""
 " End of Vundle block
 """"""""""""""""""""""""""""""""""""""""
+
+let mapleader = ","
+let maplocalleader = " "
 
 syntax on
 
@@ -243,6 +254,7 @@ noremap  <C-a> gg0vG$
 " Quit
 inoremap <C-Q> <esc>:q<cr>
 noremap  <C-Q> :q<cr>
+vnoremap <C-Q> <esc><cr>
 
 " Toggle line number display
 noremap <F12> :set nonumber!<cr>
@@ -257,10 +269,10 @@ noremap  <F11> :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
 " Window toggle
-noremap <tab> <c-w>w
+noremap <tab>   <c-w>w
 noremap <S-tab> <c-w>W
-noremap g[ <C-o>
-noremap g] <C-i>
+noremap g[      <C-o>
+noremap g]      <C-i>
 
 " Ctrl-P
 let g:ctrlp_working_path_mode = 'a'
@@ -275,6 +287,7 @@ vnoremap jk <C-c>
 vnoremap v <down>
 vnoremap V <down>
 
+" vim-copy-as-rtf
 if has("unix")
   if system("uname") == "Darwin\n"
     " Clipboard
@@ -296,19 +309,13 @@ inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 inoremap <C-^> <C-o><C-^>
 
-" https://github.com/nelstrom/vim-textobj-rubyblock
-runtime macros/matchit.vim
-if has("autocmd")
-  filetype indent plugin on
-endif
-
 " Bubble lines
-noremap  <silent> <C-k> :execute "normal! ". (line('.') == 1 ? '' : (line('.') == line('$')) ? 'ddP' : 'ddkP')<cr>
-noremap  <silent> <C-j> ddp
+noremap  <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
+noremap  <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
 noremap  <silent> <C-h> <<
 noremap  <silent> <C-l> >>
-vnoremap <silent> <C-k> y:execute "normal! ". (line("'[") == 1 ? 'gv' : line("']") == line('$') ? "'[V']xP'[V']" : "'[V']xkP'[V']")<cr>
-vnoremap <silent> <C-j> y'[V']xp'[V']
+vnoremap <silent> <C-k> :<C-U>execute "normal! gv:move ".max([0,         line("'<") - 2])."\n"<cr>gv
+vnoremap <silent> <C-j> :<C-U>execute "normal! gv:move ".min([line('$'), line("'>") + 1])."\n"<cr>gv
 vnoremap <silent> <C-h> <gv
 vnoremap <silent> <C-l> >gv
 
@@ -317,11 +324,31 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Replace
-vnoremap R "_dP
+function! Replace()
+  if visualmode() ==# 'V'
+    if line("'>") == line('$')
+      normal! gv"_dp
+    else
+      normal! gv"_dP
+    endif
+  else
+    normal! gv"_d
+    if col('.') == col('$') - 1
+      normal! p
+    else
+      normal! P
+    endif
+  endif
+endfunction
+" vnoremap R "_dP
+vnoremap R :<C-U>call Replace()<cr>
 
 " Find and replace
-noremap  fnr *:%s///gc<Left><Left><Left>
-vnoremap fnr y:%s/<C-R>"//gc<Left><Left><Left>
+noremap  fnr *:%s###gc<Left><Left><Left>
+vnoremap fnr y:%s#<C-R>"##gc<Left><Left><Left>
+
+" vim-textobj-rubyblock
+runtime macros/matchit.vim
 
 " vim-scroll-position
 " let g:scroll_position_jump = '-'
@@ -380,18 +407,20 @@ noremap  <silent> <leader>t :call TmuxSend()<cr>
 vnoremap <silent> <leader>t :call TmuxSend()<cr>
 
 function! RotateColors()
-  if !exists("s:colorscheme_list")
-    let s:colorscheme_list = split(globpath(&rtp, "colors/*.vim"), "\n")
+  if !exists("s:colors_list")
+    let s:colors_list =
+    \ sort(map(
+    \   filter(split(globpath(&rtp, "colors/*.vim"), "\n"), 'v:val !~ "^/usr/"'),
+    \   "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"))
   endif
-  if !exists("s:colorscheme_index")
-    let s:colorscheme_index = 0
+  if !exists("s:colors_index")
+    let s:colors_index = index(s:colors_list, g:colors_name)
   endif
-  let s:colorscheme_index += 1
-  let path = s:colorscheme_list[(len(s:colorscheme_list) - s:colorscheme_index - 1) % len(s:colorscheme_list)]
-  let name = substitute(fnamemodify(path, ':t'), '\..\{-}$', '', '')
+  let s:colors_index = (s:colors_index + 1) % len(s:colors_list)
+  let name = s:colors_list[s:colors_index]
   execute "colorscheme " . name
   redraw
-  echom name
+  echo name
 endfunction
 noremap <F8> :call RotateColors()<cr>
 
