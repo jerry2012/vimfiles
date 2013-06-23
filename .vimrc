@@ -34,6 +34,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'majutsushi/tagbar'
+Bundle 'junegunn/vim-github-dashboard'
 
 " Git
 Bundle 'tpope/vim-fugitive'
@@ -458,3 +459,6 @@ augroup vimrc
   au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 augroup END
 command! Chomp silent! normal! :%s/\s\+$//<cr>
+
+" vim-github-dashboard
+let g:github_dashboard = { 'username': 'junegunn', 'password': '' }
