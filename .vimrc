@@ -461,4 +461,4 @@ augroup END
 command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 " vim-github-dashboard
-let g:github_dashboard = { 'username': 'junegunn', 'password': '' }
+let g:github_dashboard = { 'username': 'junegunn' }
