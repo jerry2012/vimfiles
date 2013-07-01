@@ -269,9 +269,7 @@ inoremap <F11> <esc>:TagbarToggle<cr>
 noremap  <F11> :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
-" Window toggle
-noremap <tab>   <c-w>w
-noremap <S-tab> <c-w>W
+" Jump list
 noremap g[      <C-o>
 noremap g]      <C-i>
 
@@ -347,6 +345,32 @@ vnoremap R :<C-U>call Replace()<cr>
 " Find and replace
 noremap  fnr *:%s###gc<Left><Left><Left>
 vnoremap fnr y:%s#<C-R>"##gc<Left><Left><Left>
+
+" Circular windows navigation
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
+
+" Tmux navigation
+" - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir, prev)
+    execute "wincmd " . a:wincmd
+    if a:prev == winnr()
+      " The sleep and & gives time to get back to vim so tmux's focus tracking
+      " can kick in and send us our ^[[O
+      execute "silent !sh -c 'sleep 0.01; tmux select-pane -" . a:tmuxdir . "' &"
+      redraw!
+    endif
+  endfunction
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+  nnoremap <silent> \h     :call TmuxOrSplitSwitch('h', 'L', winnr())<cr>
+  nnoremap <silent> \j     :call TmuxOrSplitSwitch('j', 'D', winnr())<cr>
+  nnoremap <silent> \k     :call TmuxOrSplitSwitch('k', 'U', winnr())<cr>
+  nnoremap <silent> \l     :call TmuxOrSplitSwitch('l', 'R', winnr())<cr>
+  nnoremap <silent> \<tab> :call TmuxOrSplitSwitch('w', 't :.+', 1)<cr>
+endif
 
 " vim-textobj-rubyblock
 runtime macros/matchit.vim
