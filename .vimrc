@@ -350,6 +350,9 @@ vnoremap fnr y:%s#<C-R>"##gc<Left><Left><Left>
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
+" : -> q:
+noremap : q:i
+
 " Tmux navigation
 " - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
 if exists('$TMUX')
