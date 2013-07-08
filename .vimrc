@@ -10,7 +10,8 @@ filetype on
 filetype off
 let      $GIT_SSL_NO_VERIFY = 'true'
 set      rtp+=~/.vim/bundle/vundle/
-call     vundle#rc()
+silent!  call vundle#rc()
+if       exists(':Bundle')
 Bundle   'gmarik/vundle'
 
 " Edit
@@ -76,7 +77,7 @@ Bundle 'junegunn/Zenburn'
 Bundle 'summerfruit256.vim'
 Bundle 'beauty256'
 
-filetype plugin indent on
+endif | filetype plugin indent on
 """"""""""""""""""""""""""""""""""""""""
 " End of Vundle block
 """"""""""""""""""""""""""""""""""""""""
@@ -110,7 +111,7 @@ set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
-set statusline=%<[%n]\ %F\ %m%r%y%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}%=%-14.(%l,%c%V%)\ %P
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
@@ -137,11 +138,14 @@ set complete-=i
 " colo zenburn
 set  t_Co=256
 set  background=dark
-colo seoul256
+silent! colo seoul256
 
 " mouse
 set ttymouse=xterm2
 set mouse=a
+
+" Googling
+set keywordprg=open\ http://www.google.com/search?q=\
 
 " Make TOhtml use CSS and XHTML
 let g:html_use_css=1
@@ -479,8 +483,8 @@ augroup vimrc
     \ let b:current_syntax='mkd'
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
-  au BufNewFile,BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
-  au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+  au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
+  au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 augroup END
 command! Chomp silent! normal! :%s/\s\+$//<cr>
 
