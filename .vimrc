@@ -354,6 +354,16 @@ vnoremap fnr y:%s#<C-R>"##gc<Left><Left><Left>
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
+" Clear search highlights
+noremap <silent><Leader>/ :nohl<CR>
+
+" Make Y behave like other capitals
+map Y y$
+
+" very magic
+nnoremap / /\v
+vnoremap / /\v
+
 " Tmux navigation
 " - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
 if exists('$TMUX')
