@@ -360,10 +360,6 @@ noremap <silent><Leader>/ :nohl<CR>
 " Make Y behave like other capitals
 map Y y$
 
-" very magic
-nnoremap / /\v
-vnoremap / /\v
-
 " Tmux navigation
 " - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
 if exists('$TMUX')
