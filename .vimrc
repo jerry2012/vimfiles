@@ -24,6 +24,7 @@ Bundle 'bronson/vim-visual-star-search'
 Bundle 'ervandew/supertab'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'tpope/vim-tbone'
+Bundle 'kshenoy/vim-signature'
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
 endif
@@ -355,7 +356,7 @@ nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
 " Clear search highlights
-noremap <silent><Leader>/ :nohl<CR>
+noremap <silent><localleader>/ :nohl<CR>
 
 " Make Y behave like other capitals
 map Y y$
@@ -456,6 +457,30 @@ function! RotateColors()
 endfunction
 noremap <F8> :call RotateColors()<cr>
 
+function! GFM()
+  let syntaxes = {
+  \ 'ruby':   '~/.vim/bundle/vim-ruby/syntax/ruby.vim',
+  \ 'yaml':   '~/.vim/syntax/yaml.vim',
+  \ 'vim':    'syntax/vim.vim',
+  \ 'sh':     'syntax/sh.vim',
+  \ 'python': 'syntax/python.vim',
+  \ 'java':   'syntax/java.vim'
+  \ }
+
+  for [lang, syn] in items(syntaxes)
+    unlet b:current_syntax
+    silent! exec printf("syntax include @%s %s", lang, syn)
+    exec printf("syntax region %sSnip matchgroup=Snip start='```%s' end='```' contains=@%s",
+                \ lang, lang, lang)
+  endfor
+  if g:colors_name =~ 'light'
+    highlight def Snip ctermfg=231
+  else
+    highlight def Snip ctermfg=232
+  endif
+  let b:current_syntax='mkd'
+endfunction
+
 augroup vimrc
   autocmd!
 
@@ -481,12 +506,8 @@ augroup vimrc
     \ let vimclojure#SearchThreshold = 30                    |
     \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
-  au FileType mkd
-    \ unlet b:current_syntax                                                          |
-    \ exec "syntax include @RUBY ~/.vim/bundle/vim-ruby/syntax/ruby.vim"              |
-    \ syntax region rubySnip matchgroup=Snip start="```ruby" end="```" contains=@RUBY |
-    \ highlight link Snip mkdCode                                                     |
-    \ let b:current_syntax='mkd'
+  au FileType    mkd  :call GFM()
+  au ColorScheme *.md :call GFM()
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
