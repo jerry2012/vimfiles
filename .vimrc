@@ -397,7 +397,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " vim-easy-align
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
-\ '/': { 'pattern': '//\+' },
+\ '/': { 'pattern': '//\+\|/\*\|\*/' },
 \ '#': { 'pattern': '#\+' },
 \ ']': {
 \     'margin_left':   '',
@@ -456,6 +456,18 @@ function! RotateColors()
   echo name
 endfunction
 noremap <F8> :call RotateColors()<cr>
+
+function! Shuffle()
+ruby << EOF
+  buf = VIM::Buffer.current
+  firstnum = VIM::evaluate('a:firstline').to_i
+  lastnum = VIM::evaluate('a:lastline').to_i
+  (firstnum..lastnum).map { |l| buf[l] }.shuffle.each_with_index do |line, i|
+    buf[firstnum + i] = line
+  end
+EOF
+endfunction
+command! -range Shuffle <line1>,<line2>call Shuffle()
 
 function! GFM()
   let syntaxes = {
