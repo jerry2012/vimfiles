@@ -148,6 +148,10 @@ set mouse=a
 " Googling
 set keywordprg=open\ http://www.google.com/search?q=\
 
+" 80 chars/line
+set textwidth=80
+set colorcolumn=+1
+
 " Make TOhtml use CSS and XHTML
 let g:html_use_css=1
 let g:use_xhtml=1
