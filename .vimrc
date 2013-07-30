@@ -66,6 +66,7 @@ Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
 Bundle 'vim-scripts/VimClojure'
 Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'ap/vim-css-color'
 
 " Visual
 Bundle 'Yggdroot/indentLine'
@@ -480,7 +481,8 @@ function! GFM()
   \ 'vim':    'syntax/vim.vim',
   \ 'sh':     'syntax/sh.vim',
   \ 'python': 'syntax/python.vim',
-  \ 'java':   'syntax/java.vim'
+  \ 'java':   'syntax/java.vim',
+  \ 'c':      'syntax/c.vim'
   \ }
 
   for [lang, syn] in items(syntaxes)
