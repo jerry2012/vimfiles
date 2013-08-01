@@ -341,11 +341,10 @@ function! Replace()
       normal! gv"_dP
     endif
   else
-    normal! gv"_d
-    if col('.') == col('$') - 1
-      normal! p
+    if col("'>") == col('$') - 1
+      normal! gv"_dp
     else
-      normal! P
+      normal! gv"_dP
     endif
   endif
 endfunction
@@ -535,3 +534,10 @@ command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 " vim-github-dashboard
 let g:github_dashboard = { 'username': 'junegunn' }
+
+" For screencasting with Keycastr
+" map <tab> <nop>
+" imap <tab> <nop>
+" vmap <tab> <nop>
+
+set list listchars=tab:\|\ ,
