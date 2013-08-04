@@ -499,6 +499,21 @@ function! GFM()
   let b:current_syntax='mkd'
 endfunction
 
+function! SaveMacro(name, file)
+  let content = eval('@'.a:name)
+  if !empty(content)
+    call writefile(split(content, "\n"), a:file)
+    echom len(content) . " bytes save to ". expand('%:p', a:file)
+  endif
+endfunction
+command! -nargs=* SaveMacro call SaveMacro(<f-args>)
+
+function! LoadMacro(file, name)
+  execute 'let @'.a:name.' = join(readfile(a:file), "\n")'
+  echom "Macro loaded to @". a:name
+endfunction
+command! -nargs=* LoadMacro call LoadMacro(<f-args>)
+
 augroup vimrc
   autocmd!
 
