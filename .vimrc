@@ -117,6 +117,7 @@ set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#status
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
+set synmaxcol=160
 
 " For MacVim
 set noimd
