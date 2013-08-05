@@ -151,8 +151,8 @@ set mouse=a
 set keywordprg=open\ http://www.google.com/search?q=\
 
 " 80 chars/line
-set textwidth=80
-set colorcolumn=+1
+set textwidth=0
+set colorcolumn=81
 
 " Make TOhtml use CSS and XHTML
 let g:html_use_css=1
@@ -497,6 +497,8 @@ function! GFM()
     highlight def Snip ctermfg=232
   endif
   let b:current_syntax='mkd'
+
+  set textwidth=80
 endfunction
 
 function! SaveMacro(name, file)
