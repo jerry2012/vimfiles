@@ -405,16 +405,21 @@ let g:easy_align_delimiters = {
 \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignores': ['String'] },
 \ '#': { 'pattern': '#\+', 'ignores': ['String'] },
 \ ']': {
-\     'margin_left':   '',
 \     'pattern':       '[\[\]]',
-\     'margin_right':  '',
+\     'left_margin':   0,
+\     'right_margin':  0,
 \     'stick_to_left': 0
 \   },
 \ ')': {
 \     'pattern':       '[()]',
-\     'margin_left':   '',
-\     'margin_right':  '',
+\     'left_margin':   0,
+\     'right_margin':  0,
 \     'stick_to_left': 0
+\   },
+\ 'd': {
+\     'pattern': ' \(\S\+\s*[;=]\)\@=',
+\     'left_margin': 0,
+\     'right_margin': 0
 \   }
 \ }
 vnoremap <silent> <Enter> :EasyAlign<cr>
@@ -515,6 +520,11 @@ function! LoadMacro(file, name)
   echom "Macro loaded to @". a:name
 endfunction
 command! -nargs=* LoadMacro call LoadMacro(<f-args>)
+
+function! HL()
+  echo synIDattr(synID(line('.'), col('.'), 0), 'name')
+endfunction
+command! HL call HL()
 
 augroup vimrc
   autocmd!
