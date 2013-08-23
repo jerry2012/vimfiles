@@ -405,7 +405,7 @@ let g:easy_align_delimiters = {
 \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignores': ['String'] },
 \ '#': { 'pattern': '#\+', 'ignores': ['String'] },
 \ ']': {
-\     'pattern':       '[\[\]]',
+\     'pattern':       '[[\]]',
 \     'left_margin':   0,
 \     'right_margin':  0,
 \     'stick_to_left': 0
@@ -510,7 +510,7 @@ function! SaveMacro(name, file)
   let content = eval('@'.a:name)
   if !empty(content)
     call writefile(split(content, "\n"), a:file)
-    echom len(content) . " bytes save to ". expand('%:p', a:file)
+    echom len(content) . " bytes save to ". a:file
   endif
 endfunction
 command! -nargs=* SaveMacro call SaveMacro(<f-args>)
