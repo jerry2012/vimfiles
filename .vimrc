@@ -18,7 +18,7 @@ Bundle   'gmarik/vundle'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-abolish'
+" Bundle 'tpope/vim-abolish'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'ervandew/supertab'
 Bundle 'junegunn/vim-easy-align'
@@ -33,7 +33,7 @@ Bundle 'tpope/vim-dispatch'
 
 " Browsing
 Bundle 'a.vim'
-Bundle 'grep.vim'
+" Bundle 'grep.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
@@ -46,15 +46,15 @@ Bundle 'gregsexton/gitv'
 Bundle 'airblade/vim-gitgutter'
 
 " Snippets
-Bundle 'honza/vim-snippets'
-Bundle   'garbas/vim-snipmate'
-Bundle     'tomtom/tlib_vim'
-Bundle     'MarcWeber/vim-addon-mw-utils'
+" Bundle 'honza/vim-snippets'
+" Bundle   'garbas/vim-snipmate'
+" Bundle     'tomtom/tlib_vim'
+" Bundle     'MarcWeber/vim-addon-mw-utils'
 
 " Text object
-Bundle 'nelstrom/vim-textobj-rubyblock'
-Bundle   'kana/vim-textobj-user'
-Bundle 'vim-scripts/argtextobj.vim'
+" Bundle 'nelstrom/vim-textobj-rubyblock'
+" Bundle   'kana/vim-textobj-user'
+" Bundle 'vim-scripts/argtextobj.vim'
 Bundle 'michaeljsmith/vim-indent-object'
 
 " Lang
@@ -67,7 +67,7 @@ Bundle 'slim-template/vim-slim'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
 Bundle 'vim-scripts/VimClojure'
-Bundle 'kien/rainbow_parentheses.vim'
+" Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'ap/vim-css-color'
 
 " Visual
@@ -76,9 +76,9 @@ Bundle 'junegunn/vim-scroll-position'
 
 " Colors
 Bundle 'junegunn/seoul256.vim'
-Bundle 'junegunn/jellybeans.vim'
-Bundle 'junegunn/Zenburn'
-Bundle 'summerfruit256.vim'
+" Bundle 'junegunn/jellybeans.vim'
+" Bundle 'junegunn/Zenburn'
+" Bundle 'summerfruit256.vim'
 Bundle 'beauty256'
 
 endif | filetype plugin indent on
@@ -485,6 +485,26 @@ ruby << EOF
 EOF
 endfunction
 command! -range Shuffle <line1>,<line2>call Shuffle()
+
+function! s:coerce()
+  " snake_case -> kebab-case -> camelCase -> MixedCase
+  let word = @"
+  if word =~# '^[a-z0-9_]\+[!?]\?$'
+    let @" = substitute(word, '_', '-', 'g')
+  elseif word =~# '^[a-z0-9?!-]\+[!?]\?$'
+    let @" = substitute(word, '\C-\([^-]\)', '\u\1', 'g')
+  elseif word =~# '^[a-z0-9]\+\([A-Z][a-z0-9]*\)\+[!?]\?$'
+    let @" = toupper(word[0]) . strpart(word, 1)
+  elseif word =~# '^\([A-Z][a-z0-9]*\)\{2,}[!?]\?$'
+    let @" = strpart(substitute(word, '\C\([A-Z]\)', '_\l\1', 'g'), 1)
+  else
+    normal gv
+  endif
+
+  let e = col("'>") + len(@") - len(word)
+  execute "normal gv\"_c\<C-R>\"\<esc>".col("'<"). "|v" . e . '|'
+endfunction
+vnoremap <silent> <tab> y:call <sid>coerce()<cr>
 
 function! GFM()
   let syntaxes = {
