@@ -20,14 +20,17 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-abolish'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'bronson/vim-visual-star-search'
+Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'ervandew/supertab'
 Bundle 'junegunn/vim-easy-align'
-Bundle 'tpope/vim-tbone'
 Bundle 'kshenoy/vim-signature'
 if has("unix") && system("uname") == "Darwin\n"
   Bundle 'zerowidth/vim-copy-as-rtf'
 endif
+
+" Tmux
+Bundle 'tpope/vim-tbone'
+Bundle 'tpope/vim-dispatch'
 
 " Browsing
 Bundle 'a.vim'
@@ -353,8 +356,10 @@ endfunction
 vnoremap R :<C-U>call Replace()<cr>
 
 " Find and replace
-noremap  fnr *:%s###gc<Left><Left><Left>
-vnoremap fnr y:%s#<C-R>"##gc<Left><Left><Left>
+noremap <Enter> :set hls!<cr>:set hls?<cr>
+noremap  *      :<C-U>let @/ = expand('<cword>')<cr>
+noremap  fnr    :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
+vnoremap fnr    y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
 
 " Circular windows navigation
 nnoremap <tab>   <c-w>w
