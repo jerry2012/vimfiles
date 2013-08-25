@@ -20,7 +20,6 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-abolish'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'ervandew/supertab'
 Bundle 'junegunn/vim-easy-align'
 Bundle 'kshenoy/vim-signature'
@@ -356,10 +355,13 @@ endfunction
 vnoremap R :<C-U>call Replace()<cr>
 
 " Find and replace
-noremap <Enter> :set hls!<cr>:set hls?<cr>
-noremap  *      :<C-U>let @/ = expand('<cword>')<cr>
-noremap  fnr    :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
-vnoremap fnr    y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
+noremap  <silent> <Enter> :set hls!<cr>:set hls?<cr>
+noremap  fnr     :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
+vnoremap fnr     y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
+
+" Star-search without moving
+noremap  <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.expand('<cword>').'\>'<cr>:set hls<cr>
+vnoremap <silent> * y:<C-U>let @/ = '\V'.@"<cr>:set hls<cr>
 
 " Circular windows navigation
 nnoremap <tab>   <c-w>w
