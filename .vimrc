@@ -355,7 +355,7 @@ endfunction
 vnoremap R :<C-U>call Replace()<cr>
 
 " Find and replace
-noremap  <silent> <Enter> :set hls!<cr>:set hls?<cr>
+" noremap  <silent> <Enter> :set hls!<cr>:set hls?<cr>
 noremap  fnr     :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
 vnoremap fnr     y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
 
