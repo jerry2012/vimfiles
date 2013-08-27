@@ -156,7 +156,7 @@ set keywordprg=open\ http://www.google.com/search?q=\
 set textwidth=0
 set colorcolumn=81
 
-" Keep the cursor on the same solumn
+" Keep the cursor on the same column
 set nostartofline
 
 " Make TOhtml use CSS and XHTML
