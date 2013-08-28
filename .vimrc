@@ -67,6 +67,7 @@ Bundle 'slim-template/vim-slim'
 Bundle 'jnwhiteh/vim-golang'
 Bundle 'junegunn/vim-redis'
 Bundle 'vim-scripts/VimClojure'
+Bundle 'Glench/Vim-Jinja2-Syntax'
 " Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'ap/vim-css-color'
 
@@ -506,31 +507,52 @@ function! s:coerce()
 endfunction
 vnoremap <silent> <tab> y:call <sid>coerce()<cr>
 
-function! GFM()
-  let syntaxes = {
-  \ 'ruby':   '~/.vim/bundle/vim-ruby/syntax/ruby.vim',
-  \ 'yaml':   '~/.vim/syntax/yaml.vim',
-  \ 'vim':    'syntax/vim.vim',
-  \ 'sh':     'syntax/sh.vim',
-  \ 'python': 'syntax/python.vim',
-  \ 'java':   'syntax/java.vim',
-  \ 'c':      'syntax/c.vim'
-  \ }
-
-  for [lang, syn] in items(syntaxes)
-    unlet b:current_syntax
-    silent! exec printf("syntax include @%s %s", lang, syn)
-    exec printf("syntax region %sSnip matchgroup=Snip start='```%s' end='```' contains=@%s",
-                \ lang, lang, lang)
-  endfor
-  if g:colors_name =~ 'light'
-    highlight def Snip ctermfg=231
-  else
-    highlight def Snip ctermfg=232
+function! SyntaxInclude(lang, b, e, inclusive)
+  let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
+  if empty(syns)
+    return
   endif
-  let b:current_syntax='mkd'
 
-  set textwidth=80
+  let csyn = b:current_syntax
+  unlet b:current_syntax
+
+  let z = "'" " Default
+  for nr in range(char2nr('a'), char2nr('z'))
+    let char = nr2char(nr)
+    if a:b !~ char && a:e !~ char
+      let z = char
+      break
+    endif
+  endfor
+
+  silent! exec printf("syntax include @%s %s", a:lang, syns[0])
+  if a:inclusive
+    exec printf('syntax region %sSnip start=%s\(\)\(%s\)\@=%s end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
+                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+  else
+    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s end=%s%s%s contains=@%s containedin=ALL',
+                \ a:lang, z, a:b, z, z, a:e, z, a:lang)
+  endif
+
+  let b:current_syntax = csyn
+endfunction
+
+function! FileTypeHandler()
+  if &ft =~ 'jinja' && &ft != 'jinja'
+    call SyntaxInclude('jinja', '{{', '}}', 1)
+    call SyntaxInclude('jinja', '{%', '%}', 1)
+  elseif &ft == 'mkd'
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'python', 'java', 'c']
+      call SyntaxInclude(lang, '```'.lang, '```', 0)
+    endfor
+
+    if &background == 'light'
+      highlight def Snip ctermfg=231
+    else
+      highlight def Snip ctermfg=232
+    endif
+    set textwidth=80
+  endif
 endfunction
 
 function! SaveMacro(name, file)
@@ -567,9 +589,8 @@ augroup vimrc
   au BufNewFile,BufRead   *.god               set filetype=ruby
   au BufNewFile,BufRead   *.coffee-processing set filetype=coffee
 
-  au Filetype ruby syn match rubyRocket "=>" | syn match rubyParens "[()]"
-
   au Filetype slim hi def link slimBegin NONE
+  au Filetype,ColorScheme * call FileTypeHandler()
 
   au FileType clojure
     \ let vimclojure#ParenRainbow    = 1                     |
@@ -578,8 +599,6 @@ augroup vimrc
     \ let vimclojure#SearchThreshold = 30                    |
     \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
-  au FileType    mkd  :call GFM()
-  au ColorScheme *.md :call GFM()
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
