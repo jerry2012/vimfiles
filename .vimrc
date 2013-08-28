@@ -157,6 +157,9 @@ set keywordprg=open\ http://www.google.com/search?q=\
 set textwidth=0
 set colorcolumn=81
 
+" Keep the cursor on the same column
+set nostartofline
+
 " Make TOhtml use CSS and XHTML
 let g:html_use_css=1
 let g:use_xhtml=1
@@ -304,9 +307,9 @@ vnoremap V <down>
 if has("unix")
   if system("uname") == "Darwin\n"
     " Clipboard
-    vnoremap <C-c> y:call system("pbcopy", getreg("\""))<CR>"))
+    vnoremap <C-c> "*y
     " Clipboard-RTF
-    vnoremap <S-c> <esc>:colo summerfruit256<cr>gv:CopyRTF<cr>:colo seoul256<cr>
+    vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
   endif
 endif
 
