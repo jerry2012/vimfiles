@@ -570,7 +570,7 @@ function! HL()
 endfunction
 command! HL call HL()
 
-function! AdjustIndentation(idt) range
+function! s:adjust_indentation(idt) range
   let [min, max, range] = [10000, 0, range(a:firstline, a:lastline)]
   for l in range
     let line = getline(l)
@@ -585,9 +585,9 @@ function! AdjustIndentation(idt) range
     call setline(l, substitute(line, '^\s*', idt, ''))
   endfor
 endfunction
-vnoremap <silent> id :call AdjustIndentation('d')<cr>
-vnoremap <silent> is :call AdjustIndentation('s')<cr>
-vnoremap <silent> in :call AdjustIndentation('n')<cr>
+vnoremap <silent> id :call <sid>adjust_indentation('d')<cr>
+vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
+vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
 
 augroup vimrc
   autocmd!
