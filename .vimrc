@@ -95,8 +95,6 @@ syntax on
 set nu
 set autoindent
 set smartindent
-set cindent
-set nobackup
 set lazyredraw
 set laststatus=2
 set showcmd
@@ -131,19 +129,17 @@ set ims=-1
 set tags=./tags;/
 
 " Annoying temporary files
-set backupdir=/tmp
-set directory=/tmp
+set backupdir=/tmp,.
+set directory=/tmp,.
 
 " Shift-tab on GNU screen
+" http://superuser.com/questions/195794/gnu-screen-shift-tab-issue
 set t_kB=[Z
 
 " set complete=.,w,b,u,t
 set complete-=i
 
 " Color setting
-" colo zenburn
-set  t_Co=256
-set  background=dark
 silent! colo seoul256
 
 " mouse
@@ -155,14 +151,10 @@ set keywordprg=open\ http://www.google.com/search?q=\
 
 " 80 chars/line
 set textwidth=0
-set colorcolumn=81
+set colorcolumn=80
 
 " Keep the cursor on the same column
 set nostartofline
-
-" Make TOhtml use CSS and XHTML
-let g:html_use_css=1
-let g:use_xhtml=1
 
 if has("cscope")
   set csprg=/usr/local/bin/cscope
@@ -577,6 +569,25 @@ function! HL()
   echo synIDattr(synID(line('.'), col('.'), 0), 'name')
 endfunction
 command! HL call HL()
+
+function! AdjustIndentation(idt) range
+  let [min, max, range] = [10000, 0, range(a:firstline, a:lastline)]
+  for l in range
+    let line = getline(l)
+    if empty(line) | continue | endif
+    let ilen = len(matchstr(line, '^\s\+'))
+    let [min, max] = [min([ilen, min]), max([ilen, max])]
+  endfor
+  let idt = repeat(' ', a:idt == 'd' ? max : (a:idt == 's' ? min : 0))
+  for l in range
+    let line = getline(l)
+    if empty(line) | continue | endif
+    call setline(l, substitute(line, '^\s*', idt, ''))
+  endfor
+endfunction
+vnoremap <silent> id :call AdjustIndentation('d')<cr>
+vnoremap <silent> is :call AdjustIndentation('s')<cr>
+vnoremap <silent> in :call AdjustIndentation('n')<cr>
 
 augroup vimrc
   autocmd!
