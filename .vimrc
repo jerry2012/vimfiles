@@ -589,6 +589,48 @@ vnoremap <silent> id :call <sid>adjust_indentation('d')<cr>
 vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
 
+function! s:bundle_parallel_update(...)
+  vertical topleft new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+  noremap <silent> <buffer> q :q<cr>
+  call append(0, 'Updating Bundles')
+  call append(1, '['.repeat(' ', len(g:bundles)).']')
+  redraw!
+  ruby << EOF
+  st    = Time.now
+  nt    = VIM::evaluate('a:0 > 0 ? a:1 : len(g:bundles)').to_i
+  base  = VIM::evaluate('g:bundle_dir')
+  all   = VIM::evaluate('g:bundles')
+  total = all.length
+  cnt   = 0
+  all.each_slice(nt).each do |slice|
+    slice.map { |b|
+      Thread.new do
+        name, dir, uri = b.values_at *%w[name rtpath uri]
+        Thread.current[:result] =
+          name + ': ' +
+            if File.directory? dir
+              `cd #{dir}; git pull 2>&1`
+            else
+              `mkdir -p #{base}; cd #{base}; git clone --recursive #{uri} #{dir} 2>&1`
+            end.lines.to_a.last.strip
+      end
+    }.each do |t|
+      t.join
+      $curbuf[1] = "Updating Bundles (#{cnt += 1}/#{total})"
+      $curbuf[2] = '[' + ('=' * cnt).ljust(total) + ']'
+      $curbuf.append $curbuf.count, t[:result]
+      VIM::command('redraw')
+    end
+  end
+  $curbuf[1] = "Updated. Elapsed time: #{"%.2f" % (Time.now - st)} sec."
+EOF
+  call vundle#installer#docs()
+  call vundle#config#require(g:bundles)
+endfunction
+command! -nargs=* BundleParallelUpdate call s:bundle_parallel_update(<f-args>)
+command! StartBundleParallelUpdate Start! vim -c BundleParallelUpdate -c qa
+
 augroup vimrc
   autocmd!
 
