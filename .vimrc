@@ -590,6 +590,10 @@ vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
 
 function! s:bundle_parallel_update(...)
+  if !has('ruby')
+    BundleInstall!
+    return
+  endif
   vertical topleft new
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
   noremap <silent> <buffer> q :q<cr>
@@ -629,7 +633,7 @@ EOF
   call vundle#config#require(g:bundles)
 endfunction
 command! -nargs=* BundleParallelUpdate call s:bundle_parallel_update(<f-args>)
-command! StartBundleParallelUpdate Start! vim -c BundleParallelUpdate -c qa
+command! StartBundleParallelUpdate Start! vim +BundleParallelUpdate +qa
 
 augroup vimrc
   autocmd!
