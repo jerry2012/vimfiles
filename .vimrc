@@ -114,7 +114,29 @@ set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
+
+" %< Where to truncate
+" %n buffer number
+" %F Full path
+" %m Modified flag: [+], [-]
+" %r Readonly flag: [RO]
+" %y Type:          [vim]
+" fugitive#statusline()
+" %= Separator
+" %-14.(...)
+" %l Line
+" %c Column
+" %V Virtual column
+" %P Percentage
+" %#HighlightGroup#
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}%=%-14.(%l,%c%V%)\ %P
+" function! CursorPosition(width)
+"   let lines = line('$')
+"   let cline = line('.')
+"   let pct   = float2nr(a:width * 1.0 * cline / lines)
+"   return '|' . repeat('-', pct) . '>'
+" endfunction
+" set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}%=%14.(%l,%c%V%)\ %-12{CursorPosition(10)}%P
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
