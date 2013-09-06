@@ -388,6 +388,10 @@ nnoremap <S-tab> <c-w>W
 " Clear search highlights
 noremap <silent><localleader>/ :nohl<CR>
 
+" Headings
+noremap <leader>1 yypVr=
+noremap <leader>2 yypVr-
+
 " Make Y behave like other capitals
 map Y y$
 
