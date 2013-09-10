@@ -10,7 +10,6 @@ silent! call plug#init()
 if exists(':Plug')
 
 " Edit
-Plug 'gmarik/vundle'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
