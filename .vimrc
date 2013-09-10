@@ -3,88 +3,84 @@
 """"""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""
-" Vundle block
+" vim-plug block
 """"""""""""""""""""""""""""""""""""""""
-set      nocompatible
-filetype on
-filetype off
-let      $GIT_SSL_NO_VERIFY = 'true'
-set      rtp+=~/.vim/bundle/vundle/
-silent!  call vundle#rc()
-if       exists(':Bundle')
-Bundle   'gmarik/vundle'
+let $GIT_SSL_NO_VERIFY = 'true'
+silent! call plug#init()
+if exists(':Plug')
 
 " Edit
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-endwise'
-" Bundle 'tpope/vim-abolish'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'ervandew/supertab'
-Bundle 'junegunn/vim-easy-align'
-Bundle 'kshenoy/vim-signature'
+Plug 'gmarik/vundle'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-abolish'
+Plug 'tomtom/tcomment_vim'
+Plug 'ervandew/supertab'
+Plug 'junegunn/vim-easy-align'
+Plug 'kshenoy/vim-signature'
 if has("unix") && system("uname") == "Darwin\n"
-  Bundle 'zerowidth/vim-copy-as-rtf'
+  Plug 'zerowidth/vim-copy-as-rtf'
 endif
 
 " Tmux
-Bundle 'tpope/vim-tbone'
-Bundle 'tpope/vim-dispatch'
+Plug 'tpope/vim-tbone'
+Plug 'tpope/vim-dispatch'
 
 " Browsing
-Bundle 'a.vim'
-" Bundle 'grep.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'majutsushi/tagbar'
-Bundle 'junegunn/vim-github-dashboard'
+Plug 'a.vim'
+" Plug 'grep.vim'
+Plug 'mileszs/ack.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'junegunn/vim-github-dashboard'
 
 " Git
-Bundle 'tpope/vim-fugitive'
-Bundle 'gregsexton/gitv'
-Bundle 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
+Plug 'airblade/vim-gitgutter'
 
 " Snippets
-" Bundle 'honza/vim-snippets'
-" Bundle   'garbas/vim-snipmate'
-" Bundle     'tomtom/tlib_vim'
-" Bundle     'MarcWeber/vim-addon-mw-utils'
+" Plug 'honza/vim-snippets'
+" Plug   'garbas/vim-snipmate'
+" Plug     'tomtom/tlib_vim'
+" Plug     'MarcWeber/vim-addon-mw-utils'
 
 " Text object
-" Bundle 'nelstrom/vim-textobj-rubyblock'
-" Bundle   'kana/vim-textobj-user'
-" Bundle 'vim-scripts/argtextobj.vim'
-Bundle 'michaeljsmith/vim-indent-object'
+" Plug 'nelstrom/vim-textobj-rubyblock'
+" Plug   'kana/vim-textobj-user'
+" Plug 'vim-scripts/argtextobj.vim'
+Plug 'michaeljsmith/vim-indent-object'
 
 " Lang
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'pangloss/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'plasticboy/vim-markdown'
-Bundle 'slim-template/vim-slim'
-Bundle 'jnwhiteh/vim-golang'
-Bundle 'junegunn/vim-redis'
-Bundle 'vim-scripts/VimClojure'
-Bundle 'Glench/Vim-Jinja2-Syntax'
-" Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'ap/vim-css-color'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'pangloss/vim-javascript'
+Plug 'kchmck/vim-coffee-script'
+Plug 'plasticboy/vim-markdown'
+Plug 'slim-template/vim-slim'
+Plug 'jnwhiteh/vim-golang'
+Plug 'junegunn/vim-redis'
+Plug 'vim-scripts/VimClojure'
+Plug 'Glench/Vim-Jinja2-Syntax'
+" Plug 'kien/rainbow_parentheses.vim'
+Plug 'ap/vim-css-color'
 
 " Visual
-Bundle 'Yggdroot/indentLine'
-Bundle 'junegunn/vim-scroll-position'
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/vim-scroll-position'
 
 " Colors
-Bundle 'junegunn/seoul256.vim'
-" Bundle 'junegunn/jellybeans.vim'
-" Bundle 'junegunn/Zenburn'
-" Bundle 'summerfruit256.vim'
-Bundle 'beauty256'
+Plug 'junegunn/seoul256.vim'
+" Plug 'junegunn/jellybeans.vim'
+" Plug 'junegunn/Zenburn'
+" Plug 'summerfruit256.vim'
+Plug 'beauty256'
 
-endif | filetype plugin indent on
+endif
 """"""""""""""""""""""""""""""""""""""""
-" End of Vundle block
+" End of vim-plug block
 """"""""""""""""""""""""""""""""""""""""
 
 let mapleader = ","
@@ -169,7 +165,7 @@ set ttymouse=xterm2
 set mouse=a
 
 " Googling
-set keywordprg=open\ http://www.google.com/search?q=\
+" set keywordprg=open\ http://www.google.com/search?q=\
 
 " 80 chars/line
 set textwidth=0
@@ -424,6 +420,8 @@ runtime macros/matchit.vim
 " let g:scroll_position_jump = '-'
 " let g:scroll_position_change = 'x'
 " let g:scroll_position_auto_enable = 0
+let g:scroll_position_auto_enable = 0
+" call scroll_position#show()
 
 " supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -444,6 +442,11 @@ let g:easy_align_delimiters = {
 \     'left_margin':   0,
 \     'right_margin':  0,
 \     'stick_to_left': 0
+\   },
+\ 'f': {
+\     'pattern': ' \(\S\+(\)\@=',
+\     'left_margin': 0,
+\     'right_margin': 0
 \   },
 \ 'd': {
 \     'pattern': ' \(\S\+\s*[;=]\)\@=',
@@ -562,7 +565,7 @@ function! FileTypeHandler()
   if &ft =~ 'jinja' && &ft != 'jinja'
     call SyntaxInclude('jinja', '{{', '}}', 1)
     call SyntaxInclude('jinja', '{%', '%}', 1)
-  elseif &ft == 'mkd'
+  elseif &ft == 'mkd' || &ft == 'markdown'
     for lang in ['ruby', 'yaml', 'vim', 'sh', 'python', 'java', 'c']
       call SyntaxInclude(lang, '```'.lang, '```', 0)
     endfor
@@ -615,52 +618,6 @@ vnoremap <silent> id :call <sid>adjust_indentation('d')<cr>
 vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
 
-function! s:bundle_parallel_update(...)
-  if !has('ruby')
-    BundleInstall!
-    return
-  endif
-  vertical topleft new
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-  noremap <silent> <buffer> q :q<cr>
-  call append(0, 'Updating Bundles')
-  call append(1, '['.repeat(' ', len(g:bundles)).']')
-  redraw!
-  ruby << EOF
-  st    = Time.now
-  nt    = VIM::evaluate('a:0 > 0 ? a:1 : len(g:bundles)').to_i
-  base  = VIM::evaluate('g:bundle_dir')
-  all   = VIM::evaluate('g:bundles')
-  total = all.length
-  cnt   = 0
-  all.each_slice(nt).each do |slice|
-    slice.map { |b|
-      Thread.new do
-        name, dir, uri = b.values_at *%w[name rtpath uri]
-        Thread.current[:result] =
-          name + ': ' +
-            if File.directory? dir
-              `cd #{dir}; git pull 2>&1`
-            else
-              `mkdir -p #{base}; cd #{base}; git clone --recursive #{uri} #{dir} 2>&1`
-            end.lines.to_a.last.strip
-      end
-    }.each do |t|
-      t.join
-      $curbuf[1] = "Updating Bundles (#{cnt += 1}/#{total})"
-      $curbuf[2] = '[' + ('=' * cnt).ljust(total) + ']'
-      $curbuf.append $curbuf.count, t[:result]
-      VIM::command('redraw')
-    end
-  end
-  $curbuf[1] = "Updated. Elapsed time: #{"%.2f" % (Time.now - st)} sec."
-EOF
-  call vundle#installer#docs()
-  call vundle#config#require(g:bundles)
-endfunction
-command! -nargs=* BundleParallelUpdate call s:bundle_parallel_update(<f-args>)
-command! StartBundleParallelUpdate Start! vim +BundleParallelUpdate +qa
-
 augroup vimrc
   autocmd!
 
@@ -701,3 +658,4 @@ let g:github_dashboard = { 'username': 'junegunn' }
 " vmap <tab> <nop>
 
 set list listchars=tab:\|\ ,
+
