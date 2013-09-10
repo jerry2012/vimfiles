@@ -17,7 +17,7 @@ for d in ftplugin syntax; do
   fi
 done
 
-vim +BundleParallelUpdate +qall
+vim +PlugInstall +qall
 
 # VimClojure-client
 rm -rf vimclojure-nailgun-client*                                            &&
