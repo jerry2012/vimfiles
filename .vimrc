@@ -303,6 +303,7 @@ if has("cscope")
   elseif !empty($CSCOPE_DB)
     execute "cs add ".$CSCOPE_DB
   endif
+  unlet db
   set csverb
 
   "   's'   symbol: find all references to the token under cursor
