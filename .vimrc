@@ -646,7 +646,7 @@ runtime macros/matchit.vim
 " let g:scroll_position_jump = '-'
 " let g:scroll_position_change = 'x'
 " let g:scroll_position_auto_enable = 0
-let g:scroll_position_auto_enable = 0
+" let g:scroll_position_auto_enable = 0
 " call scroll_position#show()
 
 " ----------------------------------------------------------------------------
