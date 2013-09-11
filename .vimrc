@@ -297,11 +297,11 @@ if has("cscope")
   set nocsverb
   " add any database in current directory
   let db = findfile('cscope.out', '.;')
-  if db != ""
-      execute("cs add ".db)
+  if !empty(db)
+    execute "cs add ".db
   " else add database pointed to by environment
-  elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
+  elseif !empty($CSCOPE_DB)
+    execute "cs add ".$CSCOPE_DB
   endif
   set csverb
 
@@ -323,14 +323,20 @@ if has("cscope")
   noremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
+
 " ============================================================================
-" FUNCTIONS
+" FUNCTIONS & COMMANDS
 " ============================================================================
+
+" ----------------------------------------------------------------------------
+" :Chomp
+" ----------------------------------------------------------------------------
+command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 " ----------------------------------------------------------------------------
 " R | Replace
 " ----------------------------------------------------------------------------
-function! Replace()
+function! s:replace()
   if visualmode() ==# 'V'
     if line("'>") == line('$')
       normal! gv"_dp
@@ -346,14 +352,14 @@ function! Replace()
   endif
 endfunction
 " vnoremap R "_dP
-vnoremap R :<C-U>call Replace()<cr>
+vnoremap R :<C-U>call <SID>replace()<cr>
 
 " ----------------------------------------------------------------------------
 " Tmux navigation (disabled)
 " ----------------------------------------------------------------------------
 " - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
 " if exists('$TMUX')
-"   function! TmuxOrSplitSwitch(wincmd, tmuxdir, prev)
+"   function! tmux_or_split_switch(wincmd, tmuxdir, prev)
 "     execute "wincmd " . a:wincmd
 "     if a:prev == winnr()
 "       " The sleep and & gives time to get back to vim so tmux's focus tracking
@@ -365,42 +371,37 @@ vnoremap R :<C-U>call Replace()<cr>
 "   let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
 "   let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
 "   let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-"   nnoremap <silent> \h     :call TmuxOrSplitSwitch('h', 'L', winnr())<cr>
-"   nnoremap <silent> \j     :call TmuxOrSplitSwitch('j', 'D', winnr())<cr>
-"   nnoremap <silent> \k     :call TmuxOrSplitSwitch('k', 'U', winnr())<cr>
-"   nnoremap <silent> \l     :call TmuxOrSplitSwitch('l', 'R', winnr())<cr>
-"   nnoremap <silent> \<tab> :call TmuxOrSplitSwitch('w', 't :.+', 1)<cr>
+"   nnoremap <silent> \h     :call <SID>tmux_or_split_switch('h', 'L', winnr())<cr>
+"   nnoremap <silent> \j     :call <SID>tmux_or_split_switch('j', 'D', winnr())<cr>
+"   nnoremap <silent> \k     :call <SID>tmux_or_split_switch('k', 'U', winnr())<cr>
+"   nnoremap <silent> \l     :call <SID>tmux_or_split_switch('l', 'R', winnr())<cr>
+"   nnoremap <silent> \<tab> :call <SID>tmux_or_split_switch('w', 't :.+', 1)<cr>
 " endif
 
 " ----------------------------------------------------------------------------
 " <F5> / <F6> | Run script
 " ----------------------------------------------------------------------------
-function! RunThisScript(output)
-  let head = getline(1)
-  let pos  = stridx(head, '#!')
-  let file = expand('%')
-  let absp = stridx(file, '/') == 0
-  if !absp
-    let file = './'.file
-  end
-
-  let ofile = "/tmp/vim-exec.txt"
-  let redir = " 2>&1 | tee ".ofile
+function! s:run_this_script(output)
+  let head  = getline(1)
+  let pos   = stridx(head, '#!')
+  let file  = expand('%:p')
+  let ofile = tempname()
+  let rdr   = " 2>&1 | tee ".ofile
   " She-bang found
   if pos != -1
-    execute '!'.strpart(head, pos + 2).' '.file.redir
+    execute '!'.strpart(head, pos + 2).' '.file.rdr
   " She-bang not found but executable
   elseif executable(file)
-    execute '!'.file.redir
+    execute '!'.file.rdr
   elseif &filetype == 'ruby'
-    execute '!/usr/bin/env ruby '.file.redir
+    execute '!/usr/bin/env ruby '.file.rdr
   elseif &filetype == 'tex'
-    execute '!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').redir
+    execute '!latex '.file. '; [ $? -eq 0 ] && xdvi '. expand('%:r').rdr
   elseif &filetype == 'dot'
-    let svg = substitute(file, '.dot$', '.svg', '')
-    let png = substitute(file, '.dot$', '.png', '')
+    let svg = expand('%:r') . '.svg'
+    let png = expand('%:r') . '.png'
     execute '!dot -Tsvg '.file.' -o '.svg.' && '
-          \ 'mogrify -density 300 -format png '.svg.' && open '.png.redir
+          \ 'mogrify -density 300 -format png '.svg.' && open '.png.rdr
   else
     return
   end
@@ -430,15 +431,15 @@ function! RunThisScript(output)
   normal!  gg"_dd
   execute  "normal! \<C-W>p"
 endfunction
-inoremap <silent> <F5> <esc>:call RunThisScript(0)<cr>
-noremap  <silent> <F5> :call RunThisScript(0)<cr>
-inoremap <silent> <F6> <esc>:call RunThisScript(1)<cr>
-noremap  <silent> <F6> :call RunThisScript(1)<cr>
+inoremap <silent> <F5> <esc>:call <SID>run_this_script(0)<cr>
+noremap  <silent> <F5> :call <SID>run_this_script(0)<cr>
+inoremap <silent> <F6> <esc>:call <SID>run_this_script(1)<cr>
+noremap  <silent> <F6> :call <SID>run_this_script(1)<cr>
 
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
 " ----------------------------------------------------------------------------
-function! RotateColors()
+function! s:rotate_colors()
   if !exists("s:colors_list")
     let s:colors_list =
     \ sort(map(
@@ -454,12 +455,12 @@ function! RotateColors()
   redraw
   echo name
 endfunction
-noremap <F8> :call RotateColors()<cr>
+noremap <F8> :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
 " ----------------------------------------------------------------------------
-function! Shuffle()
+function! s:shuffle()
 ruby << EOF
   buf = VIM::Buffer.current
   firstnum = VIM::evaluate('a:firstline').to_i
@@ -469,7 +470,7 @@ ruby << EOF
   end
 EOF
 endfunction
-command! -range Shuffle <line1>,<line2>call Shuffle()
+command! -range Shuffle <line1>,<line2>call s:shuffle()
 
 " ----------------------------------------------------------------------------
 " <tab> | Case conversion
@@ -497,7 +498,7 @@ vnoremap <silent> <tab> y:call <sid>coerce()<cr>
 " ----------------------------------------------------------------------------
 " Syntax highlighting in code snippets
 " ----------------------------------------------------------------------------
-function! SyntaxInclude(lang, b, e, inclusive)
+function! s:syntax_include(lang, b, e, inclusive)
   let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
   if empty(syns)
     return
@@ -517,23 +518,25 @@ function! SyntaxInclude(lang, b, e, inclusive)
 
   silent! exec printf("syntax include @%s %s", a:lang, syns[0])
   if a:inclusive
-    exec printf('syntax region %sSnip start=%s\(\)\(%s\)\@=%s end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
+    exec printf('syntax region %sSnip start=%s\(\)\(%s\)\@=%s ' .
+                \ 'end=%s\(%s\)\@<=\(\)%s contains=@%s containedin=ALL',
                 \ a:lang, z, a:b, z, z, a:e, z, a:lang)
   else
-    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s end=%s%s%s contains=@%s containedin=ALL',
+    exec printf('syntax region %sSnip matchgroup=Snip start=%s%s%s ' .
+                \ 'end=%s%s%s contains=@%s containedin=ALL',
                 \ a:lang, z, a:b, z, z, a:e, z, a:lang)
   endif
 
   let b:current_syntax = csyn
 endfunction
 
-function! FileTypeHandler()
+function! s:file_type_handler()
   if &ft =~ 'jinja' && &ft != 'jinja'
-    call SyntaxInclude('jinja', '{{', '}}', 1)
-    call SyntaxInclude('jinja', '{%', '%}', 1)
+    call s:syntax_include('jinja', '{{', '}}', 1)
+    call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft == 'mkd' || &ft == 'markdown'
     for lang in ['ruby', 'yaml', 'vim', 'sh', 'python', 'java', 'c']
-      call SyntaxInclude(lang, '```'.lang, '```', 0)
+      call s:syntax_include(lang, '```'.lang, '```', 0)
     endfor
 
     if &background == 'light'
@@ -548,28 +551,28 @@ endfunction
 " ----------------------------------------------------------------------------
 " SaveMacro / LoadMacro
 " ----------------------------------------------------------------------------
-function! SaveMacro(name, file)
+function! s:save_macro(name, file)
   let content = eval('@'.a:name)
   if !empty(content)
     call writefile(split(content, "\n"), a:file)
     echom len(content) . " bytes save to ". a:file
   endif
 endfunction
-command! -nargs=* SaveMacro call SaveMacro(<f-args>)
+command! -nargs=* SaveMacro call <SID>save_macro(<f-args>)
 
-function! LoadMacro(file, name)
+function! s:load_macro(file, name)
   execute 'let @'.a:name.' = join(readfile(a:file), "\n")'
   echom "Macro loaded to @". a:name
 endfunction
-command! -nargs=* LoadMacro call LoadMacro(<f-args>)
+command! -nargs=* LoadMacro call <SID>load_macro(<f-args>)
 
 " ----------------------------------------------------------------------------
 " HL | Find out syntax group
 " ----------------------------------------------------------------------------
-function! HL()
+function! s:hl()
   echo synIDattr(synID(line('.'), col('.'), 0), 'name')
 endfunction
-command! HL call HL()
+command! HL call <SID>hl()
 
 " ----------------------------------------------------------------------------
 " (v) id / in / is | Indentation adjustment
@@ -723,7 +726,7 @@ let g:github_dashboard = { 'username': 'junegunn' }
 " ----------------------------------------------------------------------------
 " <leader>t | vim-tbone
 " ----------------------------------------------------------------------------
-function! TmuxSend() range
+function! s:tmux_send() range
   echon "To which pane? (t = .1) "
   let char = getchar()
   if char == 116
@@ -733,8 +736,8 @@ function! TmuxSend() range
   endif
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, target)
 endfunction
-noremap  <silent> <leader>t :call TmuxSend()<cr>
-vnoremap <silent> <leader>t :call TmuxSend()<cr>
+noremap  <silent> <leader>t :call <SID>tmux_send()<cr>
+vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 
 
 " ============================================================================
@@ -756,7 +759,7 @@ augroup vimrc
   au BufNewFile,BufRead   *.coffee-processing set filetype=coffee
 
   au Filetype slim hi def link slimBegin NONE
-  au Filetype,ColorScheme * call FileTypeHandler()
+  au Filetype,ColorScheme * call <SID>file_type_handler()
 
   au FileType clojure
     \ let vimclojure#ParenRainbow    = 1                     |
@@ -770,5 +773,4 @@ augroup vimrc
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 augroup END
-command! Chomp silent! normal! :%s/\s\+$//<cr>
 
