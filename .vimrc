@@ -6,7 +6,9 @@
 " VIM-PLUG BLOCK
 " ============================================================================
 
+let s:darwin = has("unix") && system("uname") == "Darwin\n"
 let $GIT_SSL_NO_VERIFY = 'true'
+
 silent! call plug#init()
 if exists(':Plug')
 
@@ -19,7 +21,7 @@ Plug 'ervandew/supertab'
 Plug 'junegunn/vim-easy-align'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
-if has("unix") && system("uname") == "Darwin\n"
+if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
 endif
 
@@ -667,7 +669,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
 " ----------------------------------------------------------------------------
-if exists(':CopyRTF')
+if s:darwin
   " Clipboard
   vnoremap <C-c> "*y
   " Clipboard-RTF
