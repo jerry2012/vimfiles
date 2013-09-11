@@ -1,10 +1,10 @@
-""""""""""""""""""""""""""""""""""""""""
+" ----------------------------------------------------------------------------
 " .vimrc of Junegunn Choi
-""""""""""""""""""""""""""""""""""""""""
+" ----------------------------------------------------------------------------
 
-""""""""""""""""""""""""""""""""""""""""
+" ----------------------------------------------------------------------------
 " vim-plug block
-""""""""""""""""""""""""""""""""""""""""
+" ----------------------------------------------------------------------------
 let $GIT_SSL_NO_VERIFY = 'true'
 silent! call plug#init()
 if exists(':Plug')
@@ -13,11 +13,11 @@ if exists(':Plug')
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-" Plug 'tpope/vim-abolish'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'junegunn/vim-easy-align'
-Plug 'kshenoy/vim-signature'
+" Plug 'tpope/vim-abolish'
+" Plug 'kshenoy/vim-signature'
 if has("unix") && system("uname") == "Darwin\n"
   Plug 'zerowidth/vim-copy-as-rtf'
 endif
@@ -27,10 +27,11 @@ Plug 'tpope/vim-tbone'
 Plug 'tpope/vim-dispatch'
 
 " Browsing
-Plug 'a.vim'
+" Plug 'a.vim'
 " Plug 'grep.vim'
 Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/vim-github-dashboard'
@@ -60,7 +61,7 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'jnwhiteh/vim-golang'
-Plug 'junegunn/vim-redis'
+" Plug 'junegunn/vim-redis'
 Plug 'vim-scripts/VimClojure'
 Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'kien/rainbow_parentheses.vim'
@@ -78,11 +79,12 @@ Plug 'junegunn/seoul256.vim'
 Plug 'beauty256'
 
 endif
-""""""""""""""""""""""""""""""""""""""""
-" End of vim-plug block
-""""""""""""""""""""""""""""""""""""""""
 
-let mapleader = ","
+" ----------------------------------------------------------------------------
+" Basic settings
+" ----------------------------------------------------------------------------
+
+let mapleader = " "
 let maplocalleader = " "
 
 syntax on
@@ -109,6 +111,8 @@ set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
+set list
+set listchars=tab:\|\ ,
 
 " %< Where to truncate
 " %n buffer number
@@ -125,13 +129,6 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 " %P Percentage
 " %#HighlightGroup#
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}%=%-14.(%l,%c%V%)\ %P
-" function! CursorPosition(width)
-"   let lines = line('$')
-"   let cline = line('.')
-"   let pct   = float2nr(a:width * 1.0 * cline / lines)
-"   return '|' . repeat('-', pct) . '>'
-" endfunction
-" set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}%=%14.(%l,%c%V%)\ %-12{CursorPosition(10)}%P
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
@@ -173,6 +170,9 @@ set colorcolumn=80
 " Keep the cursor on the same column
 set nostartofline
 
+" ----------------------------------------------------------------------------
+" Cscope mappings
+" ----------------------------------------------------------------------------
 if has("cscope")
   set csprg=/usr/local/bin/cscope
   set csto=0
@@ -206,7 +206,9 @@ if has("cscope")
   noremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
-" Run script
+" ----------------------------------------------------------------------------
+" <F5> / <F6> | Run script
+" ----------------------------------------------------------------------------
 function! RunThisScript(output)
   let head = getline(1)
   let pos  = stridx(head, '#!')
@@ -236,31 +238,40 @@ function! RunThisScript(output)
   else
     return
   end
+  if !a:output | return | endif
 
   " Scratch buffer
-  if !a:output
-    return
+  execute get(s:, 'vim_exec_win', 0) . 'wincmd w'
+  if exists('b:vim_exec_win')
+    %d
+  else
+    let      sr = &splitright
+    set      splitright
+    silent!  bdelete [vim-exec-output]
+    silent!  100vnew
+    silent!  file [vim-exec-output]
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+    set      nowrap
+    let      b:vim_exec_win = 1
+    let      s:vim_exec_win = winnr()
+    if !sr
+      set nosplitright
+    endif
   endif
-  let sr = &splitright
-  set      splitright
-  silent!  bdelete [vim-exec-output]
-  silent!  100vnew
-  silent!  file [vim-exec-output]
-  setlocal buftype=nofile
-  setlocal bufhidden=hide
-  setlocal noswapfile
-  set      nowrap
   execute  "silent! read ".ofile
   normal!  gg"_dd
   execute  "normal! \<C-W>p"
-  if !sr
-    set nosplitright
-  endif
 endfunction
 inoremap <silent> <F5> <esc>:call RunThisScript(0)<cr>
 noremap  <silent> <F5> :call RunThisScript(0)<cr>
 inoremap <silent> <F6> <esc>:call RunThisScript(1)<cr>
 noremap  <silent> <F6> :call RunThisScript(1)<cr>
+
+" ----------------------------------------------------------------------------
+" Basic mappings
+" ----------------------------------------------------------------------------
 
 noremap ^[[6~ ^D
 noremap ^[[5~ ^U
@@ -281,51 +292,31 @@ noremap  <C-a> gg0vG$
 " Quit
 inoremap <C-Q> <esc>:q<cr>
 noremap  <C-Q> :q<cr>
-vnoremap <C-Q> <esc><cr>
+vnoremap <C-Q> <esc>
 
-" Toggle line number display
-noremap <F12> :set nonumber!<cr>
+" Jump list
+noremap g[ <C-o>
+noremap g] <C-i>
 
-" NERD Tree
+" <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
 noremap  <F10> :NERDTreeToggle<cr>
 
-" Tagbar
+" <F11> | Tagbar
 inoremap <F11> <esc>:TagbarToggle<cr>
 noremap  <F11> :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
-" Jump list
-noremap g[      <C-o>
-noremap g]      <C-i>
+" <F12> Toggle line number display
+noremap <F12> :set nonumber!<cr>
 
-" Ctrl-P
-let g:ctrlp_working_path_mode = 'a'
-let g:ctrlp_max_height = 30
-noremap <C-P><C-P> :CtrlPBuffer<cr>
-
-" Escaping!
+" jk | Escaping!
 noremap! jk <C-c>
 vnoremap jk <C-c>
 
 " No delay in visual mode by jk
 vnoremap v <down>
 vnoremap V <down>
-
-" vim-copy-as-rtf
-if has("unix")
-  if system("uname") == "Darwin\n"
-    " Clipboard
-    vnoremap <C-c> "*y
-    " Clipboard-RTF
-    vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
-  endif
-endif
-
-" Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
-if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
-  let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
-endif
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h
@@ -334,7 +325,17 @@ inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 inoremap <C-^> <C-o><C-^>
 
-" Bubble lines
+" Make Y behave like other capitals
+map Y y$
+
+" For screencasting with Keycastr
+" map <tab> <nop>
+" imap <tab> <nop>
+" vmap <tab> <nop>
+
+" ----------------------------------------------------------------------------
+" Moving lines
+" ----------------------------------------------------------------------------
 noremap  <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
 noremap  <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
 noremap  <silent> <C-h> <<
@@ -343,12 +344,12 @@ vnoremap <silent> <C-k> :<C-U>execute "normal! gv:move ".max([0,         line("'
 vnoremap <silent> <C-j> :<C-U>execute "normal! gv:move ".min([line('$'), line("'>") + 1])."\n"<cr>gv
 vnoremap <silent> <C-h> <gv
 vnoremap <silent> <C-l> >gv
-
-" Indentation
 vnoremap < <gv
 vnoremap > >gv
 
-" Replace
+" ----------------------------------------------------------------------------
+" R | Replace
+" ----------------------------------------------------------------------------
 function! Replace()
   if visualmode() ==# 'V'
     if line("'>") == line('$')
@@ -368,64 +369,107 @@ endfunction
 vnoremap R :<C-U>call Replace()<cr>
 
 " Find and replace
-" noremap  <silent> <Enter> :set hls!<cr>:set hls?<cr>
-noremap  fnr     :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
-vnoremap fnr     y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
+noremap  fnr :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
+vnoremap fnr y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
 
-" Star-search without moving
+" ----------------------------------------------------------------------------
+" * | Star-search without moving
+" ----------------------------------------------------------------------------
 noremap  <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.expand('<cword>').'\>'<cr>:set hls<cr>
 vnoremap <silent> * y:<C-U>let @/ = '\V'.@"<cr>:set hls<cr>
 
-" Circular windows navigation
+" ----------------------------------------------------------------------------
+" <tab> / <s-tab> | Circular windows navigation
+" ----------------------------------------------------------------------------
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
 
+" ----------------------------------------------------------------------------
 " Clear search highlights
+" ----------------------------------------------------------------------------
 noremap <silent><localleader>/ :nohl<CR>
 
-" Headings
-noremap <leader>1 yypVr=
-noremap <leader>2 yypVr-
+" ----------------------------------------------------------------------------
+" Markdown headings
+" ----------------------------------------------------------------------------
+noremap <leader>1 m`yypVr=``
+noremap <leader>2 m`yypVr-``
+noremap <leader>3 m`^i### <esc>``4l
+noremap <leader>4 m`^i#### <esc>``5l
+noremap <leader>5 m`^i##### <esc>``6l
 
-" Make Y behave like other capitals
-map Y y$
-
-" Tmux navigation
-" - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir, prev)
-    execute "wincmd " . a:wincmd
-    if a:prev == winnr()
-      " The sleep and & gives time to get back to vim so tmux's focus tracking
-      " can kick in and send us our ^[[O
-      execute "silent !sh -c 'sleep 0.01; tmux select-pane -" . a:tmuxdir . "' &"
-      redraw!
-    endif
-  endfunction
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
-  nnoremap <silent> \h     :call TmuxOrSplitSwitch('h', 'L', winnr())<cr>
-  nnoremap <silent> \j     :call TmuxOrSplitSwitch('j', 'D', winnr())<cr>
-  nnoremap <silent> \k     :call TmuxOrSplitSwitch('k', 'U', winnr())<cr>
-  nnoremap <silent> \l     :call TmuxOrSplitSwitch('l', 'R', winnr())<cr>
-  nnoremap <silent> \<tab> :call TmuxOrSplitSwitch('w', 't :.+', 1)<cr>
+" ----------------------------------------------------------------------------
+" Avoid JRuby RVM delay -- https://github.com/vim-ruby/vim-ruby/issues/33
+" ----------------------------------------------------------------------------
+if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
+  let g:ruby_path = join(split(glob($MY_RUBY_HOME.'/lib/ruby/*.*')."\n".glob($MY_RUBY_HOME.'/lib/rubysite_ruby/*'),"\n"),',')
 endif
 
+" ----------------------------------------------------------------------------
+" Tmux navigation (disabled)
+" ----------------------------------------------------------------------------
+" - http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
+" if exists('$TMUX')
+"   function! TmuxOrSplitSwitch(wincmd, tmuxdir, prev)
+"     execute "wincmd " . a:wincmd
+"     if a:prev == winnr()
+"       " The sleep and & gives time to get back to vim so tmux's focus tracking
+"       " can kick in and send us our ^[[O
+"       execute "silent !sh -c 'sleep 0.01; tmux select-pane -" . a:tmuxdir . "' &"
+"       redraw!
+"     endif
+"   endfunction
+"   let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+"   let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+"   let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+"   nnoremap <silent> \h     :call TmuxOrSplitSwitch('h', 'L', winnr())<cr>
+"   nnoremap <silent> \j     :call TmuxOrSplitSwitch('j', 'D', winnr())<cr>
+"   nnoremap <silent> \k     :call TmuxOrSplitSwitch('k', 'U', winnr())<cr>
+"   nnoremap <silent> \l     :call TmuxOrSplitSwitch('l', 'R', winnr())<cr>
+"   nnoremap <silent> \<tab> :call TmuxOrSplitSwitch('w', 't :.+', 1)<cr>
+" endif
+
+" ----------------------------------------------------------------------------
 " vim-textobj-rubyblock
+" ----------------------------------------------------------------------------
 runtime macros/matchit.vim
 
+" ----------------------------------------------------------------------------
 " vim-scroll-position
+" ----------------------------------------------------------------------------
 " let g:scroll_position_jump = '-'
 " let g:scroll_position_change = 'x'
 " let g:scroll_position_auto_enable = 0
 let g:scroll_position_auto_enable = 0
 " call scroll_position#show()
 
+" ----------------------------------------------------------------------------
+" Ctrl-P
+" ----------------------------------------------------------------------------
+let g:ctrlp_working_path_mode = 'a'
+let g:ctrlp_max_height = 30
+let g:ctrlp_extensions = ['funky']
+noremap <C-P><C-P> :CtrlPBuffer<cr>
+noremap <C-P><C-F> :CtrlPFunky<cr>
+
+" ----------------------------------------------------------------------------
 " supertab
+" ----------------------------------------------------------------------------
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" vim-easy-align
+" ----------------------------------------------------------------------------
+" vim-copy-as-rtf
+" ----------------------------------------------------------------------------
+if exists(':CopyRTF')
+  " Clipboard
+  vnoremap <C-c> "*y
+  " Clipboard-RTF
+  vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
+endif
+
+" ----------------------------------------------------------------------------
+" <Enter> | vim-easy-align
+" ----------------------------------------------------------------------------
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
 \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignores': ['String'] },
@@ -455,18 +499,27 @@ let g:easy_align_delimiters = {
 \ }
 vnoremap <silent> <Enter> :EasyAlign<cr>
 
-" vim-redis
-" let g:vim_redis_host = 'localhost'
-" let g:vim_redis_port = '6379'
-" let g:vim_redis_auth = 'xxx'
-let g:vim_redis_paste_command = 1
-let g:vim_redis_paste_command_prefix = '> '
-noremap  <silent> <leader>re :RedisExecute<cr>
-vnoremap <silent> <leader>re :RedisExecuteVisual<cr>gv
-noremap  <silent> <leader>rw :RedisWipe<cr>
-noremap  <silent> <leader>rq :RedisQuit<cr>
+" ----------------------------------------------------------------------------
+" vim-github-dashboard
+" ----------------------------------------------------------------------------
+let g:github_dashboard = { 'username': 'junegunn' }
 
-" vim-tbone
+" ----------------------------------------------------------------------------
+" vim-redis
+" ----------------------------------------------------------------------------
+" " let g:vim_redis_host = 'localhost'
+" " let g:vim_redis_port = '6379'
+" " let g:vim_redis_auth = 'xxx'
+" let g:vim_redis_paste_command = 1
+" let g:vim_redis_paste_command_prefix = '> '
+" noremap  <silent> <leader>re :RedisExecute<cr>
+" vnoremap <silent> <leader>re :RedisExecuteVisual<cr>gv
+" noremap  <silent> <leader>rw :RedisWipe<cr>
+" noremap  <silent> <leader>rq :RedisQuit<cr>
+
+" ----------------------------------------------------------------------------
+" <leader>t | vim-tbone
+" ----------------------------------------------------------------------------
 function! TmuxSend() range
   echon "To which pane? (t = .1) "
   let char = getchar()
@@ -480,6 +533,9 @@ endfunction
 noremap  <silent> <leader>t :call TmuxSend()<cr>
 vnoremap <silent> <leader>t :call TmuxSend()<cr>
 
+" ----------------------------------------------------------------------------
+" <F8> | Color scheme selector
+" ----------------------------------------------------------------------------
 function! RotateColors()
   if !exists("s:colors_list")
     let s:colors_list =
@@ -498,6 +554,9 @@ function! RotateColors()
 endfunction
 noremap <F8> :call RotateColors()<cr>
 
+" ----------------------------------------------------------------------------
+" :Shuffle | Shuffle selected lines
+" ----------------------------------------------------------------------------
 function! Shuffle()
 ruby << EOF
   buf = VIM::Buffer.current
@@ -510,6 +569,9 @@ EOF
 endfunction
 command! -range Shuffle <line1>,<line2>call Shuffle()
 
+" ----------------------------------------------------------------------------
+" <tab> | Case conversion
+" ----------------------------------------------------------------------------
 function! s:coerce()
   " snake_case -> kebab-case -> camelCase -> MixedCase
   let word = @"
@@ -530,6 +592,9 @@ function! s:coerce()
 endfunction
 vnoremap <silent> <tab> y:call <sid>coerce()<cr>
 
+" ----------------------------------------------------------------------------
+" Syntax highlighting in code snippets
+" ----------------------------------------------------------------------------
 function! SyntaxInclude(lang, b, e, inclusive)
   let syns = split(globpath(&rtp, "syntax/".a:lang.".vim"), "\n")
   if empty(syns)
@@ -578,6 +643,9 @@ function! FileTypeHandler()
   endif
 endfunction
 
+" ----------------------------------------------------------------------------
+" SaveMacro / LoadMacro
+" ----------------------------------------------------------------------------
 function! SaveMacro(name, file)
   let content = eval('@'.a:name)
   if !empty(content)
@@ -593,11 +661,17 @@ function! LoadMacro(file, name)
 endfunction
 command! -nargs=* LoadMacro call LoadMacro(<f-args>)
 
+" ----------------------------------------------------------------------------
+" HL | Find out syntax group
+" ----------------------------------------------------------------------------
 function! HL()
   echo synIDattr(synID(line('.'), col('.'), 0), 'name')
 endfunction
 command! HL call HL()
 
+" ----------------------------------------------------------------------------
+" (v) id / in / is | Indentation adjustment
+" ----------------------------------------------------------------------------
 function! s:adjust_indentation(idt) range
   let [min, max, range] = [10000, 0, range(a:firstline, a:lastline)]
   for l in range
@@ -617,6 +691,34 @@ vnoremap <silent> id :call <sid>adjust_indentation('d')<cr>
 vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
 
+" ----------------------------------------------------------------------------
+" :A
+" ----------------------------------------------------------------------------
+function! s:a()
+  let name = expand('%:r')
+  let ext = tolower(expand('%:e'))
+  let sources = ['c', 'cc', 'cpp', 'cxx']
+  let headers = ['h', 'hh', 'hpp', 'hxx']
+  for pair in [[sources, headers], [headers, sources]]
+    let [set1, set2] = pair
+    if index(set1, ext) >= 0
+      for h in set2
+        let aname = name.'.'.h
+        for a in [aname, toupper(aname)]
+          if filereadable(a)
+            execute "e ".a
+            return
+          end
+        endfor
+      endfor
+    endif
+  endfor
+endfunction
+command! A call s:a()
+
+" ----------------------------------------------------------------------------
+" autocmd
+" ----------------------------------------------------------------------------
 augroup vimrc
   autocmd!
 
@@ -647,14 +749,4 @@ augroup vimrc
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 augroup END
 command! Chomp silent! normal! :%s/\s\+$//<cr>
-
-" vim-github-dashboard
-let g:github_dashboard = { 'username': 'junegunn' }
-
-" For screencasting with Keycastr
-" map <tab> <nop>
-" imap <tab> <nop>
-" vmap <tab> <nop>
-
-set list listchars=tab:\|\ ,
 
