@@ -1,7 +1,11 @@
-" https://gist.github.com/723126
+" Only do this when not done yet for this buffer
+if exists("b:did_ftplugin")
+  finish
+endif
+let b:did_ftplugin = 1
 
+" https://gist.github.com/723126
 command! -nargs=0 MarkdownPreview call MarkdownRenderBufferToPreview()
-noremap <buffer> <Leader>rp :MarkdownPreview<CR>
 setlocal ignorecase
 setlocal wrap
 setlocal lbr

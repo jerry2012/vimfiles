@@ -752,6 +752,7 @@ augroup vimrc
   au BufWritePost         .vimrc              source %
 
   au BufNewFile,BufRead   [Cc]apfile          set filetype=ruby
+  au BufNewFile,BufRead   *.md                set filetype=markdown
   au BufNewFile,BufRead   *.icc               set filetype=cpp
   au BufNewFile,BufRead   *.pde               set filetype=java
   au BufNewFile,BufRead   *.less              set filetype=less
