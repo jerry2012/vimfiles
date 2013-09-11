@@ -69,8 +69,8 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ap/vim-css-color'
 
 " Visual
-Plug 'Yggdroot/indentLine'
-Plug 'junegunn/vim-scroll-position'
+" Plug 'Yggdroot/indentLine'
+" Plug 'junegunn/vim-scroll-position'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
