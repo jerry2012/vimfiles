@@ -264,7 +264,7 @@ nnoremap <S-tab> <c-w>W
 " ----------------------------------------------------------------------------
 " Clear search highlights
 " ----------------------------------------------------------------------------
-noremap <silent><localleader>/ :nohl<CR>
+noremap <silent><leader>/ :nohl<CR>
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -623,6 +623,48 @@ function! s:a()
   endfor
 endfunction
 command! A call s:a()
+
+" ----------------------------------------------------------------------------
+" <leader>f | fuzzy matching
+" ----------------------------------------------------------------------------
+function! s:fuzzy_matching_pattern(str)
+  let chars = split(a:str, '\s*')
+  return join(
+        \ extend(map(chars[0 : -2], 'v:val . "[^" .v:val. "]\\{-}"'),
+        \ chars[-1:-1]), '')
+endfunction
+
+function! s:fuzzy_matching()
+  let str = ''
+  let prev = @/
+  while 1
+    echon "\r/". str
+
+    let c = getchar()
+    let ch = nr2char(c)
+
+    if c == 3 || c == 27 || (c == "\<bs>" && len(str) == 1)
+      echon "\r".repeat(' ', len(str) + 1)
+      let @/ = prev
+      nohl
+      break
+    elseif ch == "\<Enter>"
+      normal! n
+      break
+    elseif ch == "\<C-U>"
+      let str = ''
+    elseif c == "\<bs>"
+      let str = str[0 : -2]
+    else
+      let str .= ch
+    endif
+    let @/ = s:fuzzy_matching_pattern(str)
+    set hls
+    echon "\r/". str
+    redraw
+  endwhile
+endfunction
+nnoremap <silent> <leader>f :call <SID>fuzzy_matching()<cr>
 
 
 " ============================================================================
