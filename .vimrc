@@ -194,35 +194,35 @@ noremap <C-B> <C-U>
 
 " Save
 inoremap <C-s> <C-O>:update<cr>
-noremap  <C-s> :update<cr>
+nnoremap  <C-s> :update<cr>
 
 " Select-all (don't need confusing increment C-a)
 noremap  <C-a> gg0vG$
 
 " Quit
 inoremap <C-Q> <esc>:q<cr>
-noremap  <C-Q> :q<cr>
+nnoremap  <C-Q> :q<cr>
 vnoremap <C-Q> <esc>
 
 " Jump list
-noremap g[ <C-o>
-noremap g] <C-i>
+nnoremap g[ <C-o>
+nnoremap g] <C-i>
 
 " <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
-noremap  <F10> :NERDTreeToggle<cr>
+nnoremap  <F10> :NERDTreeToggle<cr>
 
 " <F11> | Tagbar
 inoremap <F11> <esc>:TagbarToggle<cr>
-noremap  <F11> :TagbarToggle<cr>
+nnoremap  <F11> :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
 " <F12> Toggle line number display
-noremap <F12> :set nonumber!<cr>
+nnoremap <F12> :set nonumber!<cr>
 
 " jk | Escaping!
+noremap  jk <C-c>
 noremap! jk <C-c>
-vnoremap jk <C-c>
 
 " No delay in visual mode by jk
 vnoremap v <down>
@@ -236,8 +236,13 @@ inoremap <C-k> <C-o>k
 inoremap <C-^> <C-o><C-^>
 
 " Make Y behave like other capitals
-map Y y$
+nnoremap Y y$
 
+" qq to record, Q to replay
+nnoremap Q @q
+
+"
+"n
 " For screencasting with Keycastr
 " map <tab> <nop>
 " imap <tab> <nop>
@@ -246,13 +251,13 @@ map Y y$
 " ----------------------------------------------------------------------------
 " fnr | Find and replace
 " ----------------------------------------------------------------------------
-noremap  fnr :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
+nnoremap fnr :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
 vnoremap fnr y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
 
 " ----------------------------------------------------------------------------
 " * | Star-search without moving
 " ----------------------------------------------------------------------------
-noremap  <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.expand('<cword>').'\>'<cr>:set hls<cr>
+nnoremap <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.expand('<cword>').'\>'<cr>:set hls<cr>
 vnoremap <silent> * y:<C-U>let @/ = '\V'.@"<cr>:set hls<cr>
 
 " ----------------------------------------------------------------------------
@@ -264,24 +269,24 @@ nnoremap <S-tab> <c-w>W
 " ----------------------------------------------------------------------------
 " Clear search highlights
 " ----------------------------------------------------------------------------
-noremap <silent><leader>/ :nohl<CR>
+nnoremap <silent><leader>/ :nohl<CR>
 
 " ----------------------------------------------------------------------------
 " Markdown headings
 " ----------------------------------------------------------------------------
-noremap <leader>1 m`yypVr=``
-noremap <leader>2 m`yypVr-``
-noremap <leader>3 m`^i### <esc>``4l
-noremap <leader>4 m`^i#### <esc>``5l
-noremap <leader>5 m`^i##### <esc>``6l
+nnoremap <leader>1 m`yypVr=``
+nnoremap <leader>2 m`yypVr-``
+nnoremap <leader>3 m`^i### <esc>``4l
+nnoremap <leader>4 m`^i#### <esc>``5l
+nnoremap <leader>5 m`^i##### <esc>``6l
 
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-noremap  <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
-noremap  <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
-noremap  <silent> <C-h> <<
-noremap  <silent> <C-l> >>
+nnoremap  <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
+nnoremap  <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
+nnoremap  <silent> <C-h> <<
+nnoremap  <silent> <C-l> >>
 vnoremap <silent> <C-k> :<C-U>execute "normal! gv:move ".max([0,         line("'<") - 2])."\n"<cr>gv
 vnoremap <silent> <C-j> :<C-U>execute "normal! gv:move ".min([line('$'), line("'>") + 1])."\n"<cr>gv
 vnoremap <silent> <C-h> <gv
@@ -316,14 +321,14 @@ if has("cscope")
   "   'f'   file:   open the filename under cursor
   "   'i'   includes: find files that include the filename under cursor
   "   'd'   called: find functions that function under cursor calls
-  noremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-  noremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-  noremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-  noremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  noremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-  noremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  noremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-  noremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+  nnoremap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+  nnoremap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+  nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
 
@@ -435,9 +440,9 @@ function! s:run_this_script(output)
   execute  "normal! \<C-W>p"
 endfunction
 inoremap <silent> <F5> <esc>:call <SID>run_this_script(0)<cr>
-noremap  <silent> <F5> :call <SID>run_this_script(0)<cr>
+nnoremap <silent> <F5> :call <SID>run_this_script(0)<cr>
 inoremap <silent> <F6> <esc>:call <SID>run_this_script(1)<cr>
-noremap  <silent> <F6> :call <SID>run_this_script(1)<cr>
+nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 
 " ----------------------------------------------------------------------------
 " <F8> | Color scheme selector
@@ -458,7 +463,7 @@ function! s:rotate_colors()
   redraw
   echo name
 endfunction
-noremap <F8> :call <SID>rotate_colors()<cr>
+nnoremap <F8> :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
@@ -700,8 +705,8 @@ runtime macros/matchit.vim
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_height = 30
 let g:ctrlp_extensions = ['funky']
-noremap <C-P><C-P> :CtrlPBuffer<cr>
-noremap <C-P><C-F> :CtrlPFunky<cr>
+nnoremap <C-P><C-P> :CtrlPBuffer<cr>
+nnoremap <C-P><C-F> :CtrlPFunky<cr>
 
 " ----------------------------------------------------------------------------
 " supertab
@@ -763,10 +768,10 @@ let g:github_dashboard = { 'username': 'junegunn' }
 " " let g:vim_redis_auth = 'xxx'
 " let g:vim_redis_paste_command = 1
 " let g:vim_redis_paste_command_prefix = '> '
-" noremap  <silent> <leader>re :RedisExecute<cr>
+" nnoremap <silent> <leader>re :RedisExecute<cr>
 " vnoremap <silent> <leader>re :RedisExecuteVisual<cr>gv
-" noremap  <silent> <leader>rw :RedisWipe<cr>
-" noremap  <silent> <leader>rq :RedisQuit<cr>
+" nnoremap <silent> <leader>rw :RedisWipe<cr>
+" nnoremap <silent> <leader>rq :RedisQuit<cr>
 
 " ----------------------------------------------------------------------------
 " <leader>t | vim-tbone
@@ -781,7 +786,7 @@ function! s:tmux_send() range
   endif
   silent call tbone#write_command(0, a:firstline, a:lastline, 1, target)
 endfunction
-noremap  <silent> <leader>t :call <SID>tmux_send()<cr>
+nnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 
 
