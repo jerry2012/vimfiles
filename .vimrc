@@ -2,11 +2,13 @@
 " .vimrc of Junegunn Choi
 " ============================================================================
 
+let s:darwin = has("unix") && system("uname") == "Darwin\n"
+let s:ag     = executable('ag')
+
 " ============================================================================
 " VIM-PLUG BLOCK
 " ============================================================================
 
-let s:darwin = has("unix") && system("uname") == "Darwin\n"
 let $GIT_SSL_NO_VERIFY = 'true'
 
 silent! call plug#init()
@@ -730,8 +732,18 @@ runtime macros/matchit.vim
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_height = 30
 let g:ctrlp_extensions = ['funky']
+if s:ag
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 nnoremap <C-P><C-P> :CtrlPBuffer<cr>
 nnoremap <C-P><C-F> :CtrlPFunky<cr>
+
+" ----------------------------------------------------------------------------
+" ack.vim
+" ----------------------------------------------------------------------------
+if s:ag
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+endif
 
 " ----------------------------------------------------------------------------
 " supertab
