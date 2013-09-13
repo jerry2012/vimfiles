@@ -283,10 +283,10 @@ nnoremap <leader>5 m`^i##### <esc>``6l
 " ----------------------------------------------------------------------------
 " Moving lines
 " ----------------------------------------------------------------------------
-nnoremap  <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
-nnoremap  <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
-nnoremap  <silent> <C-h> <<
-nnoremap  <silent> <C-l> >>
+nnoremap <silent> <C-k> :execute ":move ".max([0,         line('.') - 2])<cr>
+nnoremap <silent> <C-j> :execute ":move ".min([line('$'), line('.') + 1])<cr>
+nnoremap <silent> <C-h> <<
+nnoremap <silent> <C-l> >>
 vnoremap <silent> <C-k> :<C-U>execute "normal! gv:move ".max([0,         line("'<") - 2])."\n"<cr>gv
 vnoremap <silent> <C-j> :<C-U>execute "normal! gv:move ".min([line('$'), line("'>") + 1])."\n"<cr>gv
 vnoremap <silent> <C-h> <gv
@@ -583,7 +583,7 @@ endfunction
 command! HL call <SID>hl()
 
 " ----------------------------------------------------------------------------
-" (v) id / in / is | Indentation adjustment
+" (v) <c-t>d / <c-t>n / <c-t>s | indenTation adjustment
 " ----------------------------------------------------------------------------
 function! s:adjust_indentation(idt) range
   let [min, max, range] = [10000, 0, range(a:firstline, a:lastline)]
@@ -600,9 +600,34 @@ function! s:adjust_indentation(idt) range
     call setline(l, substitute(line, '^\s*', idt, ''))
   endfor
 endfunction
-vnoremap <silent> id :call <sid>adjust_indentation('d')<cr>
-vnoremap <silent> in :call <sid>adjust_indentation('n')<cr>
-vnoremap <silent> is :call <sid>adjust_indentation('s')<cr>
+vnoremap <silent> <c-t>d :call <sid>adjust_indentation('d')<cr>
+vnoremap <silent> <c-t>n :call <sid>adjust_indentation('n')<cr>
+vnoremap <silent> <c-t>s :call <sid>adjust_indentation('s')<cr>
+
+" ----------------------------------------------------------------------------
+" vio | strictly-indent-object
+" ----------------------------------------------------------------------------
+function! s:strictly_indent_object()
+  let b = line('.')
+  let e = b
+  let x = line('$')
+  let i = len(matchstr(getline(b), '^\s*'))
+  while b > 1
+    let line = getline(b - 1)
+    if len(matchstr(line, '^\s*')) == i && !empty(line)
+      let b -= 1
+    else | break | end
+  endwhile
+  while e < x
+    let line = getline(e + 1)
+    if len(matchstr(line, '^\s*')) == i && !empty(line)
+      let e += 1
+    else | break | end
+  endwhile
+  execute printf('normal! %dGV%dG', b, e)
+endfunction
+vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
 
 " ----------------------------------------------------------------------------
 " :A
