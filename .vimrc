@@ -193,8 +193,8 @@ noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
 " Save
-inoremap <C-s> <esc>:w<cr>a
-noremap  <C-s> :w<cr>
+inoremap <C-s> <C-O>:update<cr>
+noremap  <C-s> :update<cr>
 
 " Select-all (don't need confusing increment C-a)
 noremap  <C-a> gg0vG$
