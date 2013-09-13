@@ -221,8 +221,8 @@ let g:tagbar_sort = 0
 nnoremap <F12> :set nonumber!<cr>
 
 " jk | Escaping!
-noremap  jk <C-c>
 noremap! jk <C-c>
+vnoremap jk <C-c>
 
 " No delay in visual mode by jk
 vnoremap v <down>
