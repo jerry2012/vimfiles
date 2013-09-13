@@ -789,6 +789,21 @@ endfunction
 nnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 
+" ----------------------------------------------------------------------------
+" gt / q | Help in new tabs
+" ----------------------------------------------------------------------------
+
+function! s:helptab()
+  if &buftype == 'help'
+    execute "normal! \<C-W>T"
+    nnoremap q :q<cr>
+  endif
+endfunction
+
+augroup helptxt
+  autocmd!
+  autocmd BufEnter *.txt call s:helptab()
+augroup END
 
 " ============================================================================
 " AUTOCMD
