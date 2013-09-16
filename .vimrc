@@ -9,7 +9,7 @@
 let s:darwin = has("unix") && system("uname") == "Darwin\n"
 let $GIT_SSL_NO_VERIFY = 'true'
 
-silent! call plug#init()
+silent! call plug#begin()
 if exists(':Plug')
 
 " Edit
@@ -81,6 +81,7 @@ Plug 'junegunn/seoul256.vim'
 " Plug 'summerfruit256.vim'
 Plug 'beauty256'
 
+call plug#end()
 endif
 
 
@@ -607,20 +608,24 @@ vnoremap <silent> <c-t>s :call <sid>adjust_indentation('s')<cr>
 " ----------------------------------------------------------------------------
 " vio | strictly-indent-object
 " ----------------------------------------------------------------------------
+function! s:indent_len(str)
+  return len(matchstr(a:str, '^\s*'))
+endfunction
+
 function! s:strictly_indent_object()
   let b = line('.')
   let e = b
   let x = line('$')
-  let i = len(matchstr(getline(b), '^\s*'))
+  let i = s:indent_len(getline(b))
   while b > 1
     let line = getline(b - 1)
-    if len(matchstr(line, '^\s*')) == i && !empty(line)
+    if s:indent_len(line) == i && !empty(line)
       let b -= 1
     else | break | end
   endwhile
   while e < x
     let line = getline(e + 1)
-    if len(matchstr(line, '^\s*')) == i && !empty(line)
+    if s:indent_len(line) == i && !empty(line)
       let e += 1
     else | break | end
   endwhile
@@ -628,6 +633,30 @@ function! s:strictly_indent_object()
 endfunction
 vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
 onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+
+" ----------------------------------------------------------------------------
+" #gi / #gpi | go to next/previous indentation level
+" ----------------------------------------------------------------------------
+function! s:go_indent(times, dir)
+  for _ in range(a:times)
+    let l = line('.')
+    let x = line('$')
+    let i = s:indent_len(getline(l))
+    let e = empty(getline(l))
+
+    while l >= 1 && l <= x
+      let line = getline(l + a:dir)
+      let l += a:dir
+      if s:indent_len(line) != i || empty(line) != e
+        break
+      endif
+    endwhile
+    let l = min([max([1, l]), x])
+    execute 'normal! '. l .'G^'
+  endfor
+endfunction
+nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
+nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
 " ----------------------------------------------------------------------------
 " :A
