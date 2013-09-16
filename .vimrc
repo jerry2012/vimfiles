@@ -515,8 +515,10 @@ function! s:syntax_include(lang, b, e, inclusive)
     return
   endif
 
-  let csyn = b:current_syntax
-  unlet b:current_syntax
+  if exists('b:current_syntax')
+    let csyn = b:current_syntax
+    unlet b:current_syntax
+  endif
 
   let z = "'" " Default
   for nr in range(char2nr('a'), char2nr('z'))
@@ -538,7 +540,9 @@ function! s:syntax_include(lang, b, e, inclusive)
                 \ a:lang, z, a:b, z, z, a:e, z, a:lang)
   endif
 
-  let b:current_syntax = csyn
+  if exists('csyn')
+    let b:current_syntax = csyn
+  endif
 endfunction
 
 function! s:file_type_handler()
