@@ -550,8 +550,9 @@ function! s:file_type_handler()
     call s:syntax_include('jinja', '{{', '}}', 1)
     call s:syntax_include('jinja', '{%', '%}', 1)
   elseif &ft == 'mkd' || &ft == 'markdown'
-    for lang in ['ruby', 'yaml', 'vim', 'sh', 'python', 'java', 'c']
-      call s:syntax_include(lang, '```'.lang, '```', 0)
+    let map = { 'bash': 'sh' }
+    for lang in ['ruby', 'yaml', 'vim', 'sh', 'bash', 'python', 'java', 'c']
+      call s:syntax_include(get(map, lang, lang), '```'.lang, '```', 0)
     endfor
 
     if &background == 'light'
