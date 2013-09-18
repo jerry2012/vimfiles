@@ -21,6 +21,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'junegunn/vim-easy-align'
+Plug 'git@github.com:junegunn/vim-easy-align.git'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
@@ -75,6 +76,7 @@ Plug 'ap/vim-css-color'
 " Visual
 " Plug 'Yggdroot/indentLine'
 " Plug 'junegunn/vim-scroll-position'
+" Plug 'nathanaelkane/vim-indent-guides'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
@@ -244,8 +246,9 @@ nnoremap Y y$
 " qq to record, Q to replay
 nnoremap Q @q
 
-"
-"n
+" <C-V><C-V> Paste clipboard content
+inoremap <C-V><C-V> <c-o>:set paste<cr><c-o>"*p<c-o>:set nopaste<cr>
+
 " For screencasting with Keycastr
 " map <tab> <nop>
 " imap <tab> <nop>
@@ -858,6 +861,13 @@ function! s:tmux_send() range
 endfunction
 nnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
+
+" ----------------------------------------------------------------------------
+" vim-indent-guides
+" ----------------------------------------------------------------------------
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_guide_size            = 1
+" let g:indent_guides_start_level           = 2
 
 " ----------------------------------------------------------------------------
 " gt / q | Help in new tabs
