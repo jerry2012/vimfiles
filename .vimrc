@@ -246,9 +246,6 @@ nnoremap Y y$
 " qq to record, Q to replay
 nnoremap Q @q
 
-" <C-V><C-V> Paste clipboard content
-inoremap <C-V><C-V> <c-o>:set paste<cr><c-o>"*p<c-o>:set nopaste<cr>
-
 " For screencasting with Keycastr
 " map <tab> <nop>
 " imap <tab> <nop>
@@ -792,6 +789,10 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 if s:darwin
   " Clipboard
   vnoremap <C-c> "*y
+
+  " <C-V><C-V> Paste clipboard content
+  inoremap <C-V><C-V> <c-o>"*p
+
   " Clipboard-RTF
   vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
 endif
