@@ -471,15 +471,13 @@ nnoremap <F8> :call <SID>rotate_colors()<cr>
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
 " ----------------------------------------------------------------------------
-function! s:shuffle()
-ruby << EOF
-  buf = VIM::Buffer.current
-  firstnum = VIM::evaluate('a:firstline').to_i
-  lastnum = VIM::evaluate('a:lastline').to_i
-  (firstnum..lastnum).map { |l| buf[l] }.shuffle.each_with_index do |line, i|
-    buf[firstnum + i] = line
+function! s:shuffle() range
+ruby << RB
+  first, last = %w[a:firstline a:lastline].map { |e| VIM::evaluate(e).to_i }
+  (first..last).map { |l| $curbuf[l] }.shuffle.each_with_index do |line, i|
+    $curbuf[first + i] = line
   end
-EOF
+RB
 endfunction
 command! -range Shuffle <line1>,<line2>call s:shuffle()
 
