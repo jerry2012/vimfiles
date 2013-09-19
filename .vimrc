@@ -792,7 +792,7 @@ if s:darwin
   vnoremap <C-c> "*y
 
   " <C-V><C-V> Paste clipboard content
-  inoremap <C-V><C-V> <c-o>"*p
+  inoremap <C-V><C-V> <c-o>"*P
 
   " Clipboard-RTF
   vnoremap <S-c> <esc>:colo seoul256-light<cr>gv:CopyRTF<cr>:colo seoul256<cr>
