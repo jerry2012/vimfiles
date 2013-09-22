@@ -74,15 +74,16 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'ap/vim-css-color'
 
 " Visual
+Plug 'git@github.com:junegunn/vim-emoji.git'
 " Plug 'Yggdroot/indentLine'
 " Plug 'junegunn/vim-scroll-position'
 " Plug 'nathanaelkane/vim-indent-guides'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
-" Plug 'junegunn/jellybeans.vim'
-" Plug 'junegunn/Zenburn'
-" Plug 'summerfruit256.vim'
+Plug 'junegunn/jellybeans.vim'
+Plug 'junegunn/Zenburn'
+Plug 'summerfruit256.vim'
 Plug 'beauty256'
 
 call plug#end()
@@ -245,11 +246,6 @@ nnoremap Y y$
 
 " qq to record, Q to replay
 nnoremap Q @q
-
-" For screencasting with Keycastr
-" map <tab> <nop>
-" imap <tab> <nop>
-" vmap <tab> <nop>
 
 " ----------------------------------------------------------------------------
 " fnr | Find and replace
@@ -801,6 +797,7 @@ endif
 " ----------------------------------------------------------------------------
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
+\ '\': { 'pattern': '\\' },
 \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignores': ['String'] },
 \ '#': { 'pattern': '#\+', 'ignores': ['String'] },
 \ ']': {
@@ -870,9 +867,18 @@ vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 " let g:indent_guides_start_level           = 2
 
 " ----------------------------------------------------------------------------
+" vim-gitgutter
+" ----------------------------------------------------------------------------
+silent! if emoji#available()
+  let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
+  let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
+  let g:gitgutter_sign_removed = emoji#for('small_red_triangle')
+  let g:gitgutter_sign_modified_removed = emoji#for('collision')
+endif
+
+" ----------------------------------------------------------------------------
 " gt / q | Help in new tabs
 " ----------------------------------------------------------------------------
-
 function! s:helptab()
   if &buftype == 'help'
     execute "normal! \<C-W>T"
@@ -920,3 +926,9 @@ augroup vimrc
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
 augroup END
 
+" ----------------------------------------------------------------------------
+" For screencasting with Keycastr
+" ----------------------------------------------------------------------------
+" map <tab> <nop>
+" imap <tab> <nop>
+" vmap <tab> <nop>
