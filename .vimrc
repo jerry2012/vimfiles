@@ -81,9 +81,9 @@ Plug 'git@github.com:junegunn/vim-emoji.git'
 
 " Colors
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/jellybeans.vim'
-Plug 'junegunn/Zenburn'
-Plug 'summerfruit256.vim'
+" Plug 'junegunn/jellybeans.vim'
+" Plug 'junegunn/Zenburn'
+" Plug 'summerfruit256.vim'
 Plug 'beauty256'
 
 call plug#end()
