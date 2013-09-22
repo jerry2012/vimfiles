@@ -15,6 +15,7 @@ silent! call plug#begin()
 if exists(':Plug')
 
 " Edit
+Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
@@ -869,6 +870,9 @@ vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
 " ----------------------------------------------------------------------------
 " vim-gitgutter
 " ----------------------------------------------------------------------------
+nmap gh <Plug>GitGutterNextHunk
+nmap gph <Plug>GitGutterPrevHunk
+
 silent! if emoji#available()
   let g:gitgutter_sign_added = emoji#for('small_blue_diamond')
   let g:gitgutter_sign_modified = emoji#for('small_orange_diamond')
