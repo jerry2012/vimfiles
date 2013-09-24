@@ -140,7 +140,7 @@ set listchars=tab:\|\ ,
 " %P Percentage
 " %#HighlightGroup#
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
-if emoji#available()
+silent! if emoji#available()
   set statusline^=%{emoji#for('cherry_blossom')}\ 
   set statusline+=\ %{emoji#for('cherry_blossom')}
 endif
