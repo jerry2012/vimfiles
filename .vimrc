@@ -139,7 +139,11 @@ set listchars=tab:\|\ ,
 " %V Virtual column
 " %P Percentage
 " %#HighlightGroup#
-set statusline=%{emoji#for('cherry_blossom')}\ %<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P\ \%{emoji#for('cherry_blossom')}
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
+if emoji#available()
+  set statusline^=%{emoji#for('cherry_blossom')}\ 
+  set statusline+=\ %{emoji#for('cherry_blossom')}
+endif
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
