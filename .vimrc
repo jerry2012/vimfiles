@@ -11,8 +11,7 @@ let s:ag     = executable('ag')
 
 let $GIT_SSL_NO_VERIFY = 'true'
 
-silent! call plug#begin()
-if exists(':Plug')
+silent! if plug#begin()
 
 " Edit
 Plug 'tpope/vim-characterize'
