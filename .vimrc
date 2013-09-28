@@ -13,6 +13,24 @@ let $GIT_SSL_NO_VERIFY = 'true'
 
 silent! if plug#begin()
 
+if s:darwin
+  Plug 'git@github.com:junegunn/vim-easy-align.git'
+  Plug 'git@github.com:junegunn/vim-emoji.git'
+  Plug 'git@github.com:junegunn/vim-github-dashboard.git'
+  Plug 'git@github.com:junegunn/vim-easy-align.git'
+  Plug 'git@github.com:junegunn/seoul256.vim.git'
+" Plug 'git@github.com:junegunn/vim-scroll-position.git'
+" Plug 'git@github.com:junegunn/vim-redis.git'
+" Plug 'git@github.com:junegunn/jellybeans.vim.git'
+" Plug 'git@github.com:junegunn/Zenburn.git'
+else
+  Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/vim-emoji'
+  Plug 'junegunn/vim-github-dashboard'
+  Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/seoul256.vim'
+endif
+
 " Edit
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-repeat'
@@ -20,8 +38,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
-Plug 'junegunn/vim-easy-align'
-Plug 'git@github.com:junegunn/vim-easy-align.git'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
@@ -40,7 +56,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
-Plug 'junegunn/vim-github-dashboard'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -67,28 +82,21 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'jnwhiteh/vim-golang'
-" Plug 'junegunn/vim-redis'
 Plug 'vim-scripts/VimClojure'
 Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'ap/vim-css-color'
 
 " Visual
-Plug 'git@github.com:junegunn/vim-emoji.git'
 " Plug 'Yggdroot/indentLine'
-" Plug 'junegunn/vim-scroll-position'
 " Plug 'nathanaelkane/vim-indent-guides'
 
 " Colors
-Plug 'junegunn/seoul256.vim'
-" Plug 'junegunn/jellybeans.vim'
-" Plug 'junegunn/Zenburn'
 " Plug 'summerfruit256.vim'
 Plug 'beauty256'
 
 call plug#end()
 endif
-
 
 " ============================================================================
 " Basic settings
@@ -954,3 +962,22 @@ augroup END
 " map <tab> <nop>
 " imap <tab> <nop>
 " vmap <tab> <nop>
+function! Aaa()
+  try
+    ruby << EOF
+      s = true
+      t2 = Thread.new { `sleep 1000` }
+      t = Thread.new {
+        while ch = VIM::evaluate('getchar(1)')
+          sleep 0.1
+          p ch
+        end
+        t2.kill
+        abort
+      }
+      t2.join
+EOF
+  catch /^Vim:Interrupt$/
+    echom 1
+  endtry
+endfunction
