@@ -850,6 +850,7 @@ if s:ag
 endif
 nnoremap <C-P><C-P> :CtrlPBuffer<cr>
 nnoremap <C-P><C-F> :CtrlPFunky<cr>
+nnoremap <C-P><C-T> :CtrlPBufTag<cr>
 
 " ----------------------------------------------------------------------------
 " ack.vim
