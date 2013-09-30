@@ -151,10 +151,17 @@ silent! if emoji#available()
   set statusline=%{emoji#for('cherry_blossom')}\ %<[%n]\ %F\ %{MyModified()}%{MyReadonly()}%{MyFileType()}\ %{MyFugitiveHead()}\ %=%-14.(%l,%c%V%)\ %P\ %{MyClock()}
 
   let s:ft_emoji = map({
+    \ 'c':          'baby_chick',
+    \ 'clojure':    'lollipop',
+    \ 'cpp':        'chicken',
+    \ 'css':        'art',
+    \ 'eruby':      'ring',
     \ 'gitcommit':  'soon',
     \ 'haml':       'hammer',
     \ 'help':       'angel',
+    \ 'html':       'herb',
     \ 'java':       'older_man',
+    \ 'javascript': 'monkey',
     \ 'make':       'seedling',
     \ 'markdown':   'book',
     \ 'perl':       'camel',
@@ -162,6 +169,7 @@ silent! if emoji#available()
     \ 'ruby':       'gem',
     \ 'sh':         'shell',
     \ 'slim':       'dancer',
+    \ 'text':       'books',
     \ 'vim':        'poop',
     \ 'vim-plug':   'electric_plug',
     \ 'yaml':       'yum',
@@ -1026,22 +1034,27 @@ augroup END
 " map <tab> <nop>
 " imap <tab> <nop>
 " vmap <tab> <nop>
+
 function! Aaa()
-  try
-    ruby << EOF
-      s = true
-      t2 = Thread.new { `sleep 1000` }
-      t = Thread.new {
-        while ch = VIM::evaluate('getchar(1)')
-          sleep 0.1
-          p ch
-        end
-        t2.kill
-        abort
-      }
-      t2.join
+ruby << EOF
+  main = Thread.current
+  watcher = Thread.new {
+    while VIM::evaluate('getchar(1)')
+      sleep 0.1
+    end
+    main.kill
+  }
+  sleep 5
+  watcher.kill
 EOF
+endfunction
+
+function! Bbb()
+  try
+    call Aaa()
   catch /^Vim:Interrupt$/
-    echom 1
+    echom 2
+  finally
+    echom 3
   endtry
 endfunction
