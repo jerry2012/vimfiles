@@ -148,9 +148,72 @@ set listchars=tab:\|\ ,
 " %#HighlightGroup#
 set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
 silent! if emoji#available()
-  set statusline^=%{emoji#for('cherry_blossom')}\ 
-  set statusline+=\ %{emoji#for('cherry_blossom')}
+  set statusline=%{emoji#for('cherry_blossom')}\ %<[%n]\ %F\ %{MyModified()}%{MyReadonly()}%{MyFileType()}\ %{MyFugitiveHead()}\ %=%-14.(%l,%c%V%)\ %P\ %{MyClock()}
+
+  let s:ft_emoji = map({
+    \ 'haml':       'hammer',
+    \ 'java':       'older_man',
+    \ 'make':       'seedling',
+    \ 'markdown':   'book',
+    \ 'perl':       'camel',
+    \ 'python':     'snake',
+    \ 'ruby':       'gem',
+    \ 'sh':         'shell',
+    \ 'slim':       'dancer',
+    \ 'vim':        'poop',
+    \ 'vim-plug':   'electric_plug',
+    \ 'yaml':       'yum',
+    \ 'yaml.jinja': 'yum',
+  \ }, 'emoji#for(v:val)')
+
+  function! MyFileType()
+    let ft = &filetype
+    if empty(ft)
+      return emoji#for('grey_question')
+    else
+      return get(s:ft_emoji, &filetype, '['.&filetype.']')
+    endif
+  endfunction
+
+  function! MyModified()
+    if &modified
+      return emoji#for('kiss') .' '
+    elseif !&modifiable
+      return emoji#for('anchor') .' '
+    else
+      return ''
+    endif
+  endfunction
+
+  function! MyReadonly()
+    return &readonly ? emoji#for('lock') : ''
+  endfunction
+
+  function! MyFugitiveHead()
+    let head = fugitive#head()
+    if empty(head)
+      return ''
+    else
+      return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
+    endif
+  endfunction
+
+  function! MyClock()
+    let h = strftime('%l')
+    let m = strftime('%M')
+    if m < 15
+      let m = ''
+    elseif m >= 15 && m < 45
+      let m = 30
+    elseif m >= 45
+      let h = str2nr(h) + 1
+      let h = h > 12 ? 1 : h
+      let m = ''
+    endif
+    return emoji#for('clock'.h.m, h.m)
+  endfunction
 endif
+
 set pastetoggle=<Ins>
 set pastetoggle=<F9> " For Mac
 set modelines=2
