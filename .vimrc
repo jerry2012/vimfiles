@@ -200,7 +200,7 @@ silent! if emoji#available()
   endfunction
 
   function! MyClock()
-    let h = strftime('%l')
+    let h = substitute(strftime('%l'), ' ', '', '')
     let m = strftime('%M')
     if m < 15
       let m = ''
