@@ -1036,26 +1036,3 @@ augroup END
 " imap <tab> <nop>
 " vmap <tab> <nop>
 
-function! Aaa()
-ruby << EOF
-  main = Thread.current
-  watcher = Thread.new {
-    while VIM::evaluate('getchar(1)')
-      sleep 0.1
-    end
-    main.kill
-  }
-  sleep 5
-  watcher.kill
-EOF
-endfunction
-
-function! Bbb()
-  try
-    call Aaa()
-  catch /^Vim:Interrupt$/
-    echom 2
-  finally
-    echom 3
-  endtry
-endfunction
