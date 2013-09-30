@@ -151,7 +151,9 @@ silent! if emoji#available()
   set statusline=%{emoji#for('cherry_blossom')}\ %<[%n]\ %F\ %{MyModified()}%{MyReadonly()}%{MyFileType()}\ %{MyFugitiveHead()}\ %=%-14.(%l,%c%V%)\ %P\ %{MyClock()}
 
   let s:ft_emoji = map({
+    \ 'gitcommit':  'soon',
     \ 'haml':       'hammer',
+    \ 'help':       'angel',
     \ 'java':       'older_man',
     \ 'make':       'seedling',
     \ 'markdown':   'book',
@@ -163,12 +165,11 @@ silent! if emoji#available()
     \ 'vim':        'poop',
     \ 'vim-plug':   'electric_plug',
     \ 'yaml':       'yum',
-    \ 'yaml.jinja': 'yum',
+    \ 'yaml.jinja': 'yum'
   \ }, 'emoji#for(v:val)')
 
   function! MyFileType()
-    let ft = &filetype
-    if empty(ft)
+    if empty(&filetype)
       return emoji#for('grey_question')
     else
       return get(s:ft_emoji, &filetype, '['.&filetype.']')
@@ -177,16 +178,16 @@ silent! if emoji#available()
 
   function! MyModified()
     if &modified
-      return emoji#for('kiss') .' '
+      return emoji#for('kiss').' '
     elseif !&modifiable
-      return emoji#for('anchor') .' '
+      return emoji#for('construction').' '
     else
       return ''
     endif
   endfunction
 
   function! MyReadonly()
-    return &readonly ? emoji#for('lock') : ''
+    return &readonly ? emoji#for('lock') . ' ' : ''
   endfunction
 
   function! MyFugitiveHead()
