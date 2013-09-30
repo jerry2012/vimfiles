@@ -153,6 +153,7 @@ silent! if emoji#available()
   let s:ft_emoji = map({
     \ 'c':          'baby_chick',
     \ 'clojure':    'lollipop',
+    \ 'coffee':     'coffee',
     \ 'cpp':        'chicken',
     \ 'css':        'art',
     \ 'eruby':      'ring',
