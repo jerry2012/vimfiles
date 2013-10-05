@@ -932,7 +932,7 @@ let g:easy_align_delimiters = {
 \     'right_margin': 0
 \   }
 \ }
-vnoremap <silent> <Enter> :EasyAlign<cr>
+vnoremap <silent> <Enter> :EasyAlign<Enter>
 
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
