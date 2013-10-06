@@ -19,6 +19,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-github-dashboard.git'
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
+  Plug 'git@github.com:junegunn/vader.vim.git'
 " Plug 'git@github.com:junegunn/vim-scroll-position.git'
 " Plug 'git@github.com:junegunn/vim-redis.git'
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
@@ -29,6 +30,7 @@ else
   Plug 'junegunn/vim-github-dashboard'
   Plug 'junegunn/vim-easy-align'
   Plug 'junegunn/seoul256.vim'
+  Plug 'junegunn/vader.vim'
 endif
 
 " Edit
@@ -38,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
+Plug 'sjl/gundo.vim'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
