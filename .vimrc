@@ -41,6 +41,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'sjl/gundo.vim'
+Plug 'kovisoft/paredit'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
@@ -937,6 +938,17 @@ let g:easy_align_delimiters = {
 \   }
 \ }
 vnoremap <silent> <Enter> :EasyAlign<Enter>
+
+" help map-operator
+function! s:easy_align_1st_eq(type, ...)
+  '[,']EasyAlign=
+endfunction
+nnoremap <Leader>= :set opfunc=<SID>easy_align_1st_eq<Enter>g@
+
+function! s:easy_align_1st_colon(type, ...)
+  '[,']EasyAlign:
+endfunction
+nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@
 
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
