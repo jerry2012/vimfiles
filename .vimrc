@@ -431,6 +431,22 @@ endif
 command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 " ----------------------------------------------------------------------------
+" :Root | Change directory to the root of the Git repository
+" ----------------------------------------------------------------------------
+function! s:root()
+  let me = expand('%:p:h')
+  let gitd = finddir('.git', me.';')
+  if empty(gitd)
+    echo "Not in Git repo"
+  else
+    let gitp = fnamemodify(gitd, ':h')
+    echo "Change directory to: ".gitp
+    execute 'lcd '.gitp
+  endif
+endfunction
+command! Root call s:root()
+
+" ----------------------------------------------------------------------------
 " R | Replace
 " ----------------------------------------------------------------------------
 function! s:replace()
