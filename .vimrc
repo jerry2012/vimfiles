@@ -11,7 +11,7 @@ let s:ag     = executable('ag')
 
 let $GIT_SSL_NO_VERIFY = 'true'
 
-silent! if plug#begin()
+silent! if plug#begin('~/.vim/plugged')
 
 if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
@@ -20,6 +20,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
   Plug 'git@github.com:junegunn/vader.vim.git'
+  Plug 'git@github.com:junegunn/fzf.git'
 " Plug 'git@github.com:junegunn/vim-scroll-position.git'
 " Plug 'git@github.com:junegunn/vim-redis.git'
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
@@ -31,6 +32,7 @@ else
   Plug 'junegunn/vim-easy-align'
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim'
+  Plug 'junegunn/fzf'
 endif
 
 " Edit
@@ -1092,3 +1094,4 @@ augroup END
 " imap <tab> <nop>
 " vmap <tab> <nop>
 
+let g:matchparen_insert_timeout=5
