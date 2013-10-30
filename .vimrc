@@ -44,6 +44,7 @@ Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
 Plug 'sjl/gundo.vim'
 Plug 'kovisoft/paredit'
+Plug 'justinmk/vim-sneak'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
@@ -956,6 +957,7 @@ let g:easy_align_delimiters = {
 \   }
 \ }
 vnoremap <silent> <Enter> :EasyAlign<Enter>
+vnoremap <silent> <Leader><Enter> :LiveEasyAlign<Enter>
 
 " help map-operator
 function! s:easy_align_1st_eq(type, ...)
@@ -1036,6 +1038,13 @@ function! s:replace_emojis() range
   endfor
 endfunction
 command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
+
+" ----------------------------------------------------------------------------
+" vim-sneak
+" ----------------------------------------------------------------------------
+hi def link SneakPluginScope LineNr
+hi def link SneakPluginTarget DiffChange
+
 
 " ----------------------------------------------------------------------------
 " gt / q | Help in new tabs
