@@ -343,14 +343,14 @@ nnoremap Q @q
 " ----------------------------------------------------------------------------
 " fnr | Find and replace
 " ----------------------------------------------------------------------------
-nnoremap fnr :<C-U>.,$s~<C-R><C-W>~~gc<Left><Left><Left>
-vnoremap fnr y:<C-U>.,$s~<C-R>"~~gc<Left><Left><Left>
+nnoremap fnr    :<C-U>.,$s#\V<C-R>=escape(expand('<cword>'), '\#')<CR>##gc<Left><Left><Left>
+vnoremap fnr "xy:<C-U>.,$s#\V<C-R>=escape(@x,                '\#')<CR>##gc<Left><Left><Left>
 
 " ----------------------------------------------------------------------------
-" * | Star-search without moving
+" * | Star-search without moving ~~~ asdf
 " ----------------------------------------------------------------------------
-nnoremap <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.expand('<cword>').'\>'<cr>:set hls<cr>
-vnoremap <silent> * y:<C-U>let @/ = '\V'.@"<cr>:set hls<cr>
+nnoremap <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
+vnoremap <silent> *       "xy:<C-U>let @/ = '\V'.  escape(@x,                '\')<cr>:set hls<cr>
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
