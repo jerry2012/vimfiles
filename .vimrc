@@ -343,8 +343,8 @@ nnoremap Q @q
 " ----------------------------------------------------------------------------
 " fnr | Find and replace
 " ----------------------------------------------------------------------------
-nnoremap fnr :<C-U>.,$s#<C-R><C-W>##gc<Left><Left><Left>
-vnoremap fnr y:<C-U>.,$s#<C-R>"##gc<Left><Left><Left>
+nnoremap fnr :<C-U>.,$s~<C-R><C-W>~~gc<Left><Left><Left>
+vnoremap fnr y:<C-U>.,$s~<C-R>"~~gc<Left><Left><Left>
 
 " ----------------------------------------------------------------------------
 " * | Star-search without moving
@@ -836,6 +836,11 @@ endfunction
 nnoremap <silent> <leader>f :call <SID>fuzzy_matching()<cr>
 
 " ----------------------------------------------------------------------------
+" MatchParen delay
+" ----------------------------------------------------------------------------
+let g:matchparen_insert_timeout=5
+
+" ----------------------------------------------------------------------------
 " call LSD()
 " ----------------------------------------------------------------------------
 function! LSD()
@@ -970,6 +975,8 @@ function! s:easy_align_1st_colon(type, ...)
 endfunction
 nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@
 
+" inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
+
 " ----------------------------------------------------------------------------
 " vim-github-dashboard
 " ----------------------------------------------------------------------------
@@ -1103,4 +1110,3 @@ augroup END
 " imap <tab> <nop>
 " vmap <tab> <nop>
 
-let g:matchparen_insert_timeout=5
