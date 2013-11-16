@@ -804,31 +804,33 @@ function! s:fuzzy_matching_pattern(str)
 endfunction
 
 function! s:fuzzy_matching()
-  let str = ''
+  let str  = ''
   let prev = @/
+  normal! m`
   while 1
     echon "\rf/". str
 
     let c = getchar()
     let ch = nr2char(c)
 
-    if c == 3 || c == 27 || (c == "\<bs>" && len(str) == 1)
-      echon "\r".repeat(' ', len(str) + 1)
+    if ch == "\<C-C>" || ch == "\<Esc>" || (c == "\<bs>" && len(str) == 1)
+      echon "\r".repeat(' ', len(str) + 2)
       let @/ = prev
       nohl
+      keepjumps normal! ``
       break
-    elseif ch == "\<Enter>"
-      normal! n
-      break
-    elseif ch == "\<C-U>"
-      let str = ''
-    elseif c == "\<bs>"
-      let str = str[0 : -2]
-    else
-      let str .= ch
+    elseif ch == "\<Enter>"    | break
+    elseif ch == "\<C-U>"      | let str = ''
+    elseif c  == "\<bs>"       | let str = str[0 : -2]
+    elseif ch =~ '[[:print:]]' | let str .= ch
     endif
+
     let @/ = s:fuzzy_matching_pattern(str)
-    call search(@/)
+    if !empty(@/)
+      if search(@/, 'c') == 0
+        keepjumps normal! ``
+      endif
+    end
     set hls
     echon "\r/". str
     redraw
