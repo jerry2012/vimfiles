@@ -797,7 +797,7 @@ command! A call s:a()
 " <leader>f | fuzzy matching
 " ----------------------------------------------------------------------------
 function! s:fuzzy_matching_pattern(str)
-  let chars = map(split(a:str, '\s*'), 'escape(v:val, "\\[]$")')
+  let chars = map(split(a:str, '\s*'), 'escape(v:val, "\\[]^$.*")')
   return join(
         \ extend(map(chars[0 : -2], 'v:val . "[^" .v:val. "]\\{-}"'),
         \ chars[-1:-1]), '')
@@ -813,7 +813,7 @@ function! s:fuzzy_matching()
     let c = getchar()
     let ch = nr2char(c)
 
-    if ch == "\<C-C>" || ch == "\<Esc>" || (c == "\<bs>" && len(str) == 1)
+    if ch == "\<C-C>" || ch == "\<Esc>" || (c == "\<bs>" && len(str) <= 1)
       echon "\r".repeat(' ', len(str) + 2)
       let @/ = prev
       nohl
@@ -832,7 +832,7 @@ function! s:fuzzy_matching()
       endif
     end
     set hls
-    echon "\r/". str
+    echon "\rf/". str
     redraw
   endwhile
 endfunction
