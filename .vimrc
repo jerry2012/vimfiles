@@ -797,7 +797,7 @@ command! A call s:a()
 " <leader>f | fuzzy matching
 " ----------------------------------------------------------------------------
 function! s:fuzzy_matching_pattern(str)
-  let chars = map(split(a:str, '\s*'), 'escape(v:val, "\\[]^$.*")')
+  let chars = map(split(a:str, '.\zs'), 'escape(v:val, "\\[]^$.*")')
   return join(
         \ extend(map(chars[0 : -2], 'v:val . "[^" .v:val. "]\\{-}"'),
         \ chars[-1:-1]), '')
