@@ -125,6 +125,7 @@ set backspace=indent,eol,start
 set timeoutlen=500
 set whichwrap=b,s
 set shortmess=aI
+set shortmess+=T
 set hlsearch " CTRL-L / CTRL-R W
 set incsearch
 set hidden
@@ -795,6 +796,7 @@ command! A call s:a()
 
 " ----------------------------------------------------------------------------
 " <leader>f | fuzzy matching
+" - set shortmess+=T
 " ----------------------------------------------------------------------------
 function! s:fuzzy_matching_pattern(str)
   let chars = map(split(a:str, '.\zs'), 'escape(v:val, "\\[]^$.*")')
