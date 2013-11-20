@@ -1003,18 +1003,15 @@ let g:github_dashboard = { 'username': 'junegunn' }
 " ----------------------------------------------------------------------------
 " <leader>t | vim-tbone
 " ----------------------------------------------------------------------------
-function! s:tmux_send() range
-  echon "To which pane? (t = .1) "
-  let char = getchar()
-  if char == 116
-    let target = '.1'
-  else
-    let target = nr2char(char)
-  endif
-  silent call tbone#write_command(0, a:firstline, a:lastline, 1, target)
+function! s:tmux_send(dest) range
+  call inputsave()
+  let dest = empty(a:dest) ? input('To which pane? ') : a:dest
+  call inputrestore()
+  silent call tbone#write_command(0, a:firstline, a:lastline, 1, dest)
 endfunction
-nnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
-vnoremap <silent> <leader>t :call <SID>tmux_send()<cr>
+noremap <silent> <leader>t  :call <SID>tmux_send('')<cr>
+noremap <silent> <leader>t1 :call <SID>tmux_send('.1')<cr>
+noremap <silent> <leader>t2 :call <SID>tmux_send('.2')<cr>
 
 " ----------------------------------------------------------------------------
 " vim-indent-guides
