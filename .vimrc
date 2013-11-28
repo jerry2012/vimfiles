@@ -21,6 +21,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/seoul256.vim.git'
   Plug 'git@github.com:junegunn/vader.vim.git'
   Plug 'git@github.com:junegunn/fzf.git'
+  Plug 'git@github.com:junegunn/vim-ruby-x.git'
 " Plug 'git@github.com:junegunn/vim-scroll-position.git'
 " Plug 'git@github.com:junegunn/vim-redis.git'
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
@@ -33,6 +34,7 @@ else
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim'
   Plug 'junegunn/fzf'
+  Plug 'junegunn/vim-ruby-x.git'
 endif
 
 " Edit
@@ -900,6 +902,7 @@ runtime macros/matchit.vim
 " Ctrl-P
 " ----------------------------------------------------------------------------
 let g:ctrlp_working_path_mode = 'a'
+let g:ctrlp_max_files  = 0
 let g:ctrlp_max_height = 30
 let g:ctrlp_extensions = ['funky']
 if s:ag
