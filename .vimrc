@@ -38,6 +38,7 @@ else
 endif
 
 " Edit
+Plug 'godlygeek/tabular'
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -99,6 +100,8 @@ Plug 'ap/vim-css-color'
 " Visual
 " Plug 'Yggdroot/indentLine'
 " Plug 'nathanaelkane/vim-indent-guides'
+Plug 'bilalq/lite-dfm'
+Plug 'mikewest/vimroom'
 
 " Colors
 " Plug 'summerfruit256.vim'
@@ -973,6 +976,8 @@ vnoremap <silent> <Enter> :EasyAlign<Enter>
 vnoremap <silent> <Leader><Enter> :LiveEasyAlign<Enter>
 
 " help map-operator
+nmap <leader>a <Plug>(EasyAlignOperator)
+
 function! s:easy_align_1st_eq(type, ...)
   '[,']EasyAlign=
 endfunction
@@ -1092,8 +1097,8 @@ augroup vimrc
   au BufNewFile,BufRead   *.god               set filetype=ruby
   au BufNewFile,BufRead   *.coffee-processing set filetype=coffee
 
-  au Filetype slim hi def link slimBegin NONE
-  au Filetype,ColorScheme * call <SID>file_type_handler()
+  au Filetype             slim                hi def link slimBegin NONE
+  au Filetype,ColorScheme *                   call <SID>file_type_handler()
 
   au FileType clojure
     \ let vimclojure#ParenRainbow    = 1                     |
