@@ -22,6 +22,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vader.vim.git'
   Plug 'git@github.com:junegunn/fzf.git'
   Plug 'git@github.com:junegunn/vim-ruby-x.git'
+  Plug 'git@github.com:junegunn/goyo.vim.git'
 " Plug 'git@github.com:junegunn/vim-scroll-position.git'
 " Plug 'git@github.com:junegunn/vim-redis.git'
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
@@ -35,6 +36,7 @@ else
   Plug 'junegunn/vader.vim'
   Plug 'junegunn/fzf'
   Plug 'junegunn/vim-ruby-x.git'
+  Plug 'junegunn/goyo.vim'
 endif
 
 " Edit
@@ -100,8 +102,6 @@ Plug 'ap/vim-css-color'
 " Visual
 " Plug 'Yggdroot/indentLine'
 " Plug 'nathanaelkane/vim-indent-guides'
-Plug 'bilalq/lite-dfm'
-Plug 'mikewest/vimroom'
 
 " Colors
 " Plug 'summerfruit256.vim'
