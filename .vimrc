@@ -40,8 +40,6 @@ else
 endif
 
 " Edit
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
@@ -50,6 +48,7 @@ Plug 'ervandew/supertab'
 Plug 'sjl/gundo.vim'
 Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
+" Plug 'tpope/vim-characterize'
 " Plug 'tpope/vim-abolish'
 " Plug 'kshenoy/vim-signature'
 if s:darwin
@@ -58,7 +57,7 @@ endif
 
 " Tmux
 Plug 'tpope/vim-tbone'
-Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 
 " Browsing
 " Plug 'a.vim'
@@ -93,9 +92,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
-Plug 'jnwhiteh/vim-golang'
 Plug 'vim-scripts/VimClojure'
 Plug 'Glench/Vim-Jinja2-Syntax'
+" Plug 'jnwhiteh/vim-golang'
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'ap/vim-css-color'
 
