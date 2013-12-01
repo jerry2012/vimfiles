@@ -971,11 +971,15 @@ let g:easy_align_delimiters = {
 \     'right_margin': 0
 \   }
 \ }
-vnoremap <silent> <Enter> :EasyAlign<Enter>
-vnoremap <silent> <Leader><Enter> :LiveEasyAlign<Enter>
 
-" help map-operator
-nmap <leader>a <Plug>(EasyAlignOperator)
+" Legacy
+" vnoremap <silent> <Enter> :EasyAlign<Enter>
+" vnoremap <silent> <Leader><Enter> :LiveEasyAlign<Enter>
+
+vmap <Enter>         <Plug>(EasyAlign)
+nmap <leader>a       <Plug>(EasyAlign)
+vmap <leader><Enter> <Plug>(LiveEasyAlign)
+nmap <leader>A       <Plug>(LiveEasyAlign)
 
 function! s:easy_align_1st_eq(type, ...)
   '[,']EasyAlign=
