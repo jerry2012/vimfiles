@@ -143,6 +143,7 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 set list
 set listchars=tab:\|\ ,
+set virtualedit=block
 
 " %< Where to truncate
 " %n buffer number
@@ -305,7 +306,7 @@ noremap  <C-a> gg0vG$
 
 " Quit
 inoremap <C-Q> <esc>:q<cr>
-nnoremap  <C-Q> :q<cr>
+nnoremap <C-Q> :q<cr>
 vnoremap <C-Q> <esc>
 
 " Jump list
