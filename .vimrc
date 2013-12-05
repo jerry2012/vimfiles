@@ -35,7 +35,7 @@ else
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim'
   Plug 'junegunn/fzf'
-  Plug 'junegunn/vim-ruby-x.git'
+  Plug 'junegunn/vim-ruby-x'
   Plug 'junegunn/goyo.vim'
 endif
 
