@@ -66,7 +66,9 @@ Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
+if v:version >= 703
+  Plug 'majutsushi/tagbar'
+endif
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -92,7 +94,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
-Plug 'vim-scripts/VimClojure'
+if v:version >= 703
+  Plug 'vim-scripts/VimClojure'
+endif
 Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'jnwhiteh/vim-golang'
 " Plug 'kien/rainbow_parentheses.vim'
@@ -274,7 +278,9 @@ set mouse=a
 
 " 80 chars/line
 set textwidth=0
-set colorcolumn=80
+if exists('&colorcolumn')
+  set colorcolumn=80
+endif
 
 " Keep the cursor on the same column
 set nostartofline
@@ -318,9 +324,11 @@ inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap  <F10> :NERDTreeToggle<cr>
 
 " <F11> | Tagbar
-inoremap <F11> <esc>:TagbarToggle<cr>
-nnoremap  <F11> :TagbarToggle<cr>
-let g:tagbar_sort = 0
+if v:version >= 703
+  inoremap <F11> <esc>:TagbarToggle<cr>
+  nnoremap  <F11> :TagbarToggle<cr>
+  let g:tagbar_sort = 0
+endif
 
 " <F12> Toggle line number display
 nnoremap <F12> :set nonumber!<cr>
@@ -1104,13 +1112,15 @@ augroup vimrc
   au Filetype             slim                hi def link slimBegin NONE
   au Filetype,ColorScheme *                   call <SID>file_type_handler()
 
-  au FileType clojure
+  if v:version >= 703
+    au FileType clojure
     \ let vimclojure#ParenRainbow    = 1                     |
     \ let vimclojure#WantNailgun     = 1                     |
     \ let vimclojure#NailgunClient   = $HOME."/bin/ng"       |
     \ let vimclojure#SearchThreshold = 30                    |
     \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
     \ set isk+="-?"
+endif
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
