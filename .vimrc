@@ -41,6 +41,7 @@ endif
 
 " Edit
 Plug 'tpope/vim-repeat'
+Plug 'visualrepeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
@@ -1074,6 +1075,18 @@ command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 hi def link SneakPluginScope LineNr
 hi def link SneakPluginTarget DiffChange
 
+" ----------------------------------------------------------------------------
+" goyo.vim
+" ----------------------------------------------------------------------------
+function! s:goyo_before()
+  silent !tmux set status off
+endfunction
+
+function! s:goyo_after()
+  silent !tmux set status on
+endfunction
+
+let g:goyo_callbacks = [function('s:goyo_before'), function('s:goyo_after')]
 
 " ----------------------------------------------------------------------------
 " gt / q | Help in new tabs
