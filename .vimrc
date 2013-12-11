@@ -89,15 +89,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 
 " Lang
-Plug 'vim-ruby/vim-ruby'
+if v:version >= 703
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'vim-scripts/VimClojure'
+endif
 Plug 'tpope/vim-rails'
 Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
-if v:version >= 703
-  Plug 'vim-scripts/VimClojure'
-endif
 Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'jnwhiteh/vim-golang'
 " Plug 'kien/rainbow_parentheses.vim'
