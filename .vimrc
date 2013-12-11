@@ -810,47 +810,50 @@ command! A call s:a()
 
 " ----------------------------------------------------------------------------
 " <leader>f | fuzzy matching
-" - set shortmess+=T
 " ----------------------------------------------------------------------------
-function! s:fuzzy_matching_pattern(str)
-  let chars = map(split(a:str, '.\zs'), 'escape(v:val, "\\[]^$.*")')
-  return join(
+function! s:fuzzy_matching()
+  set shortmess+=T " required :p
+  normal! m`
+
+  try
+    let mid = 0
+    let q = ''
+    while 1
+      redraw
+      echon "\rf/". q
+      let c  = getchar()
+      let ch = nr2char(c)
+
+      if ch == "\<C-C>" || ch == "\<Esc>" || (c == "\<bs>" && len(q) <= 1)
+        echon "\r".repeat(' ', len(q) + 2)
+        keepjumps normal! ``
+        break
+      elseif ch == "\<Enter>"    | let @/ = regex | set hls | break
+      elseif ch == "\<C-U>"      | let q  = ''
+      elseif c  == "\<bs>"       | let q  = q[0 : -2]
+      elseif ch =~ '[[:print:]]' | let q .= ch
+      else                       | continue
+      endif
+
+      let chars = map(split(q, '.\zs'), 'escape(v:val, "\\[]^$.*")')
+      let regex = join(
         \ extend(map(chars[0 : -2], 'v:val . "[^" .v:val. "]\\{-}"'),
         \ chars[-1:-1]), '')
-endfunction
 
-function! s:fuzzy_matching()
-  let str  = ''
-  let prev = @/
-  normal! m`
-  while 1
-    echon "\rf/". str
-
-    let c = getchar()
-    let ch = nr2char(c)
-
-    if ch == "\<C-C>" || ch == "\<Esc>" || (c == "\<bs>" && len(str) <= 1)
-      echon "\r".repeat(' ', len(str) + 2)
-      let @/ = prev
-      nohl
+      silent! call matchdelete(mid)
       keepjumps normal! ``
-      break
-    elseif ch == "\<Enter>"    | break
-    elseif ch == "\<C-U>"      | let str = ''
-    elseif c  == "\<bs>"       | let str = str[0 : -2]
-    elseif ch =~ '[[:print:]]' | let str .= ch
-    endif
-
-    let @/ = s:fuzzy_matching_pattern(str)
-    if !empty(@/)
-      if search(@/, 'c') == 0
-        keepjumps normal! ``
+      if !empty(regex)
+        if search('\c'.regex, 'c') == 0
+          keepjumps normal! ``
+        else
+          let mid = matchadd("IncSearch", '\c\%'.line('.').'l'.regex)
+        endif
       endif
-    end
-    set hls
-    echon "\rf/". str
+    endwhile
+  finally
+    silent! call matchdelete(mid)
     redraw
-  endwhile
+  endtry
 endfunction
 nnoremap <silent> <leader>f :call <SID>fuzzy_matching()<cr>
 
@@ -1127,11 +1130,12 @@ augroup vimrc
 
   if v:version >= 703
     au FileType clojure
-    \ let vimclojure#ParenRainbow    = 1                     |
-    \ let vimclojure#WantNailgun     = 1                     |
-    \ let vimclojure#NailgunClient   = $HOME."/bin/ng"       |
-    \ let vimclojure#SearchThreshold = 30                    |
-    \ map <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb |
+    \ let vimclojure#ParenRainbow    = 1                      |
+    \ let vimclojure#WantNailgun     = 1                      |
+    \ let vimclojure#NailgunClient   = $HOME."/bin/ng"        |
+    \ let vimclojure#SearchThreshold = 30                     |
+    \ nmap <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb|
+    \ vmap <LocalLeader><LocalLeader> <LocalLeader>eb|
     \ set isk+="-?"
 endif
 
