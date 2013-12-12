@@ -959,8 +959,8 @@ endif
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
 \ '\': { 'pattern': '\\' },
-\ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignores': ['String'] },
-\ '#': { 'pattern': '#\+', 'ignores': ['String'] },
+\ '/': { 'pattern': '//\+\|/\*\|\*/', 'delimiter_align': 'l', 'ignore_groups': ['String'] },
+\ '#': { 'pattern': '#\+',            'delimiter_align': 'l', 'ignore_groups': ['String'] },
 \ ']': {
 \     'pattern':       '[[\]]',
 \     'left_margin':   0,
