@@ -438,6 +438,11 @@ if has("cscope")
   nnoremap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 endif
 
+" ----------------------------------------------------------------------------
+" <Leader>c Counting occurrences of the pattern
+" ----------------------------------------------------------------------------
+vnoremap <Leader>c :s@\%V@@gn<Left><Left><Left><Left>
+nnoremap <Leader>c :%s@@@gn<Left><Left><Left><Left>
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
