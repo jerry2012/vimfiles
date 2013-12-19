@@ -102,6 +102,9 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 " Plug 'jnwhiteh/vim-golang'
 " Plug 'kien/rainbow_parentheses.vim'
 Plug 'ap/vim-css-color'
+if s:darwin
+  Plug 'Keithbsmiley/investigate.vim'
+endif
 
 " Visual
 " Plug 'Yggdroot/indentLine'
