@@ -18,6 +18,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-emoji.git'
   Plug 'git@github.com:junegunn/vim-github-dashboard.git'
   Plug 'git@github.com:junegunn/vim-easy-align.git'
+  Plug 'git@github.com:junegunn/vim-vsub.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
   Plug 'git@github.com:junegunn/vader.vim.git'
   Plug 'git@github.com:junegunn/fzf.git'
@@ -32,6 +33,7 @@ else
   Plug 'junegunn/vim-emoji'
   Plug 'junegunn/vim-github-dashboard'
   Plug 'junegunn/vim-easy-align'
+  Plug 'junegunn/vim-vsub'
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim'
   Plug 'junegunn/fzf'
@@ -997,20 +999,11 @@ let g:easy_align_delimiters = {
 " vnoremap <silent> <Enter> :EasyAlign<Enter>
 " vnoremap <silent> <Leader><Enter> :LiveEasyAlign<Enter>
 
-vmap <Enter>         <Plug>(EasyAlign)
-nmap <leader>a       <Plug>(EasyAlign)
-vmap <leader><Enter> <Plug>(LiveEasyAlign)
-nmap <leader>A       <Plug>(LiveEasyAlign)
+" Start interactive EasyAlign in visual mode
+vmap <Enter> <Plug>(EasyAlign)
 
-function! s:easy_align_1st_eq(type, ...)
-  '[,']EasyAlign=
-endfunction
-nnoremap <Leader>= :set opfunc=<SID>easy_align_1st_eq<Enter>g@
-
-function! s:easy_align_1st_colon(type, ...)
-  '[,']EasyAlign:
-endfunction
-nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@
+" Start interactive EasyAlign with a Vim movement
+nmap <Leader>a <Plug>(EasyAlign)
 
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
 
