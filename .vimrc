@@ -1005,6 +1005,9 @@ vmap <Enter> <Plug>(EasyAlign)
 " Start interactive EasyAlign with a Vim movement
 nmap <Leader>a <Plug>(EasyAlign)
 
+vmap <Leader><Enter>   <Plug>(LiveEasyAlign)
+nmap <Leader><Leader>a <Plug>(LiveEasyAlign)
+
 " inoremap <silent> => =><Esc>mzvip:EasyAlign/=>/<CR>`z$a<Space>
 
 " ----------------------------------------------------------------------------
