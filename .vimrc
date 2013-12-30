@@ -1106,6 +1106,8 @@ endfunction
 
 let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
 
+nnoremap <Leader>g :Goyo<CR>
+
 " ----------------------------------------------------------------------------
 " gt / q | Help in new tabs
 " ----------------------------------------------------------------------------
