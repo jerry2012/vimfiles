@@ -1097,11 +1097,23 @@ hi def link SneakPluginTarget DiffChange
 " goyo.vim
 " ----------------------------------------------------------------------------
 function! g:goyo_before()
-  silent !tmux set status off
+  if has('gui_running')
+    set fullscreen
+    set background=light
+    set linespace=7
+  elseif exists('$TMUX')
+    silent !tmux set status off
+  endif
 endfunction
 
 function! g:goyo_after()
-  silent !tmux set status on
+  if has('gui_running')
+    set nofullscreen
+    set background=dark
+    set linespace=0
+  elseif exists('$TMUX')
+    silent !tmux set status on
+  endif
 endfunction
 
 let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
