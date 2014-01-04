@@ -17,7 +17,7 @@ if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/vim-emoji.git'
   Plug 'git@github.com:junegunn/vim-github-dashboard.git'
-  Plug 'git@github.com:junegunn/vim-vsub.git'
+  Plug 'git@github.com:junegunn/vim-fnr.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
   Plug 'git@github.com:junegunn/vader.vim.git'
   Plug 'git@github.com:junegunn/fzf.git'
@@ -31,7 +31,7 @@ else
   Plug 'junegunn/vim-easy-align'
   Plug 'junegunn/vim-emoji'
   Plug 'junegunn/vim-github-dashboard'
-  Plug 'junegunn/vim-vsub'
+  Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
   Plug 'junegunn/vader.vim'
   Plug 'junegunn/fzf'
@@ -325,12 +325,12 @@ nnoremap g] <C-i>
 
 " <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
-nnoremap  <F10> :NERDTreeToggle<cr>
+nnoremap <F10> :NERDTreeToggle<cr>
 
 " <F11> | Tagbar
 if v:version >= 703
   inoremap <F11> <esc>:TagbarToggle<cr>
-  nnoremap  <F11> :TagbarToggle<cr>
+  nnoremap <F11> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
@@ -379,7 +379,7 @@ nnoremap <S-tab> <c-w>W
 " ----------------------------------------------------------------------------
 " Clear search highlights
 " ----------------------------------------------------------------------------
-nnoremap <silent><leader>/ :nohl<CR>
+nnoremap <silent> <leader>/ :nohl<CR>
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -904,6 +904,32 @@ function! LSD()
       execute printf('hi def link lsd%s_%s LSD%s', l, c, rand)
       let c += stride
     endwhile
+  endfor
+endfunction
+
+" ----------------------------------------------------------------------------
+" call RandomizeColors()
+" ----------------------------------------------------------------------------
+function! RandomizeColors()
+  let colors = [16, 17, 23, 24, 25, 30, 31, 38, 52, 53, 58, 59, 65, 66, 67,
+  \ 68, 71, 73, 74, 88, 89, 95, 96, 101, 102, 103, 107, 108, 109, 110, 113, 116,
+  \ 117, 125, 130, 131, 132, 136, 137, 138, 143, 144, 145, 146, 148, 151, 152,
+  \ 153, 161, 168, 173, 174, 178, 179, 180, 181, 184, 186, 187, 188, 189, 195,
+  \ 208, 209, 216, 217, 218, 220, 221, 222, 223, 224, 230, 231, 238, 252]
+
+  redir => h
+  silent hi
+  redir END
+  for pair in map(filter(split(h, "\n"), 'v:val !~ "link"'),
+                  \ '[substitute(v:val, " .*", "", ""), v:val =~ "reverse"]')
+    let [g, inv] = pair
+    let c1 = colors[abs(reltime()[1] % len(colors))]
+    if inv
+      let c2 = colors[abs(reltime()[1] % len(colors))]
+      execute printf("hi %s ctermfg=%d ctermbg=%d", g, c1, c2)
+    else
+      execute printf("hi %s ctermfg=%d", g, c1)
+    endif
   endfor
 endfunction
 
