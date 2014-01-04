@@ -359,13 +359,7 @@ nnoremap Y y$
 nnoremap Q @q
 
 " ----------------------------------------------------------------------------
-" fnr | Find and replace
-" ----------------------------------------------------------------------------
-nnoremap fnr    :<C-U>.,$s#\V<C-R>=escape(expand('<cword>'), '\#')<CR>##gc<Left><Left><Left>
-vnoremap fnr "xy:<C-U>.,$s#\V<C-R>=escape(@x,                '\#')<CR>##gc<Left><Left><Left>
-
-" ----------------------------------------------------------------------------
-" * | Star-search without moving ~~~ asdf
+" * | Star-search without moving
 " ----------------------------------------------------------------------------
 nnoremap <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
 vnoremap <silent> *       "xy:<C-U>let @/ = '\V'.  escape(@x,                '\')<cr>:set hls<cr>
