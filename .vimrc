@@ -917,6 +917,7 @@ function! RandomizeColors()
   for pair in map(filter(split(h, "\n"), 'v:val !~ "link"'),
                   \ '[substitute(v:val, " .*", "", ""), v:val =~ "reverse"]')
     let [g, inv] = pair
+    if empty(g) | continue | endif
     let c1 = colors[abs(reltime()[1] % len(colors))]
     if inv
       let c2 = colors[abs(reltime()[1] % len(colors))]
