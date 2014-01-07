@@ -788,10 +788,8 @@ function! s:inner_underscore(incl)
     if pos > cursor
       let begin = pos - len(token)
       let end   = pos - (token =~ '_$' && !a:incl ? 2 : 1)
-      if a:incl
-        if begin > 1 && getline(line('.'))[begin - 2] == '_'
-          let begin -= 1
-        endif
+      if a:incl && begin > 1 && getline(line('.'))[begin - 2] == '_'
+        let begin -= 1
       endif
       execute printf("normal! %d|v%d|", begin, end)
       break
