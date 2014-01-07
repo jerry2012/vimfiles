@@ -746,7 +746,7 @@ vnoremap <silent> <c-t>n :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> <c-t>s :call <sid>adjust_indentation('s')<cr>
 
 " ----------------------------------------------------------------------------
-" vio | strictly-indent-object
+" ?io | strictly-indent-object
 " ----------------------------------------------------------------------------
 function! s:indent_len(str)
   return len(matchstr(a:str, '^\s*'))
@@ -773,6 +773,38 @@ function! s:strictly_indent_object()
 endfunction
 vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
 onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+
+" ----------------------------------------------------------------------------
+" ?i_, ?a_ | underscore_text_object (vT_ot_ / vF_of_)
+" ----------------------------------------------------------------------------
+function! s:inner_underscore(incl)
+  let cursor = col('.')
+  let save_x = @x
+  normal! "xyiw
+
+  let pos = col(".")
+  for token in split(@x, '_\zs')
+    let pos += len(token)
+    if pos > cursor
+      let begin = pos - len(token)
+      let end   = pos - (token =~ '_$' && !a:incl ? 2 : 1)
+      if a:incl
+        if begin > 1 && getline(line('.'))[begin - 2] == '_'
+          let begin -= 1
+        endif
+      endif
+      execute printf("normal! %d|v%d|", begin, end)
+      break
+    endif
+  endfor
+
+  let @x = save_x
+endfunction
+
+vnoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
+onoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
+vnoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
+onoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
 
 " ----------------------------------------------------------------------------
 " #gi / #gpi | go to next/previous indentation level
