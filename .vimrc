@@ -805,6 +805,12 @@ vnoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
 onoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
 
 " ----------------------------------------------------------------------------
+" ?ie | entire object
+" ----------------------------------------------------------------------------
+vnoremap <silent> ie gg0oG$
+onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
+
+" ----------------------------------------------------------------------------
 " #gi / #gpi | go to next/previous indentation level
 " ----------------------------------------------------------------------------
 function! s:go_indent(times, dir)
