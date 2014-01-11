@@ -966,7 +966,12 @@ onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
 " ----------------------------------------------------------------------------
 " ?ic | Blockwise column
 " ----------------------------------------------------------------------------
-function! s:inner_blockwise_column()
+function! s:inner_blockwise_column(vmode)
+  if a:vmode == "\<C-V>"
+    let [pvb, pve] = [getpos("'<"), getpos("'>")]
+    normal! `z
+  endif
+
   execute "normal! \<C-V>iwo\<C-C>"
   let [cb, ce] = [col("'<"), col("'>")]
   normal! gv
@@ -984,10 +989,19 @@ function! s:inner_blockwise_column()
       normal! o
     endif
   endfor
+
+  if a:vmode == "\<C-V>"
+    normal! o
+    if pvb[1] < line('.') | execute "normal! ".pvb[1]."G" | endif
+    if pvb[2] < col('.')  | execute "normal! ".pvb[2]."|" | endif
+    normal! o
+    if pve[1] > line('.') | execute "normal! ".pve[1]."G" | endif
+    if pve[2] > col('.')  | execute "normal! ".pve[2]."|" | endif
+  endif
 endfunction
 
-vnoremap <silent> ic :<C-U>call <SID>inner_blockwise_column()<CR>
-onoremap <silent> ic :<C-U>call <SID>inner_blockwise_column()<CR>
+vnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode())<CR>
+onoremap <silent> ic :<C-U>call <SID>inner_blockwise_column('')<CR>
 
 
 " ============================================================================
