@@ -971,23 +971,19 @@ function! s:inner_blockwise_column()
   let [cb, ce] = [col("'<"), col("'>")]
   normal! gv
 
-  while line('.') > 1
-    let l = getline(line('.') - 1)
-    if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
-      break
+  for pair in [[-1, 'k'], [1, 'j']]
+    let [dir, cmd] = pair
+    while line('.') > 1 && line('.') < line('$')
+      let l = getline(line('.') + dir)
+      if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
+        break
+      endif
+      execute "normal! ".cmd
+    endwhile
+    if dir == -1
+      normal! o
     endif
-    normal! k
-  endwhile
-
-  normal! o
-
-  while line('.') < line('$')
-    let l = getline(line('.') + 1)
-    if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
-      break
-    endif
-    normal! j
-  endwhile
+  endfor
 endfunction
 
 vnoremap <silent> ic :<C-U>call <SID>inner_blockwise_column()<CR>
