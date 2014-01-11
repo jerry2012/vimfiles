@@ -291,18 +291,12 @@ set nostartofline
 
 
 " ============================================================================
-" MAPPING
+" MAPPINGS
 " ============================================================================
 
 " ----------------------------------------------------------------------------
 " Basic mappings
 " ----------------------------------------------------------------------------
-
-noremap ^[[6~ ^D
-noremap ^[[5~ ^U
-
-noremap ^[[B ^E
-noremap ^[[A ^Y
 
 noremap <C-F> <C-D>
 noremap <C-B> <C-U>
@@ -452,6 +446,30 @@ cnoremap        <M-b> <S-Left>
 cnoremap        <M-f> <S-Right>
 silent! exe "set <S-Left>=\<Esc>b"
 silent! exe "set <S-Right>=\<Esc>f"
+
+" ----------------------------------------------------------------------------
+" #gi / #gpi | go to next/previous indentation level
+" ----------------------------------------------------------------------------
+function! s:go_indent(times, dir)
+  for _ in range(a:times)
+    let l = line('.')
+    let x = line('$')
+    let i = s:indent_len(getline(l))
+    let e = empty(getline(l))
+
+    while l >= 1 && l <= x
+      let line = getline(l + a:dir)
+      let l += a:dir
+      if s:indent_len(line) != i || empty(line) != e
+        break
+      endif
+    endwhile
+    let l = min([max([1, l]), x])
+    execute 'normal! '. l .'G^'
+  endfor
+endfunction
+nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
+nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
 
 " ============================================================================
@@ -746,95 +764,6 @@ vnoremap <silent> <c-t>n :call <sid>adjust_indentation('n')<cr>
 vnoremap <silent> <c-t>s :call <sid>adjust_indentation('s')<cr>
 
 " ----------------------------------------------------------------------------
-" ?io | strictly-indent-object
-" ----------------------------------------------------------------------------
-function! s:indent_len(str)
-  return len(matchstr(a:str, '^\s*'))
-endfunction
-
-function! s:strictly_indent_object()
-  let b = line('.')
-  let e = b
-  let x = line('$')
-  let i = s:indent_len(getline(b))
-  while b > 1
-    let line = getline(b - 1)
-    if s:indent_len(line) == i && !empty(line)
-      let b -= 1
-    else | break | end
-  endwhile
-  while e < x
-    let line = getline(e + 1)
-    if s:indent_len(line) == i && !empty(line)
-      let e += 1
-    else | break | end
-  endwhile
-  execute printf('normal! %dGV%dG', b, e)
-endfunction
-vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
-onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
-
-" ----------------------------------------------------------------------------
-" ?i_, ?a_ | underscore_text_object (vT_ot_ / vF_of_)
-" ----------------------------------------------------------------------------
-function! s:inner_underscore(incl)
-  let cursor = col('.')
-  let save_x = @x
-  normal! "xyiw
-
-  let pos = col(".")
-  for token in split(@x, '_\zs')
-    let pos += len(token)
-    if pos > cursor
-      let begin = pos - len(token)
-      let end   = pos - (token =~ '_$' && !a:incl ? 2 : 1)
-      if a:incl && begin > 1 && getline(line('.'))[begin - 2] == '_'
-        let begin -= 1
-      endif
-      execute printf("normal! %d|v%d|", begin, end)
-      break
-    endif
-  endfor
-
-  let @x = save_x
-endfunction
-
-vnoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
-onoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
-vnoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
-onoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
-
-" ----------------------------------------------------------------------------
-" ?ie | entire object
-" ----------------------------------------------------------------------------
-vnoremap <silent> ie gg0oG$
-onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
-
-" ----------------------------------------------------------------------------
-" #gi / #gpi | go to next/previous indentation level
-" ----------------------------------------------------------------------------
-function! s:go_indent(times, dir)
-  for _ in range(a:times)
-    let l = line('.')
-    let x = line('$')
-    let i = s:indent_len(getline(l))
-    let e = empty(getline(l))
-
-    while l >= 1 && l <= x
-      let line = getline(l + a:dir)
-      let l += a:dir
-      if s:indent_len(line) != i || empty(line) != e
-        break
-      endif
-    endwhile
-    let l = min([max([1, l]), x])
-    execute 'normal! '. l .'G^'
-  endfor
-endfunction
-nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
-nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
-
-" ----------------------------------------------------------------------------
 " :A
 " ----------------------------------------------------------------------------
 function! s:a()
@@ -963,6 +892,107 @@ function! RandomizeColors()
     endif
   endfor
 endfunction
+
+
+" ============================================================================
+" TEXT OBJECTS
+" ============================================================================
+
+" ----------------------------------------------------------------------------
+" ?io | strictly-indent-object
+" ----------------------------------------------------------------------------
+function! s:indent_len(str)
+  return len(matchstr(a:str, '^\s*'))
+endfunction
+
+function! s:strictly_indent_object()
+  let b = line('.')
+  let e = b
+  let x = line('$')
+  let i = s:indent_len(getline(b))
+  while b > 1
+    let line = getline(b - 1)
+    if s:indent_len(line) == i && !empty(line)
+      let b -= 1
+    else | break | end
+  endwhile
+  while e < x
+    let line = getline(e + 1)
+    if s:indent_len(line) == i && !empty(line)
+      let e += 1
+    else | break | end
+  endwhile
+  execute printf('normal! %dGV%dG', b, e)
+endfunction
+vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+
+" ----------------------------------------------------------------------------
+" ?i_, ?a_ | underscore_text_object (vT_ot_ / vF_of_)
+" ----------------------------------------------------------------------------
+function! s:inner_underscore(incl)
+  let cursor = col('.')
+  let save_x = @x
+  normal! "xyiw
+
+  let pos = col(".")
+  for token in split(@x, '_\zs')
+    let pos += len(token)
+    if pos > cursor
+      let begin = pos - len(token)
+      let end   = pos - (token =~ '_$' && !a:incl ? 2 : 1)
+      if a:incl && begin > 1 && getline(line('.'))[begin - 2] == '_'
+        let begin -= 1
+      endif
+      execute printf("normal! %d|v%d|", begin, end)
+      break
+    endif
+  endfor
+
+  let @x = save_x
+endfunction
+
+vnoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
+onoremap <silent> i_ :<C-U>call <SID>inner_underscore(0)<CR>
+vnoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
+onoremap <silent> a_ :<C-U>call <SID>inner_underscore(1)<CR>
+
+" ----------------------------------------------------------------------------
+" ?ie | entire object
+" ----------------------------------------------------------------------------
+vnoremap <silent> ie gg0oG$
+onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
+
+" ----------------------------------------------------------------------------
+" ?ic | Blockwise column
+" ----------------------------------------------------------------------------
+function! s:inner_blockwise_column()
+  execute "normal! \<C-V>iwo\<C-C>"
+  let [cb, ce] = [col("'<"), col("'>")]
+  normal! gv
+
+  while line('.') > 1
+    let l = getline(line('.') - 1)
+    if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
+      break
+    endif
+    normal! k
+  endwhile
+
+  normal! o
+
+  while line('.') < line('$')
+    let l = getline(line('.') + 1)
+    if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
+      break
+    endif
+    normal! j
+  endwhile
+endfunction
+
+vnoremap <silent> ic :<C-U>call <SID>inner_blockwise_column()<CR>
+onoremap <silent> ic :<C-U>call <SID>inner_blockwise_column()<CR>
+
 
 " ============================================================================
 " PLUGINS
@@ -1178,19 +1208,9 @@ let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
 nnoremap <Leader>g :Goyo<CR>
 
 " ----------------------------------------------------------------------------
-" gt / q | Help in new tabs
+" tcomment.vim
 " ----------------------------------------------------------------------------
-function! s:helptab()
-  if &buftype == 'help'
-    execute "normal! \<C-W>T"
-    nnoremap q :q<cr>
-  endif
-endfunction
-
-augroup helptxt
-  autocmd!
-  autocmd BufEnter *.txt call s:helptab()
-augroup END
+let g:tcommentTextObjectInlineComment = ''
 
 " ============================================================================
 " AUTOCMD
@@ -1228,6 +1248,21 @@ endif
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
   au InsertEnter * silent! match ExtraWhitespace /\s\+\%#\@<!$/
+augroup END
+
+" ----------------------------------------------------------------------------
+" gt / q | Help in new tabs
+" ----------------------------------------------------------------------------
+function! s:helptab()
+  if &buftype == 'help'
+    execute "normal! \<C-W>T"
+    nnoremap q :q<cr>
+  endif
+endfunction
+
+augroup helptxt
+  autocmd!
+  autocmd BufEnter *.txt call s:helptab()
 augroup END
 
 " ----------------------------------------------------------------------------
