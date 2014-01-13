@@ -964,31 +964,33 @@ vnoremap <silent> ie gg0oG$
 onoremap <silent> ie :<C-U>execute "normal! m`" <Bar> keepjumps normal! ggVG<CR>
 
 " ----------------------------------------------------------------------------
-" ?ic | Blockwise column
+" ?ic / ?iC | Blockwise column object
 " ----------------------------------------------------------------------------
-function! s:inner_blockwise_column(vmode)
+function! s:inner_blockwise_column(vmode, cmd)
   if a:vmode == "\<C-V>"
     let [pvb, pve] = [getpos("'<"), getpos("'>")]
     normal! `z
   endif
 
-  execute "normal! \<C-V>iwo\<C-C>"
-  let [cb, ce] = [col("'<"), col("'>")]
-  normal! gv
+  execute "normal! \<C-V>".a:cmd."o\<C-C>"
+  let [line, col] = [line('.'), col('.')]
+  let [cb, ce]    = [col("'<"), col("'>")]
+  let [mn, mx]    = [line, line]
 
-  for pair in [[-1, 'k'], [1, 'j']]
-    let [dir, cmd] = pair
+  for pair in [[1, 'j'], [-1, 'k']]
+    execute "normal! ".line."G".col."|"
+    let [dir, mv] = pair
     while line('.') > 1 && line('.') < line('$')
-      let l = getline(line('.') + dir)
-      if len(l) < ce || l[cb - 1 : ce - 1] !~ '^[[:alnum:]_]*$'
+      execute "normal! v".a:cmd."\<C-C>"
+      if cb != col("'<") || ce != col("'>")
         break
       endif
-      execute "normal! ".cmd
+      let [mn, mx] = [min([line('.'), mn]), max([line('.'), mx])]
+      execute "normal! ".mv
     endwhile
-    if dir == -1
-      normal! o
-    endif
   endfor
+
+  execute printf("normal! %dG%d|\<C-V>%s%dG", mn, col, a:cmd, mx)
 
   if a:vmode == "\<C-V>"
     normal! o
@@ -1000,8 +1002,10 @@ function! s:inner_blockwise_column(vmode)
   endif
 endfunction
 
-vnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode())<CR>
-onoremap <silent> ic :<C-U>call <SID>inner_blockwise_column('')<CR>
+vnoremap <silent> ic mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iw')<CR>
+onoremap <silent> ic :<C-U>call   <SID>inner_blockwise_column('',           'iw')<CR>
+vnoremap <silent> iC mz:<C-U>call <SID>inner_blockwise_column(visualmode(), 'iW')<CR>
+onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW')<CR>
 
 
 " ============================================================================
