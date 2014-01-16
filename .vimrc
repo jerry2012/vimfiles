@@ -1013,6 +1013,11 @@ onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW'
 " ============================================================================
 
 " ----------------------------------------------------------------------------
+" vim-fugitive
+" ----------------------------------------------------------------------------
+nnoremap <Leader>g :Gstatus<CR>
+
+" ----------------------------------------------------------------------------
 " vim-ruby (https://github.com/vim-ruby/vim-ruby/issues/33)
 " ----------------------------------------------------------------------------
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
@@ -1219,7 +1224,7 @@ endfunction
 
 let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
 
-nnoremap <Leader>g :Goyo<CR>
+nnoremap <Leader>G :Goyo<CR>
 
 " ----------------------------------------------------------------------------
 " tcomment.vim
