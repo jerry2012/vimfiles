@@ -309,9 +309,11 @@ nnoremap  <C-s> :update<cr>
 noremap  <C-a> gg0vG$
 
 " Quit
-inoremap <C-Q> <esc>:q<cr>
-nnoremap <C-Q> :q<cr>
-vnoremap <C-Q> <esc>
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>Q :qa!<cr>
+vnoremap <C-Q>     <esc>
 
 " Jump list
 nnoremap g[ <C-o>
