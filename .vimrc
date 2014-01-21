@@ -304,16 +304,19 @@ noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
 " Save
-inoremap <C-s> <C-O>:update<cr>
-nnoremap  <C-s> :update<cr>
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <Leader>w :w<cr>
 
 " Select-all (don't need confusing increment C-a)
 noremap  <C-a> gg0vG$
 
 " Quit
-inoremap <C-Q> <esc>:q<cr>
-nnoremap <C-Q> :q<cr>
-vnoremap <C-Q> <esc>
+inoremap <C-Q>      <esc>:q<cr>
+nnoremap <C-Q>      :q<cr>
+vnoremap <C-Q>      <esc>
+nnoremap <Leader>q  :q<cr>
+nnoremap <Leader>Q  :qa!<cr>
 
 " Jump list
 nnoremap g[ <C-o>
@@ -1015,6 +1018,11 @@ onoremap <silent> iC :<C-U>call   <SID>inner_blockwise_column('',           'iW'
 " ============================================================================
 
 " ----------------------------------------------------------------------------
+" vim-fugitive
+" ----------------------------------------------------------------------------
+nnoremap <Leader>g :Gstatus<CR>
+
+" ----------------------------------------------------------------------------
 " vim-ruby (https://github.com/vim-ruby/vim-ruby/issues/33)
 " ----------------------------------------------------------------------------
 if !empty(matchstr($MY_RUBY_HOME, 'jruby'))
@@ -1221,7 +1229,7 @@ endfunction
 
 let g:goyo_callbacks = [function('g:goyo_before'), function('g:goyo_after')]
 
-nnoremap <Leader>g :Goyo<CR>
+nnoremap <Leader>G :Goyo<CR>
 
 " ----------------------------------------------------------------------------
 " tcomment.vim
