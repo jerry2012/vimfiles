@@ -74,7 +74,9 @@ endif
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
-Plug 'airblade/vim-gitgutter'
+if v:version >= 703
+  Plug 'airblade/vim-gitgutter'
+endif
 
 " Snippets
 " Plug 'honza/vim-snippets'
