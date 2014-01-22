@@ -107,6 +107,7 @@ Plug 'ap/vim-css-color'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
+Plug 'AndrewRadev/sideways.vim'
 
 " Visual
 " Plug 'Yggdroot/indentLine'
@@ -476,6 +477,28 @@ endfunction
 nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
 nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
+" ----------------------------------------------------------------------------
+" s / S / gs / gS | Skip motions
+" ----------------------------------------------------------------------------
+function! s:skip(times, idx, dst, vis)
+  let pos = [line('.'), col('.')]
+
+  for _ in range(a:times)
+    let pos[a:idx] = (pos[a:idx] + a:dst) / 2
+  endfor
+
+  if !empty(a:vis)
+    execute printf("normal! `<%s`>", a:vis)
+  endif
+  execute printf("normal! %dG%d|", pos[0], pos[1])
+endfunction
+
+" nnoremap <silent> s  :<c-u>call <SID>skip(v:count1, 1, col('$'), '')<cr>
+" nnoremap <silent> S  :<c-u>call <SID>skip(v:count1, 1, max([match(getline(line('.')), '\S') + 1, 1]), '')<cr>
+" nnoremap <silent> gs :<c-u>call <SID>skip(v:count1, 0, line('w$'), '')<cr>
+" nnoremap <silent> gS :<c-u>call <SID>skip(v:count1, 0, line('w0'), '')<cr>
+" vnoremap <silent> s  <ESC>:call <SID>skip(v:count1, 1, col('$'), visualmode())<cr>
+" vnoremap <silent> S  <ESC>:call <SID>skip(v:count1, 1, max([match(getline(line('.')), '\S') + 1, 1]), visualmode())<cr>
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
@@ -1235,6 +1258,12 @@ nnoremap <Leader>G :Goyo<CR>
 " tcomment.vim
 " ----------------------------------------------------------------------------
 let g:tcommentTextObjectInlineComment = ''
+
+" ----------------------------------------------------------------------------
+" sideways.vim
+" ----------------------------------------------------------------------------
+nnoremap g< :SidewaysLeft<cr>
+nnoremap g> :SidewaysRight<cr>
 
 " ============================================================================
 " AUTOCMD
