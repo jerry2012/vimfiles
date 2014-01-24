@@ -46,7 +46,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
-Plug 'sjl/gundo.vim'
+if has('python')
+  Plug 'sjl/gundo.vim'
+else
+  Plug 'mbbill/undotree'
+endif
 Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
 " Plug 'tpope/vim-characterize'
