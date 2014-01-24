@@ -51,7 +51,7 @@ Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
 " Plug 'tpope/vim-characterize'
 " Plug 'tpope/vim-abolish'
-" Plug 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
 endif
@@ -76,19 +76,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'gregsexton/gitv'
 if v:version >= 703
   Plug 'airblade/vim-gitgutter'
+else
+  Plug 'mhinz/vim-signify'
 endif
-
-" Snippets
-" Plug 'honza/vim-snippets'
-" Plug   'garbas/vim-snipmate'
-" Plug     'tomtom/tlib_vim'
-" Plug     'MarcWeber/vim-addon-mw-utils'
-
-" Text object
-" Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug   'kana/vim-textobj-user'
-" Plug 'vim-scripts/argtextobj.vim'
-Plug 'michaeljsmith/vim-indent-object'
 
 " Lang
 if v:version >= 703
@@ -305,19 +295,18 @@ noremap <C-F> <C-D>
 noremap <C-B> <C-U>
 
 " Save
-inoremap <C-s>     <C-O>:update<cr>
-nnoremap <C-s>     :update<cr>
-nnoremap <Leader>w :w<cr>
+inoremap <C-s> <C-O>:update<cr>
+nnoremap <C-s> :update<cr>
 
 " Select-all (don't need confusing increment C-a)
 noremap  <C-a> gg0vG$
 
 " Quit
-inoremap <C-Q>      <esc>:q<cr>
-nnoremap <C-Q>      :q<cr>
-vnoremap <C-Q>      <esc>
-nnoremap <Leader>q  :q<cr>
-nnoremap <Leader>Q  :qa!<cr>
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>Q :qa!<cr>
 
 " Jump list
 nnoremap g[ <C-o>
@@ -480,25 +469,29 @@ nnoremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 " ----------------------------------------------------------------------------
 " s / S / gs / gS | Skip motions
 " ----------------------------------------------------------------------------
-function! s:skip(times, idx, dst, vis)
-  let pos = [line('.'), col('.')]
-
-  for _ in range(a:times)
-    let pos[a:idx] = (pos[a:idx] + a:dst) / 2
-  endfor
-
-  if !empty(a:vis)
-    execute printf("normal! `<%s`>", a:vis)
-  endif
-  execute printf("normal! %dG%d|", pos[0], pos[1])
-endfunction
-
+" function! s:skip(times, idx, dst, vis)
+"   let pos = [line('.'), col('.')]
+"
+"   for _ in range(a:times)
+"     let pos[a:idx] = (pos[a:idx] + a:dst) / 2
+"   endfor
+"
+"   if !empty(a:vis)
+"     execute printf("normal! `<%s`>", a:vis)
+"   endif
+"   execute printf("normal! %dG%d|", pos[0], pos[1])
+" endfunction
+"
 " nnoremap <silent> s  :<c-u>call <SID>skip(v:count1, 1, col('$'), '')<cr>
 " nnoremap <silent> S  :<c-u>call <SID>skip(v:count1, 1, max([match(getline(line('.')), '\S') + 1, 1]), '')<cr>
 " nnoremap <silent> gs :<c-u>call <SID>skip(v:count1, 0, line('w$'), '')<cr>
 " nnoremap <silent> gS :<c-u>call <SID>skip(v:count1, 0, line('w0'), '')<cr>
 " vnoremap <silent> s  <ESC>:call <SID>skip(v:count1, 1, col('$'), visualmode())<cr>
 " vnoremap <silent> S  <ESC>:call <SID>skip(v:count1, 1, max([match(getline(line('.')), '\S') + 1, 1]), visualmode())<cr>
+"
+" for i in range(1, 9)
+"   execute printf('nnoremap <silent> g%d ^:execute "normal! ".(%d * (col("$") - col(".")) / 10)."\|"<cr>', i, i)
+" endfor
 
 " ============================================================================
 " FUNCTIONS & COMMANDS
@@ -925,35 +918,43 @@ endfunction
 " ============================================================================
 " TEXT OBJECTS
 " ============================================================================
-
+"
 " ----------------------------------------------------------------------------
-" ?io | strictly-indent-object
+" ?ii / ?ai | indent-object
+" ?io       | strictly-indent-object
 " ----------------------------------------------------------------------------
 function! s:indent_len(str)
   return len(matchstr(a:str, '^\s*'))
 endfunction
 
-function! s:strictly_indent_object()
-  let b = line('.')
-  let e = b
+function! s:indent_object(op, skip_blank, b, e, bd, ed)
+  let i = min([s:indent_len(getline(a:b)), s:indent_len(getline(a:e))])
+  let b = i == 0 && empty(getline(a:b)) && empty(getline(a:e))
   let x = line('$')
-  let i = s:indent_len(getline(b))
-  while b > 1
-    let line = getline(b - 1)
-    if s:indent_len(line) == i && !empty(line)
-      let b -= 1
-    else | break | end
-  endwhile
-  while e < x
-    let line = getline(e + 1)
-    if s:indent_len(line) == i && !empty(line)
-      let e += 1
-    else | break | end
-  endwhile
-  execute printf('normal! %dGV%dG', b, e)
+  let d = [a:b, a:e]
+  for triple in [[0, 'd[o] > 1', -1], [1, 'd[o] < x', +1]]
+    let [o, ev, df] = triple
+
+    while eval(ev)
+      let line = getline(d[o] + df)
+      let idt = s:indent_len(line)
+      if b && idt > i
+        let i = idt
+      endif
+
+      if eval('idt '.a:op.' i') || (a:skip_blank && empty(line))
+        let d[o] += df
+      else | break | end
+    endwhile
+  endfor
+  execute printf('normal! %dGV%dG', max([1, d[0] + a:bd]), min([x, d[1] + a:ed]))
 endfunction
-vnoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
-onoremap <silent> io :<c-u>call <SID>strictly_indent_object()<cr>
+vnoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), 0, 0)<cr>
+onoremap <silent> ii :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), 0, 0)<cr>
+vnoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line("'<"), line("'>"), -1, 1)<cr>
+onoremap <silent> ai :<c-u>call <SID>indent_object('>=', 1, line('.'), line('.'), -1, 1)<cr>
+vnoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line("'<"), line("'>"), 0, 0)<cr>
+onoremap <silent> io :<c-u>call <SID>indent_object('==', 0, line('.'), line('.'), 0, 0)<cr>
 
 " ----------------------------------------------------------------------------
 " ?i_, ?a_ | underscore_text_object (vT_ot_ / vF_of_)
@@ -1264,6 +1265,10 @@ let g:tcommentTextObjectInlineComment = ''
 " ----------------------------------------------------------------------------
 nnoremap g< :SidewaysLeft<cr>
 nnoremap g> :SidewaysRight<cr>
+omap ia <Plug>SidewaysArgumentTextobjI
+vmap ia <Plug>SidewaysArgumentTextobjI
+omap aa <Plug>SidewaysArgumentTextobjA
+vmap aa <Plug>SidewaysArgumentTextobjA
 
 " ============================================================================
 " AUTOCMD
@@ -1276,7 +1281,6 @@ augroup vimrc
   au BufRead              *                   setlocal nofoldenable
   au BufWritePost         .vimrc              source %
 
-  au BufNewFile,BufRead   [Cc]apfile          set filetype=ruby
   au BufNewFile,BufRead   *.md                set filetype=markdown
   au BufNewFile,BufRead   *.icc               set filetype=cpp
   au BufNewFile,BufRead   *.pde               set filetype=java
@@ -1296,7 +1300,7 @@ augroup vimrc
     \ nmap <LocalLeader><LocalLeader> va)*``gv<LocalLeader>eb|
     \ vmap <LocalLeader><LocalLeader> <LocalLeader>eb|
     \ set isk+="-?"
-endif
+  endif
 
   " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
   au BufNewFile,BufRead,InsertLeave * silent! match ExtraWhitespace /\s\+$/
