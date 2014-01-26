@@ -313,8 +313,12 @@ nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
 
 " Jump list
-nnoremap g[ <C-o>
-nnoremap g] <C-i>
+nnoremap <Left>  <C-o>
+nnoremap <Right> <C-i>
+
+" Change list
+nnoremap <Up>    g;
+nnoremap <Down>  g,
 
 " <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
