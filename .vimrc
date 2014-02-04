@@ -149,6 +149,7 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 set list
 set listchars=tab:\|\ ,
 set virtualedit=block
+set nojoinspaces
 
 " %< Where to truncate
 " %n buffer number
