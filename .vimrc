@@ -46,11 +46,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
-if has('python')
-  Plug 'sjl/gundo.vim'
-else
-  Plug 'mbbill/undotree'
-endif
+Plug 'mbbill/undotree'
 Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
 " Plug 'tpope/vim-characterize'
@@ -95,9 +91,8 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-" Plug 'jnwhiteh/vim-golang'
-" Plug 'kien/rainbow_parentheses.vim'
-Plug 'ap/vim-css-color'
+Plug 'jnwhiteh/vim-golang'
+Plug 'kien/rainbow_parentheses.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
@@ -312,13 +307,13 @@ vnoremap <C-Q>     <esc>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
 
-" Jump list
-nnoremap <Left>  <C-o>
-nnoremap <Right> <C-i>
+" Tag stack
+nnoremap g<Left>  :pop<cr>
+nnoremap g<Right> :tag<cr>
 
-" Change list
-nnoremap <Up>    g;
-nnoremap <Down>  g,
+" Jump list
+nnoremap g<Up>    <C-o>
+nnoremap g<Down>  <C-i>
 
 " <F10> | NERD Tree
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -1277,6 +1272,13 @@ omap ia <Plug>SidewaysArgumentTextobjI
 vmap ia <Plug>SidewaysArgumentTextobjI
 omap aa <Plug>SidewaysArgumentTextobjA
 vmap aa <Plug>SidewaysArgumentTextobjA
+
+" ----------------------------------------------------------------------------
+" undotree
+" ----------------------------------------------------------------------------
+let g:undotree_WindowLayout = 2
+nnoremap <Leader>u :UndotreeToggle<CR>
+
 
 " ============================================================================
 " AUTOCMD
