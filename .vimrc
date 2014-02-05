@@ -144,6 +144,7 @@ set fileencodings=ucs-bom,utf-8,euc-kr,latin1
 set list
 set listchars=tab:\|\ ,
 set virtualedit=block
+set nojoinspaces
 
 " %< Where to truncate
 " %n buffer number
@@ -353,8 +354,8 @@ nnoremap Q @q
 " ----------------------------------------------------------------------------
 " * | Star-search without moving
 " ----------------------------------------------------------------------------
-nnoremap <silent> * viwo<esc>:<C-U>let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>
-vnoremap <silent> *       "xy:<C-U>let @/ = '\V'.  escape(@x,                '\')<cr>:set hls<cr>
+nnoremap <silent> *    :<C-U>let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'<cr>:set hls<cr>wb
+vnoremap <silent> * "xy:<C-U>let @/ = '\V'.  escape(@x,                '\')<cr>:set hls<cr>
 
 " ----------------------------------------------------------------------------
 " <tab> / <s-tab> | Circular windows navigation
