@@ -1278,7 +1278,7 @@ vmap aa <Plug>SidewaysArgumentTextobjA
 " undotree
 " ----------------------------------------------------------------------------
 let g:undotree_WindowLayout = 2
-nnoremap <Leader>u :UndotreeToggle<CR>
+nnoremap U :UndotreeToggle<CR>
 
 
 " ============================================================================
