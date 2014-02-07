@@ -816,8 +816,10 @@ command! A call s:a()
 " ----------------------------------------------------------------------------
 " <leader>f | fuzzy matching
 " ----------------------------------------------------------------------------
-function! s:fuzzy_matching()
+function! s:fuzzy_matching(backward)
   set shortmess+=T " required :p
+  let prefix = "\rf" . (a:backward ? '?' : '/')
+  let search = a:backward ? 'cb' : 'c'
   normal! m`
 
   try
@@ -825,7 +827,7 @@ function! s:fuzzy_matching()
     let q = ''
     while 1
       redraw
-      echon "\rf/". q
+      echon prefix . q
       let c  = getchar()
       let ch = nr2char(c)
 
@@ -848,7 +850,7 @@ function! s:fuzzy_matching()
       silent! call matchdelete(mid)
       keepjumps normal! ``
       if !empty(regex)
-        if search('\c'.regex, 'c') == 0
+        if search('\c'.regex, search) == 0
           keepjumps normal! ``
         else
           let mid = matchadd("IncSearch", '\c\%'.line('.').'l'.regex)
@@ -860,7 +862,8 @@ function! s:fuzzy_matching()
     redraw
   endtry
 endfunction
-nnoremap <silent> <leader>f :call <SID>fuzzy_matching()<cr>
+nnoremap <silent> <leader>f :call <SID>fuzzy_matching(0)<cr>
+nnoremap <silent> <leader>F :call <SID>fuzzy_matching(1)<cr>
 
 " ----------------------------------------------------------------------------
 " MatchParen delay
