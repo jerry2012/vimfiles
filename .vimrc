@@ -2,14 +2,12 @@
 " .vimrc of Junegunn Choi
 " ============================================================================
 
-let s:darwin = has("unix") && system("uname") == "Darwin\n"
+let s:darwin = has('mac')
 let s:ag     = executable('ag')
 
 " ============================================================================
 " VIM-PLUG BLOCK
 " ============================================================================
-
-let $GIT_SSL_NO_VERIFY = 'true'
 
 silent! if plug#begin('~/.vim/plugged')
 
@@ -28,6 +26,7 @@ if s:darwin
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
 " Plug 'git@github.com:junegunn/Zenburn.git'
 else
+  let $GIT_SSL_NO_VERIFY = 'true'
   Plug 'junegunn/vim-easy-align'
   Plug 'junegunn/vim-github-dashboard'
   Plug 'junegunn/vim-fnr'
@@ -58,7 +57,6 @@ Plug 'tpope/vim-tbone'
 " Browsing
 Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
 Plug 'scrooloose/nerdtree'
 if v:version >= 703
   Plug 'majutsushi/tagbar'
@@ -1065,12 +1063,10 @@ runtime macros/matchit.vim
 let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_max_files  = 0
 let g:ctrlp_max_height = 30
-let g:ctrlp_extensions = ['funky']
 if s:ag
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 nnoremap <C-P><C-P> :CtrlPBuffer<cr>
-nnoremap <C-P><C-F> :CtrlPFunky<cr>
 nnoremap <C-P><C-T> :CtrlPBufTag<cr>
 
 " ----------------------------------------------------------------------------
@@ -1078,6 +1074,8 @@ nnoremap <C-P><C-T> :CtrlPBufTag<cr>
 " ----------------------------------------------------------------------------
 if s:ag
   let g:ackprg = 'ag --nogroup --nocolor --column'
+elseif !executable('ack')
+  let g:ackprg = 'grep -rn "$*" * \| sed "s/:\([0-9]*\):/:\1:1:/" '
 endif
 
 " ----------------------------------------------------------------------------
