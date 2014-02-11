@@ -14,13 +14,14 @@ silent! if plug#begin('~/.vim/plugged')
 if s:darwin
   Plug 'git@github.com:junegunn/vim-easy-align.git'
   Plug 'git@github.com:junegunn/vim-emoji.git'
-  Plug 'git@github.com:junegunn/vim-github-dashboard.git'
+  Plug 'git@github.com:junegunn/vim-github-dashboard.git',
+                         \ { 'on': ['GHDashboard', 'GHActivity'] }
   Plug 'git@github.com:junegunn/vim-fnr.git'
   Plug 'git@github.com:junegunn/seoul256.vim.git'
-  Plug 'git@github.com:junegunn/vader.vim.git'
-  Plug 'git@github.com:junegunn/fzf.git'
-  Plug 'git@github.com:junegunn/vim-ruby-x.git'
-  Plug 'git@github.com:junegunn/goyo.vim.git'
+  Plug 'git@github.com:junegunn/vader.vim.git',  { 'on': 'Vader' }
+  Plug 'git@github.com:junegunn/fzf.git',        { 'on': 'FZF'   }
+  Plug 'git@github.com:junegunn/vim-ruby-x.git', { 'on': 'RubyX' }
+  Plug 'git@github.com:junegunn/goyo.vim.git',   { 'on': 'Goyo'  }
 " Plug 'git@github.com:junegunn/vim-scroll-position.git'
 " Plug 'git@github.com:junegunn/vim-redis.git'
 " Plug 'git@github.com:junegunn/jellybeans.vim.git'
@@ -28,13 +29,13 @@ if s:darwin
 else
   let $GIT_SSL_NO_VERIFY = 'true'
   Plug 'junegunn/vim-easy-align'
-  Plug 'junegunn/vim-github-dashboard'
+  Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
   Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
-  Plug 'junegunn/vader.vim'
-  Plug 'junegunn/fzf'
-  Plug 'junegunn/vim-ruby-x'
-  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/vader.vim',  { 'on': 'Vader' }
+  Plug 'junegunn/fzf',        { 'on': 'FZF'   }
+  Plug 'junegunn/vim-ruby-x', { 'on': 'RubyX' }
+  Plug 'junegunn/goyo.vim',   { 'on': 'Goyo'  }
 endif
 
 " Edit
@@ -43,7 +44,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
 Plug 'ervandew/supertab'
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
 Plug 'kshenoy/vim-signature'
@@ -55,16 +56,16 @@ endif
 Plug 'tpope/vim-tbone'
 
 " Browsing
-Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'mileszs/ack.vim',     { 'on': 'Ack' }
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 if v:version >= 703
-  Plug 'majutsushi/tagbar'
+  Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 endif
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 if v:version >= 703
   Plug 'airblade/vim-gitgutter'
 else
