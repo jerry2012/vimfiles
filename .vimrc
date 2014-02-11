@@ -43,10 +43,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
-Plug 'ervandew/supertab'
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'ervandew/supertab',  { 'on': '<Plug>SuperTab' }
 Plug 'kovisoft/paredit'
-Plug 'justinmk/vim-sneak'
+Plug 'mbbill/undotree',    { 'on': 'UndotreeToggle' }
+Plug 'justinmk/vim-sneak', { 'on': '<Plug>Sneak'    }
 Plug 'kshenoy/vim-signature'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
@@ -1081,6 +1081,8 @@ endif
 " supertab
 " ----------------------------------------------------------------------------
 let g:SuperTabDefaultCompletionType = "<c-n>"
+imap <tab> <Plug>SuperTabForward
+imap <s-tab> <Plug>SuperTabBackward
 
 " ----------------------------------------------------------------------------
 " vim-copy-as-rtf
@@ -1214,6 +1216,8 @@ command! -range ReplaceEmojis <line1>,<line2>call s:replace_emojis()
 " ----------------------------------------------------------------------------
 hi def link SneakPluginScope LineNr
 hi def link SneakPluginTarget DiffChange
+nmap s <Plug>Sneak_s
+nmap S <Plug>Sneak_S
 
 " ----------------------------------------------------------------------------
 " goyo.vim
@@ -1323,3 +1327,4 @@ augroup END
 " imap <tab> <nop>
 " vmap <tab> <nop>
 
+nmap fnr <Plug>(FNR%)
