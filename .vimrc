@@ -29,7 +29,6 @@ if s:darwin
 " Plug 'git@github.com:junegunn/Zenburn.git'
 else
   Plug 'junegunn/vim-easy-align'
-  Plug 'junegunn/vim-emoji'
   Plug 'junegunn/vim-github-dashboard'
   Plug 'junegunn/vim-fnr'
   Plug 'junegunn/seoul256.vim'
@@ -41,7 +40,6 @@ endif
 
 " Edit
 Plug 'tpope/vim-repeat'
-Plug 'visualrepeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tomtom/tcomment_vim'
@@ -49,8 +47,6 @@ Plug 'ervandew/supertab'
 Plug 'mbbill/undotree'
 Plug 'kovisoft/paredit'
 Plug 'justinmk/vim-sneak'
-" Plug 'tpope/vim-characterize'
-" Plug 'tpope/vim-abolish'
 Plug 'kshenoy/vim-signature'
 if s:darwin
   Plug 'zerowidth/vim-copy-as-rtf'
@@ -58,11 +54,8 @@ endif
 
 " Tmux
 Plug 'tpope/vim-tbone'
-" Plug 'tpope/vim-dispatch'
 
 " Browsing
-" Plug 'a.vim'
-" Plug 'grep.vim'
 Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
@@ -91,20 +84,10 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'jnwhiteh/vim-golang'
-Plug 'kien/rainbow_parentheses.vim'
 if s:darwin
   Plug 'Keithbsmiley/investigate.vim'
 endif
 Plug 'AndrewRadev/sideways.vim'
-
-" Visual
-" Plug 'Yggdroot/indentLine'
-" Plug 'nathanaelkane/vim-indent-guides'
-
-" Colors
-" Plug 'summerfruit256.vim'
-Plug 'beauty256'
 
 call plug#end()
 endif
