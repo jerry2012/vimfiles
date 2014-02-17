@@ -88,6 +88,9 @@ if s:darwin
 endif
 Plug 'AndrewRadev/sideways.vim'
 
+Plug 'minibufexpl.vim'
+Plug 'mru.vim'
+
 call plug#end()
 endif
 
@@ -220,7 +223,7 @@ silent! if emoji#available()
 endif
 
 set pastetoggle=<Ins>
-set pastetoggle=<F9> " For Mac
+"set pastetoggle=<F9> " For Mac
 set modelines=2
 set synmaxcol=160
 
@@ -296,9 +299,9 @@ nnoremap g<Right> :tag<cr>
 nnoremap g<Up>    <C-o>
 nnoremap g<Down>  <C-i>
 
-" <F10> | NERD Tree
-inoremap <F10> <esc>:NERDTreeToggle<cr>
-nnoremap <F10> :NERDTreeToggle<cr>
+" <F9> | NERD Tree
+inoremap <F9> <esc>:NERDTreeToggle<cr>
+nnoremap <F9> :NERDTreeToggle<cr>
 
 " <F11> | Tagbar
 if v:version >= 703
@@ -375,7 +378,8 @@ vnoremap > >gv
 " Cscope mappings
 " ----------------------------------------------------------------------------
 if has("cscope")
-  set csprg=/usr/local/bin/cscope
+  "set csprg=/usr/local/bin/cscope
+  set csprg=/usr/bin/cscope
   set csto=0
   set cst
   set nocsverb
@@ -1328,3 +1332,14 @@ augroup END
 " vmap <tab> <nop>
 
 nmap fnr <Plug>(FNR%)
+" Use the arrows to something usefull                                           
+map <right> :bn<cr>                                                             
+map <left> :bp<cr> 
+
+""""""""""""""""""""""""""""""                                                  
+" => MRU plugin                                                                 
+""""""""""""""""""""""""""""""                                                  
+let MRU_Max_Entries = 400                                                       
+map <leader>f :MRU<CR>
+" Fast saving
+nmap <leader>w :w!<cr>
