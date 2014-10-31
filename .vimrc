@@ -90,6 +90,7 @@ Plug 'AndrewRadev/sideways.vim'
 
 Plug 'minibufexpl.vim'
 Plug 'mru.vim'
+Plug 'a.vim'
 
 call plug#end()
 endif
@@ -98,8 +99,10 @@ endif
 " Basic settings
 " ============================================================================
 
-let mapleader = " "
-let maplocalleader = " "
+"let mapleader = " "
+"let maplocalleader = " "
+let mapleader = ","
+let maplocalleader = ","
 
 set nu
 set autoindent
@@ -299,14 +302,14 @@ nnoremap g<Right> :tag<cr>
 nnoremap g<Up>    <C-o>
 nnoremap g<Down>  <C-i>
 
-" <F9> | NERD Tree
-inoremap <F9> <esc>:NERDTreeToggle<cr>
-nnoremap <F9> :NERDTreeToggle<cr>
+" <F8> | NERD Tree
+inoremap <F8> <esc>:NERDTreeToggle<cr>
+nnoremap <F8> :NERDTreeToggle<cr>
 
-" <F11> | Tagbar
+" <F9> | Tagbar
 if v:version >= 703
-  inoremap <F11> <esc>:TagbarToggle<cr>
-  nnoremap <F11> :TagbarToggle<cr>
+  inoremap <F9> <esc>:TagbarToggle<cr>
+  nnoremap <F9> :TagbarToggle<cr>
   let g:tagbar_sort = 0
 endif
 
@@ -610,7 +613,7 @@ inoremap <silent> <F6> <esc>:call <SID>run_this_script(1)<cr>
 nnoremap <silent> <F6> :call <SID>run_this_script(1)<cr>
 
 " ----------------------------------------------------------------------------
-" <F8> | Color scheme selector
+" <F7> | Color scheme selector
 " ----------------------------------------------------------------------------
 function! s:rotate_colors()
   if !exists("s:colors_list")
@@ -628,7 +631,7 @@ function! s:rotate_colors()
   redraw
   echo name
 endfunction
-nnoremap <F8> :call <SID>rotate_colors()<cr>
+nnoremap <F7> :call <SID>rotate_colors()<cr>
 
 " ----------------------------------------------------------------------------
 " :Shuffle | Shuffle selected lines
@@ -1343,3 +1346,10 @@ let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
 " Fast saving
 nmap <leader>w :w!<cr>
+nmap <leader>a :A!<cr>
+nmap <leader>h :IH!<cr>
+
+set fileencoding=utf-8
+set fileencodings=utf-8,gb18030,ucs-bom,gbk,gb2312,cp936
+set encoding=utf8
+
